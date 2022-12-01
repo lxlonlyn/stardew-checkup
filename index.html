@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Stardew Checkup</title>
+<title>星露谷物语 存档进度检查器</title>
 
 <meta charset="UTF-8" />
 <meta property="og:title" content="Stardew Checkup" />
@@ -15,7 +15,8 @@
 <link rel="stylesheet" type="text/css" href="./stardew-checkup.css" />
 <link rel="icon" type="image/png" href="./favicon_c.png" />
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.2.1.min.js"></script>
 <script>window.jQuery || document.write('<script src="./jquery-3.2.1.min.js"><\/script>')</script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
 <script>window.Cookies || document.write('<script src="./js.cookie-2.2.1.min.js"><\/script>')</script>
@@ -24,40 +25,40 @@
 </head>
 <body>
 <div id="TOC">
-<h1>Navigation</h1>
+<h1>导航</h1>
 <div id="TOC-details">
 </div>
 </div>
 
 <div id="header" class="panel">
-<h1>Stardew Checkup</h1>
-<h2 id="sec_about">About</h2>
-<p>This app checks a <a href="http://stardewvalley.net/">Stardew Valley</a> save file for various achievements and milestones and
-lets you know what is missing. Currently it checks for progress on 38 achievements (everything but the 2 Prairie King minigame achieves) and Grandpa's evaluation. It also summarizes relationship progress, including cutscenes.</p>
-<p>Most changed &amp; added content from version 1.5 is supported, and 1.5-specific features should only appear in the results if the save is detected to be from that version. <span class="strong note">If you load a 1.5 save into the app, expect to see spoilers. There is now some spoiler protection for major systems by using the Output Preferences to hide some section results, but the titles of the new sections will still be visible and new items will still appear in the details of old sections.</span> </p>
-<p>The app is written in Javascript and uses <a href="https://jquery.com/">jQuery</a>, <a href="https://github.com/substack/semver-compare">semver-compare</a> and <a href="https://github.com/js-cookie/js-cookie">Javascript Cookie</a>; it is hosted on GitHub Pages at <a href="https://mouseypounds.github.io/stardew-checkup/">https://mouseypounds.github.io/stardew-checkup/</a> and the source code repository is <a href="https://github.com/MouseyPounds/stardew-checkup">https://github.com/MouseyPounds/stardew-checkup</a>.
-Please report any bugs, suggestions, or other feedback to <a href="https://community.playstarbound.com/threads/webapp-stardew-checkup-achievement-completion-progress.141706/">the topic in the Chucklefish forums.</a></p>
+<h1>星露谷物语 存档进度检查器</h1>
+<h2 id="sec_about">关于</h2>
+<p><b>注：您目前所使用的是lonlyn个人汉化的检查器，原版请点击<a href="https://mouseypounds.github.io/stardew-checkup/">此处</a>。</b></p>
+<p>通过上传您的<a href="http://stardewvalley.net/">星露谷物语</a>存档，您可以方便地查看各种成就与里程碑的获取情况。目前它支持查询38种不同的成就（有关“草原之王之旅”成就无法查询）及爷爷的评估。它同时能总结人物间友情关系，包括过场动画在内。</p>
+<p>支持大部分1.5版本修改与新增的内容，且当系统检测为1.5版本存档后会有对应特性。<span class="strong note">如果你导入1.5存档，可能会有剧透。通过调整输出格式偏好可以避免一些剧透，但新标题与新物品仍将显示。</span> </p>
+<p>该检查器由 Javascript 编写，同时使用了<a href="https://jquery.com/">jQuery</a>, <a href="https://github.com/substack/semver-compare">semver-compare</a> 和 <a href="https://github.com/js-cookie/js-cookie">Javascript Cookie</a>。使用 Github Pages 部署在 <a href="https://mouseypounds.github.io/stardew-checkup/">https://mouseypounds.github.io/stardew-checkup/</a>，源代码仓库在<a href="https://github.com/MouseyPounds/stardew-checkup">https://github.com/MouseyPounds/stardew-checkup</a>。
+如果发现任何bug，或者有反馈与建议，请在<a href="https://community.playstarbound.com/threads/webapp-stardew-checkup-achievement-completion-progress.141706/">Chucklefish forums 中的话题</a>进行讨论。</p>
 </div>
 
 <div id="input-container" class="panel">
-<h2 id="sec_save_file">Choose Save File</h2>
-<p>Select Output Preferences below and then choose your save file. The <span class="note">summary</span> is the part that lists whether or not an achievement / goal has been met and the <span class="note">details</span> are things like the NPC event checklist or full list of still-needed items. <span class="note">New Sections</span> are those which have been added for Stardew 1.5.</p>
+<h2 id="sec_save_file">选择存档</h2>
+<p>请在选择输出格式偏好后导入您的存档。<span class="note">概括</span>会给出任务/目标是否被完成的清单，而<span class="note">详情</span>则会给出更多细节，如NPC事件检查表或需要完成目标所需的所有物品清单。<span class="note">新版本</span>指1.5版本。</p>
 <fieldset id="output-prefs-old" class="radio_set">
-<legend>Output Preferences (Old Sections)</legend>
-<label><input type="radio" name="opt-old" value="show_all"> Show summary and details</label><br />
-<label><input type="radio" name="opt-old" value="hide_details" checked="checked"> Show summary but hide details</label><br />
-<label><input type="radio" name="opt-old" value="hide_all"> Hide summary and details</label><br />
+<legend>输出格式偏好 (旧版本)</legend>
+<label><input type="radio" name="opt-old" value="show_all"> 显示概括与详情</label><br />
+<label><input type="radio" name="opt-old" value="hide_details" checked="checked"> 只显示概括</label><br />
+<label><input type="radio" name="opt-old" value="hide_all"> 全部隐藏</label><br />
 </fieldset>
 <fieldset id="output-prefs-new" class="radio_set">
-<legend>Output Preferences (New Sections)</legend>
-<label><input type="radio" name="opt-new" value="show_all"> Show summary and details</label><br />
-<label><input type="radio" name="opt-new" value="hide_details"> Show summary but hide details</label><br />
-<label><input type="radio" name="opt-new" value="hide_all" checked="checked"> Hide summary and details</label><br />
+<legend>输出格式偏好 (新版本)</legend>
+<label><input type="radio" name="opt-new" value="show_all"> 显示概括与详情</label><br />
+<label><input type="radio" name="opt-new" value="hide_details"> 只显示概括</label><br />
+<label><input type="radio" name="opt-new" value="hide_all" checked="checked"> 全部隐藏</label><br />
 </fieldset>
 
-<p>Select a save file to check: <input type="file" id="file_select" /></p>
-<p>Please use the full save file named with your farmer's name (or farm name) and an ID number (e.g. <span class="path">Fred_148093307</span>); do not use the <span class="path">SaveGameInfo</span> file as it does not contain all the necessary information.
-<p>Default save file locations are:
+<p>请选择存档: <input type="file" id="file_select" /></p>
+<p>请使用带有农夫名（或农场名）与ID的存档，如<span class="path">Fred_148093307</span>。不要使用<span class="path">SaveGameInfo</span>文件，它缺失部分关键信息。
+<p>默认存档位置:
 <ul><li>Windows: <span class="path">%AppData%\StardewValley\Saves\</span></li>
 <li>Mac OSX &amp; Linux: <span class="path">~/.config/StardewValley/Saves/</span></li>
 </ul>
@@ -69,7 +70,7 @@ Please report any bugs, suggestions, or other feedback to <a href="https://commu
 </div>
 
 <div id="output-container" class="panel">
-<h2 id="sec_results">Results</h2>
+<h2 id="sec_results">结果</h2>
 <output id="out"> </output>
 </div>
 

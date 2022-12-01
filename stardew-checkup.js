@@ -17,7 +17,109 @@ window.onload = function () {
 	// Show input field immediately
 	$(document.getElementById('input-container')).show();
 
+    // Translate dict
+    // 技能类
+    var translateSkillMap = new Map([
+        ["Farming", "耕种"],
+        ["Fishing", "钓鱼"],
+        ["Foraging", "觅食"],
+        ["Mining", "采矿"],
+        ["Combat", "战斗"]
+    ]);
+    // 怪物
+    var translateMonsterMap = new Map([
+        // 矿井
+        ["Bats", "蝙蝠"],
+        ["Bat", "普通蝙蝠"],
+        ["Frost Bat", "冰冻蝙蝠"],
+        ["Lava Bat", "熔岩蝙蝠"],
+        ["Iridium Bat", "铱蝠"],
+        ["Bug", "臭虫"],
+        ["Cave Fly", "洞穴蝇"],
+        ["Duggy", "掘地虫"],
+        ["Dust Sprite", "灰尘精灵"],
+        ["Dust Sprites", "灰尘精灵"],
+        ["Dust Spirit", "灰尘精灵"],
+        ["Ghost", "幽灵"],
+        ["Grub", "蛆"],
+        ["Lava Crab", "熔岩蟹"],
+        ["Metal Head", "金属大头"],
+        ["Rock Crab", "岩石蟹"],
+        ["Rock Crabs", "岩石蟹"],
+        ["Shadow Brute", "暗影狂徒"],
+        ["Shadow Shaman", "暗影萨满"],
+        ["Skeleton", "骷髅"],
+        ["Skeletons", "骷髅"],
+        ["Slimes", "史莱姆"],
+        ["Green Slime", "绿色史莱姆"],
+        ["Frost Jelly", "冰霜史莱姆"],
+        ["Sludge", "岩浆史莱姆"],
+        ["Squid Kid", "鱿鱼娃"],
+        ["Stone Golem", "石魔"],
+
+        // 危险的矿井
+        ["Blue Squid", "蓝鱿鱼"],
+        ["Skeleton Mage", "骷髅法师"],
+        ["Spider", "蜘蛛"],
+        ["Shadow Sniper", "暗影狙击手"],
+        ["Putrid Ghost", "腐臭幽灵"],
+
+        // 采石场
+        ["Copper Slime", "铜史莱姆"],
+        ["Haunted Skull", "幽灵头骨"],
+        ["Iron Slime", "铁史莱姆"],
+
+        // 头骨山洞
+        ["Armored Bug", "甲虫"],
+        ["Big Slime", "大史莱姆"],
+        ["Carbon Ghost", "石炭幽灵"],
+        // ["Iridium Bat", "铱蝠"],
+        ["Iridium Crab", "铱蟹"],
+        // ["Lava Bat", "熔岩蝙蝠"], 定义在矿井-蝙蝠
+        ["Mummy", "木乃伊"],
+        ["Mummies", "木乃伊"],
+        ["Pepper Rex", "霸王喷火龙"],
+        ["Purple Slime", "紫色史莱姆"],
+        ["Serpent", "飞蛇"],
+        ["Serpents", "飞蛇"],
+
+        // 危险的头骨山洞
+        ["Royal Serpent", "皇家飞蛇"],
+
+        // 突变洞穴
+        ["Mutant Fly", "突变蝇"],
+        ["Mutant Grub", "突变蛆"],
+
+        // 荒野农场
+        ["Wilderness Golem", "荒野石魔"],
+
+        // 火山
+        ["Dwarvish Sentry", "矮人哨兵"],
+        ["False Magma Cap", "假熔岩菇"],
+        ["Hot Head", "熔岩大头"],
+        ["Lava Lurk", "熔岩潜伏怪"],
+        ["Magma Duggy", "熔岩掘地虫"],
+        ["Magma Sparker", "熔岩火球"],
+        ["Magma Sprite", "熔岩精灵"],
+        ["Tiger Slime", "老虎史莱姆"],
+
+        // 讨伐目标
+        ["Cave Insects", "山洞昆虫"],
+        ["Duggies", "掘地虫"],
+        ["Flame Spirits", "火焰精灵"],
+        ["Void Spirits", "虚空之灵"]
+    ]);
+    // 汇总
+    var translateMap = new Map([
+        ...translateSkillMap,
+        ...translateMonsterMap
+    ])
+
 	// Utility functions
+    function translateWordToChinese(word) {
+        return translateMap.has(word) ? translateMap.get(word) : word;
+    }
+
 	function addCommas(x) {
 		// Jamie Taylor @ https://stackoverflow.com/questions/3883342/add-commas-to-a-number-in-jquery
 		return x.toString().replace(/\B(?=(?:\d{3})+(?!\d))/g, ",");
@@ -47,8 +149,8 @@ window.onload = function () {
 		if (desc.length > 0) {
 			desc = '(' + desc + ') ';
 		}
-		return (yes) ? '<span class="ach_yes"><span class="ach">' + name + '</span> ' + desc + ' done</span>' :
-					'<span class="ach_no"><span class="ach">' + name + '</span> ' + desc + '</span> -- need ';
+		return (yes) ? '<span class="ach_yes"><span class="ach">' + name + '</span> ' + desc + ' 已完成</span>' :
+					'<span class="ach_no"><span class="ach">' + name + '</span> ' + desc + '</span> -- 还需要 ';
 	}
 
 	function getAchieveImpossibleString(name, desc) {
@@ -237,7 +339,7 @@ window.onload = function () {
 	// Most also create a meta object which is passed to the per-player info subroutine primarily to find out if 
 	// there are any details so that we know whether to show a button later.
 	function parseSummary(xmlDoc, saveInfo) {
-		var title = "Summary",
+		var title = "概括",
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -922,7 +1024,7 @@ window.onload = function () {
 	}
 
 	function parseMoney(xmlDoc, saveInfo) {
-		var title = 'Money',
+		var title = '金钱',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -950,29 +1052,29 @@ window.onload = function () {
 			money = Number($(player).children('totalMoneyEarned').text());
 
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + ' has earned ' +
+		output += '<span class="result">' + $(player).children('name').html() + ' 已经赚了 ' +
 			addCommas(money) + 'g.</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (money >= 15e3) ? getAchieveString('Greenhorn', 'earn 15,000g', 1) :
-				getAchieveString('Greenhorn', 'earn 15,000g', 0) + addCommas(15e3 - money) + 'g more';
+		output += (money >= 15e3) ? getAchieveString('新手', '赚取15,000g', 1) :
+				getAchieveString('新手', '赚取15,000g', 0) + addCommas(15e3 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 5e4) ? getAchieveString('Cowpoke', 'earn 50,000g', 1) :
-				getAchieveString('Cowpoke', 'earn 50,000g', 0) + addCommas(5e4 - money) + 'g more';
+		output += (money >= 5e4) ? getAchieveString('牛仔', '赚取50,000g', 1) :
+				getAchieveString('牛仔', '赚取50,000g', 0) + addCommas(5e4 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 25e4) ? getAchieveString('Homesteader', 'earn 250,000g', 1) :
-				getAchieveString('Homesteader', 'earn 250,000g', 0) + addCommas(25e4 - money) + 'g more';
+		output += (money >= 25e4) ? getAchieveString('农场主', '赚取250,000g', 1) :
+				getAchieveString('农场主', '赚取250,000g', 0) + addCommas(25e4 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 1e6) ? getAchieveString('Millionaire', 'earn 1,000,000g', 1) :
-				getAchieveString('Millionaire', 'earn 1,000,000g', 0) + addCommas(1e6 - money) + 'g more';
+		output += (money >= 1e6) ? getAchieveString('百万富翁', '赚取1,000,000g', 1) :
+				getAchieveString('百万富翁', '赚取1,000,000g', 0) + addCommas(1e6 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 1e7) ? getAchieveString('Legend', 'earn 10,000,000g', 1) :
-				getAchieveString('Legend', 'earn 10,000,000g', 0) + addCommas(1e7 - money) + 'g more';
+		output += (money >= 1e7) ? getAchieveString('千万富翁', '赚取10,000,000g', 1) :
+				getAchieveString('千万富翁', '赚取10,000,000g', 0) + addCommas(1e7 - money) + 'g';
 		output += '</li></ul></div>';
 		return [output];
 	}
 
 	function parseSocial(xmlDoc, saveInfo) {
-		var title = 'Social',
+		var title = '社交',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1388,7 +1490,7 @@ window.onload = function () {
 	}
 
 	function parseFamily(xmlDoc, saveInfo) {
-		var title = 'Home and Family',
+		var title = '房屋与家庭',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1495,7 +1597,7 @@ window.onload = function () {
 	}
 
 	function parseCooking(xmlDoc, saveInfo) {
-		var title = 'Cooking',
+		var title = '烹饪',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1727,7 +1829,7 @@ window.onload = function () {
 	function parseCrafting(xmlDoc, saveInfo) {
 		/* Manually listing all crafting recipes in the order they appear on http://stardewvalleywiki.com/Crafting
 		 * A translation is needed again because of text mismatch. */
-		var title = 'Crafting',
+		var title = '制作',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1883,7 +1985,7 @@ window.onload = function () {
 	}
 
 	function parseFishing(xmlDoc, saveInfo) {
-		var title = 'Fishing',
+		var title = '钓鱼',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2337,7 +2439,7 @@ window.onload = function () {
 	function parseCropShipping(xmlDoc, saveInfo) {
 		// Relevant IDs were pulled from decompiled source - StardewValley.Stats.checkForShippingAchievments()
 		// Note that there are 5 more "crops" for Monoculture than there are for Polyculture
-		var title = 'Crop Shipping',
+		var title = '农作物运送',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2471,7 +2573,7 @@ window.onload = function () {
 	}
 
 	function parseSkills(xmlDoc, saveInfo) {
-		var title = 'Skills',
+		var title = '技能',
 			output = '',
 			anchor = makeAnchor(title),
 			version = "1.2",
@@ -2526,8 +2628,11 @@ window.onload = function () {
 							break;
 						}
 					}
-					need.push('<li>' + wikify(meta.skills[i]) + ' (level ' + level + ') -- need ' + 
-						addCommas(meta.next_level[level] - num) + ' more xp to next level and ' + addCommas(15000 - num) + ' more xp to max</li>\n');
+                    // 去除 wikify 标签，同时处理翻译
+					// need.push('<li>' + wikify(meta.skills[i]) + ' (level ' + level + ') -- 需要 ' + 
+					// 	addCommas(meta.next_level[level] - num) + ' 经验达到下一等级， ' + addCommas(15000 - num) + ' 经验达到满级</li>\n');
+                    need.push('<li>' + translateWordToChinese(meta.skills[i]) + ' (level ' + level + ') -- 需要 ' + 
+						addCommas(meta.next_level[level] - num) + ' 经验达到下一等级， ' + addCommas(15000 - num) + ' 经验达到满级</li>\n');
 				} else {
 					count++;
 				}
@@ -2598,26 +2703,26 @@ window.onload = function () {
 		output += '<span class="result">' + $(player).children('name').html() +
 			' is <a href="https://stardewvalleywiki.com/Skills#Skill-Based_Title">Farmer Level</a> ' + pt_level + 
 			' with title ' + title + '.' + pt_pct + '</span><br />';
-		output += '<span class="result">' + $(player).children('name').html() + ' has reached level 10 in ' + count + 
-			' of 5 skills.</span><br />';
+		output += '<span class="result">' + $(player).children('name').html() + ' 在 ' + count + 
+			' 项技能中达到了等级 10.</span><br />';
 		output += '<ul class="ach_list"><li>';
-		output += (count >= 1) ? getAchieveString('Singular Talent', 'level 10 in a skill', 1) :
-				getAchieveString('Singular Talent', 'level 10 in a skill', 0) + (1 - count) + ' more';
+		output += (count >= 1) ? getAchieveString('非凡天赋', '（一项）技能到达10级', 1) :
+				getAchieveString('非凡天赋', '一项技能到达10级', 0) + (1 - count) + ' 项技能';
 		output += '</li>\n<li>';
-		output += (count >= 5) ? getAchieveString('Master of the Five Ways', 'level 10 in every skill', 1) :
-				getAchieveString('Master of the Five Ways', 'level 10 in every skill', 0) + (5 - count) + ' more';
+		output += (count >= 5) ? getAchieveString('5种技能大师', '每种技能都达到10级', 1) :
+				getAchieveString('5种技能大师', '每种技能都达到10级', 0) + (5 - count) + ' 项技能';
 		output += '</li></ul></div>';
 
 		if (need.length > 0) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Skills left:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="need">未满级技能:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 		return [output];
 	}
 
 	function parseMuseum(xmlDoc, saveInfo) {
-		var title = 'Museum Collection',
+		var title = '博物馆收集',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2877,7 +2982,7 @@ window.onload = function () {
 		/* Conditions & details from decompiled source StardewValley.Locations.AdventureGuild.gil()
 		 * The game counts some monsters which are not currently available; we will count them too
 		 * just in case they are in someone's save file, but not list them in the details. */
-		var title = 'Monster Hunting',
+		var title = '怪物狩猎',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2952,7 +3057,7 @@ window.onload = function () {
 			meta.categories["Magma Duggy"] = "Duggies";
 			meta.monsters["Duggies"].push("Magma Duggy");
 			meta.categories["Iridium Bat"] = "Bats";
-			meta.monsters["Bats"].push("Iridum Bat");
+			meta.monsters["Bats"].push("Iridium Bat");
 			meta.categories["Royal Serpent"] = "Serpents";
 			meta.monsters["Serpents"].push("Royal Serpent");
 			// These exist now in hard mode so need to be included in output
@@ -2992,20 +3097,20 @@ window.onload = function () {
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
 		if (mineLevel <= 0) {
-			output += '<span class="result">' + farmer + ' has not yet explored the mines.</span><br />\n';
+			output += '<span class="result">' + farmer + ' 尚未探索过矿井。</span><br />\n';
 		} else {
-			output += '<span class="result">' + farmer + ' has reached level ' + Math.min(mineLevel, 120) +
-				' of the mines.</span><br />\n';
+			output += '<span class="result">' + farmer + ' 已到达矿井第 ' + Math.min(mineLevel, 120) +
+				' 层。</span><br />\n';
 			output += '<span class="result">' + farmer + ((mineLevel > 120) ?
-				(' has reached level ' + (mineLevel - 120) + ' of the Skull Cavern') :
-				' has not yet explored the Skull Cavern');
+				(' 最深到达头骨山洞第 ' + (mineLevel - 120) + ' 层') :
+				' 尚未探索过头骨山洞');
 			output += '.</span></div>';
 		}
 		table.push(output);
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
 		output += '<ul class="ach_list"><li>\n';
-		output += (mineLevel >= 120) ? getAchieveString('The Bottom', 'reach mine level 120', 1) :
-				getAchieveString('The Bottom', 'reach mine level 120', 0) + (120 - mineLevel) + ' more';
+		output += (mineLevel >= 120) ? getAchieveString('底部', '到达矿井的最底层。', 1) :
+				getAchieveString('底部', '到达矿井的最底层。', 0) + (120 - mineLevel) + ' 层';
 		output += '</li></ul></div>';
 		
 		if (compareSemVer(saveInfo.version, "1.3") >= 0) {
@@ -3032,12 +3137,16 @@ window.onload = function () {
 					if (killed[id] >= meta.goals[id]) {
 						completed++;
 					} else {
-						need.push('<li>' + id + ' -- kill ' + (meta.goals[id] - killed[id]) + ' more of: ' +
-							meta.monsters[id].map(wikimap).join(', ') + '</li>');
+						// need.push('<li>' + id + ' -- 还需要击杀 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
+						// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
+                        need.push('<li>' + translateWordToChinese(id) + ' -- 还需要击杀任意 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
+							meta.monsters[id].map(translateWordToChinese).join(', ') + '</li>');
 					}
 				} else {
-					need.push('<li>' + id + ' -- kill ' + meta.goals[id] + ' more of: ' +
-						meta.monsters[id].map(wikimap).join(', ') + '</li>');
+					// need.push('<li>' + id + ' -- 还需要击杀 ' + meta.goals[id] + ' 个: ' +
+					// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
+                    need.push('<li>' + translateWordToChinese(id) + ' -- 还需要击杀任意 ' + meta.goals[id] + ' 个: ' +
+						meta.monsters[id].map(translateWordToChinese).join(', ') + '</li>');
 				}
 			}
 		}
@@ -3050,20 +3159,20 @@ window.onload = function () {
 		output += '<span class="result">' + farmer + ' has completed ' + completed + ' of the ' + goal_count +
 				' Monster Eradication goals.' + pt_pct + '</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (completed >= goal_count) ? getAchieveString('Protector of the Valley', 'all monster goals', 1) :
-				getAchieveString('Protector of the Valley', 'all monster goals', 0) + (goal_count - completed) + ' more';
+		output += (completed >= goal_count) ? getAchieveString('城镇守护者', '完成冒险公会猎人会长的全部任务', 1) :
+				getAchieveString('城镇守护者', '完成冒险公会猎人会长的全部任务', 0) + (goal_count - completed) + ' 个任务';
 		output += '</li></ul></div>';
 		if (need.length > 0) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Goals left:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="need">未完成任务:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 		table.push(output);
 		return table;
 	}
 
 	function parseQuests(xmlDoc, saveInfo) {
-		var title = 'Quests',
+		var title = '任务',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3098,13 +3207,13 @@ window.onload = function () {
 		}
 
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + ' has completed ' + count + ' "Help Wanted" quest(s).</span><br />\n';
+		output += '<span class="result">' + $(player).children('name').html() + ' 已经完成了 ' + count + ' 个“需要帮助” 任务。</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (count >= 10) ? getAchieveString('Gofer', 'complete 10 quests', 1) :
-				getAchieveString('Gofer', 'complete 10 quests', 0) + (10 - count) + ' more';
+		output += (count >= 10) ? getAchieveString('听差', '完成10个“需要帮助”任务', 1) :
+				getAchieveString('听差', '完成10个“需要帮助”任务', 0) + (10 - count) + ' 个任务';
 		output += '</li>\n<li>';
-		output += (count >= 40) ? getAchieveString('A Big Help', 'complete 40 quests', 1) :
-				getAchieveString('A Big Help', 'complete 40 quests', 0) + (40 - count) + ' more';
+		output += (count >= 40) ? getAchieveString('帮了大忙', '完成40个“需要帮助”任务', 1) :
+				getAchieveString('帮了大忙', '完成40个“需要帮助”任务', 0) + (40 - count) + ' 个任务';
 		output += '</li></ul></div>';
 		return [output];
 	}
@@ -3112,7 +3221,7 @@ window.onload = function () {
 	function parseStardrops(xmlDoc, saveInfo) {
 		/* mailReceived identifiers from decompiled source of StardewValley.Utility.foundAllStardrops()
 		 * descriptions are not from anywhere else and are just made up. */
-		var title = 'Stardrops',
+		var title = '星之果实',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3122,13 +3231,13 @@ window.onload = function () {
 			meta = { "hasDetails": false, "anchor": anchor, "sum_class": sum_class, "det_class": det_class },
 			table = [];
 			meta.stardrops = {
-				'CF_Fair': 'Purchased at the Fair for 2000 star tokens.',
-				'CF_Mines': 'Found in the chest on mine level 100.',
-				'CF_Spouse': 'Given by NPC spouse at 13.5 hearts (3375 points).',
-				'CF_Sewer': 'Purchased from Krobus in the Sewers for 20,000g.',
-				'CF_Statue': 'Received from Old Master Cannoli in the Secret Woods.',
-				'CF_Fish': 'Mailed by Willy after Master Angler achievement.',
-				'museumComplete': 'Reward for completing the Museum collection.'
+				'CF_Fair': '用2,000星币在星露谷集市购买',
+				'CF_Mines': '矿洞一百层奖励获得',
+				'CF_Spouse': '当你与伴侣的友谊达到12/14心时即有概率在对话时触发赠送，普遍数据为13/14心时获得，多人联机玩家之间结婚也会获得',
+				'CF_Sewer': '科罗布斯以20,000g出售',
+				'CF_Statue': '给秘密森林的老坎诺利大师一个宝石甜莓',
+				'CF_Fish': '完成成就垂钓大师（钓上所有品种的鱼）后，从威利的信中获得',
+				'museumComplete': '完成成就完整收藏（向博物馆捐出全部95种收藏）'
 			};
 			
 		table[0] = parsePlayerStardrops($(xmlDoc).find('SaveGame > player'), saveInfo, meta);
@@ -3174,23 +3283,23 @@ window.onload = function () {
 			pt_pct = getPTLink((count >= stardrop_count) ? "Yes" : "No");
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + ' has received ' + count +
-				' of ' + stardrop_count + ' stardrops.' + pt_pct + '</span><br />\n';
+		output += '<span class="result">' + $(player).children('name').html() + '已经获得了 ' + stardrop_count + ' 个星之果实中的 ' + count +
+				' 个。 '+ pt_pct + '</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (count >= stardrop_count) ? getAchieveString('Mystery Of The Stardrops', 'find every stardrop', 1) :
-				getAchieveString('Mystery Of The Stardrops', 'find every stardrop', 0) + (stardrop_count - count) + ' more';
+		output += (count >= stardrop_count) ? getAchieveString('星之果实的神秘', '找到所有星之果实', 1) :
+				getAchieveString('星之果实的神秘', '找到所有星之果实', 0) + (stardrop_count - count) + ' 个';
 		output += '</li></ul></div>';
 		if (need.length > 0) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Stardrops left:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="need">剩余的星之果实:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 		return [output];
 	}
 
 	function parseGrandpa(xmlDoc, saveInfo) {
 		// Scoring details from StardewValley.Utility.getGradpaScore() & getGrandpaCandlesFromScore()
-		var title = 'Grandpa\'s Evaluation',
+		var title = '爷爷的评估',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3469,7 +3578,7 @@ window.onload = function () {
 	function parseBundlesOld(xmlDoc, saveInfo) {
 		// TODO - boy howdy is 1.5 different
 		// Bundle info from Data\Bundles.xnb & StardewValley.Locations.CommunityCenter class
-		var title = 'Community Center / Joja Community Development',
+		var title = '社区中心收集 / Joja社区开发',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3749,7 +3858,7 @@ window.onload = function () {
 		//  the full bundle information to be placed in the save. Since we are going to at least have to partly
 		//  parse the bundle definitions now, we might as well hardcode the default bundles and handle older
 		//  versions that way.
-		var title = 'Community Center / Joja Community Development',
+		var title = '社区中心收集 / Joja社区开发',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4069,7 +4178,7 @@ window.onload = function () {
 	}
 
 	function parseSecretNotes(xmlDoc, saveInfo) {
-		var title = 'Secret Notes',
+		var title = '秘密纸条',
 			anchor = makeAnchor(title),
 			version = "1.3",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4252,7 +4361,7 @@ window.onload = function () {
 	}
 
 	function parseJournalScraps(xmlDoc, saveInfo) {
-		var title = 'Journal Scraps',
+		var title = '日记残页',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4373,7 +4482,7 @@ window.onload = function () {
 	}
 
 	function parseSpecialOrders(xmlDoc, saveInfo) {
-		var title = 'Special Orders',
+		var title = '特殊订单',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4434,7 +4543,7 @@ window.onload = function () {
 	}
 
 	function parseWalnuts(xmlDoc, saveInfo) {
-		var title = 'Golden Walnuts',
+		var title = '金色核桃',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4680,7 +4789,7 @@ window.onload = function () {
 	}
 
 	function parseIslandUpgrades(xmlDoc, saveInfo) {
-		var title = 'Island Upgrades',
+		var title = '姜岛升级',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4769,7 +4878,7 @@ window.onload = function () {
 	
 	function parsePerfectionTracker(xmlDoc, saveInfo) {
 		// Scoring details from Utility.percentGameComplete()
-		var title = 'Perfection Tracker',
+		var title = '完美度跟踪器',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4922,7 +5031,7 @@ window.onload = function () {
 	function createPlayerList(numPlayers, farmer, farmhands) {
 		var width = Math.floor(100 / (1 + numPlayers)),
 			i,
-			text = '<table><tr><th>Toggle Player Display:</th>' + '<td id="List_PL_1" class="on">' + farmer + '</td>';
+			text = '<table><tr><th>切换玩家显示:</th>' + '<td id="List_PL_1" class="on">' + farmer + '</td>';
 		for (i = 2; i <= numPlayers; i++) {
 			text += ' <td id="List_PL_' + i + '" class="on">' + farmhands[i-2] + '</td>';
 		}
