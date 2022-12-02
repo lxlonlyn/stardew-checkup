@@ -18,8 +18,36 @@ window.onload = function () {
 	$(document.getElementById('input-container')).show();
 
     // Translate dict
+    // 中译英
+    const reversedTranslateMap = new Map([
+        ["关于", "About"],
+        ["选择存档", "Choose Save File"],
+        ["结果", "Results"],
+        ["概括", "Summary"],
+        ["金钱", "Money"],
+        ["技能", "Skills"],
+        ["任务", "Quests"],
+        ["怪物狩猎", "Monster Hunting"],
+        ["星之果实", "Stardrops"],
+        ["住所与家庭", "Home and Family"],
+        ["社交", "Social"],
+        ["烹饪", "Cooking"],
+        ["制作", "Crafting"],
+        ["钓鱼", "Fishing"],
+        ["售卖", "Basic Shipping"],
+        ["农作物售卖", "Crop Shipping"],
+        ["博物馆收集", "Museum Collection"],
+        ["秘密纸条", "Secret Notes"],
+        ["社区中心收集 / Joja社区开发", "Community Center / Joja Community Development"],
+        ["爷爷的评估", "Grandpa's Evaluation"],
+        ["特殊订单", "Special Orders"],
+        ["日记残页", "Journal Scraps"],
+        ["金色核桃", "Golden Walnuts"],
+        ["姜岛升级", "Island Upgrades"],
+        ["完美度追踪器", "Perfection Tracker"]
+    ]);
     // 标题
-    var translateTitleMap = new Map([
+    const translateTitleMap = new Map([
         ["Summary", "概括"],
         ["Money", "金钱"],
         ["Skills", "技能"],
@@ -30,7 +58,7 @@ window.onload = function () {
         ["Social", "社交"],
         ["Cooking", "烹饪"],
         ["Crafting", "制作"],
-        // ["Fishing", "钓鱼"], 在技能中出现
+        ["Fishing", "钓鱼"],
         ["Basic Shipping", "售卖"],
         ["Crop Shipping", "农作物售卖"],
         ["Museum Collection", "博物馆收集"],
@@ -43,8 +71,26 @@ window.onload = function () {
         ["Island Upgrades", "姜岛升级"],
         ["Perfection Tracker", "完美度追踪器"]
     ]);
+    // 农场类型
+    const translateFarmTypeMap = new Map([
+        ["Standard", "标准农场"],
+        ["Riverland", "河边农场"],
+        ["Forest", "森林农场"],
+        ["Hill-top", "山顶农场"],
+        ["Wilderness", "荒野农场"],
+        ["Four Corners", "四角农场"],
+        ["Beach", "海滩农场"]
+    ]);
+    // 季节
+    const translateSeasonMap = new Map([
+        ["Spring", "春季"],
+        ["Summer", "夏季"],
+        ["Autumn", "秋季"],
+        ["Fall", "秋季"],
+        ["Winter", "冬季"]
+    ])
     // 技能类
-    var translateSkillMap = new Map([
+    const translateSkillMap = new Map([
         ["Farming", "耕种"],
         ["Fishing", "钓鱼"],
         ["Foraging", "觅食"],
@@ -52,7 +98,7 @@ window.onload = function () {
         ["Combat", "战斗"]
     ]);
     // 怪物
-    var translateMonsterMap = new Map([
+    const translateMonsterMap = new Map([
         // 矿井
         ["Bats", "蝙蝠"],
         ["Bat", "普通蝙蝠"],
@@ -134,16 +180,95 @@ window.onload = function () {
         ["Flame Spirits", "火焰精灵"],
         ["Void Spirits", "虚空之灵"]
     ]);
+    // 村民
+    const translateVillagerMap = new Map([
+        ["Alex", "亚历克斯"],
+        ["Elliott", "艾利欧特"],
+        ["Harvey", "哈维"],
+        ["Sam", "山姆"],
+        ["Sebastian", "塞巴斯蒂安"],
+        ["Shane", "谢恩"],
+        ["Abigail", "阿比盖尔"],
+        ["Emily", "艾米丽"],
+        ["Haley", "海莉"],
+        ["Leah", "莉雅"],
+        ["Maru", "玛鲁"],
+        ["Penny", "潘妮"],
+        ["Caroline", "卡洛琳"],
+        ["Clint", "克林特"],
+        ["Demetrius", "德米特里厄斯"],
+        ["Evelyn", "艾芙琳"],
+        ["George", "乔治"],
+        ["Gil", "吉尔"],
+        ["Gunther", "冈瑟"],
+        ["Gus", "格斯"],
+        ["Jas", "贾斯"],
+        ["Jodi", "乔迪"],
+        ["Kent", "肯特"],
+        ["Lewis", "刘易斯"],
+        ["Linus", "莱纳斯"],
+        ["Marlon", "马龙"],
+        ["Marnie", "玛妮"],
+        ["Morris", "莫里斯"],
+        ["Pam", "潘姆"],
+        ["Pierre", "皮埃尔"],
+        ["Robin", "罗宾"],
+        ["Vincent", "文森特"],
+        ["Willy", "威利"],
+        ["Birdie", "贝啼"],
+        ["Bouncer", "门卫"],
+        ["Dwaft", "矮人"],
+        ["Governor", "州长"],
+        ["Grandpa", "爷爷"],
+        ["Henchman", "仆人"],
+        ["Junimos", "祝尼魔"],
+        ["Krobus", "科罗布斯"],
+        ["Leo", "雷欧"],
+        ["Mr. Qi", "齐先生"],
+        ["Old Mariner", "老水手"],
+        ["Professor Snail", "蜗牛教授"],
+        ["Sandy", "桑迪"],
+        ["Wizard", "法师"]
+    ]);
     // 汇总
-    var translateMap = new Map([
+    const translateMap = new Map([
         ...translateTitleMap,
+        ...translateFarmTypeMap,
+        ...translateSeasonMap,
         ...translateSkillMap,
-        ...translateMonsterMap
+        ...translateMonsterMap,
+        ...translateVillagerMap
     ])
 
 	// Utility functions
-    function translateWordToChinese(word) {
-        return translateMap.has(word) ? translateMap.get(word) : word;
+    function translateWordToChinese(word, type = "all") {
+        var newWord = word;
+        switch (type) {
+            case "title":
+                newWord = translateTitleMap.has(word) ? translateTitleMap.get(word) : word;
+                break;
+            case "farm type":
+                newWord = translateFarmTypeMap.has(word) ? translateFarmTypeMap.get(word) : word;
+                break;
+            case "season":
+                newWord = translateSeasonMap.has(word) ? translateSeasonMap.get(word) : word;
+                break;
+            case "skill":
+                newWord = translateSkillMap.has(word) ? translateSkillMap.get(word) : word;
+                break;
+            case "monster":
+                newWord = translateMonsterMap.has(word) ? translateMonsterMap.get(word) : word;
+                break;
+            case "villager":
+                newWord = translateVillagerMap.has(word) ? translateVillagerMap.get(word) : word;
+                break;
+            case "all":
+                newWord = translateMap.has(word) ? translateMap.get(word) : word;
+                break;
+            default:
+                newWord = translateMap.has(word) ? translateMap.get(word) : word;
+        }
+        return newWord;
     }
 
 	function addCommas(x) {
@@ -175,8 +300,8 @@ window.onload = function () {
 		if (desc.length > 0) {
 			desc = '(' + desc + ') ';
 		}
-		return (yes) ? '<span class="ach_yes"><span class="ach">' + name + '</span> ' + desc + ' 已完成</span>' :
-					'<span class="ach_no"><span class="ach">' + name + '</span> ' + desc + '</span> -- 还需要 ';
+		return (yes) ? '<span class="ach_yes"><span class="ach">成就：' + name + '</span> ' + desc + ' 已完成</span>' :
+					'<span class="ach_no"><span class="ach">成就：' + name + '</span> ' + desc + '</span> -- 还需要 ';
 	}
 
 	function getAchieveImpossibleString(name, desc) {
@@ -188,7 +313,7 @@ window.onload = function () {
 
 	function getMilestoneString(desc, yes) {
 		return (yes) ? '<span class="ms_yes">' + desc + '</span>' :
-					'<span class="ms_no">' + desc + '</span> -- need ';
+					'<span class="ms_no">' + desc + '</span> -- 还需要 ';
 	}
 
 	function getPointString(pts, desc, cum, yes) {
@@ -310,7 +435,7 @@ window.onload = function () {
 			input = n + '%';
 		}
 		
-		return ' (<a href="#sec_Perfection_Tracker">PT: ' + input + '</a>)';
+		return ' (<a href="#sec_Perfection_Tracker">进度: ' + input + '</a>)';
 	}
 	
 	function getSectionHeader(saveInfo, title, anchor, showDetailsButton, version) {
@@ -321,7 +446,7 @@ window.onload = function () {
 		//   "old" currently means before version 1.5 and "new" is 1.5 & later
 		var prefs = (compareSemVer(version, "1.5") < 0) ? saveInfo.outputPrefOld : saveInfo.outputPrefNew;
 		
-		var output = '<div class="collapsible" id="wrap_' + anchor + '"><h3>' + translateWordToChinese(title) + '</h3>';
+		var output = '<div class="collapsible" id="wrap_' + anchor + '"><h3 id="123">' + translateWordToChinese(title, "title") + '</h3>';
 		var sum_button, sum_class, det_button, det_class;
 
 		if (prefs === 'show_all' || prefs === 'hide_details') {
@@ -419,9 +544,9 @@ window.onload = function () {
 		
 		output = getSectionHeader(saveInfo, title, anchor, false, version);
 		output += '<div class="' + anchor + '_summary ' + sum_class + '">';
-		output += '<span class="result">' + $(xmlDoc).find('player > farmName').html() + ' Farm (' + 
-			farmTypes[$(xmlDoc).find('whichFarm').text()] + ')</span><br />';
-		output += '<span class="result">Farmer ' + name ;
+		output += '<span class="result">' + $(xmlDoc).find('player > farmName').html() + ' 农场 (' + 
+			translateWordToChinese(farmTypes[$(xmlDoc).find('whichFarm').text()], "farm type") + ')</span><br />';
+		output += '<span class="result">农夫 ' + name ;
 		$(xmlDoc).find('farmhand').each(function() {
 			if (isValidFarmhand(this)) {
 				saveInfo.numPlayers++;
@@ -437,7 +562,7 @@ window.onload = function () {
 			}
 		});
 		if (saveInfo.numPlayers > 1) {
-			output += ' and Farmhand(s) ' + farmhands.join(', ');
+			output += ' 与雇农 ' + farmhands.join(', ');
 			createPlayerList(saveInfo.numPlayers, farmer, farmhands);
 		}
 		output += '</span><br />';
@@ -1029,22 +1154,25 @@ window.onload = function () {
 			928: "Golden Egg",
 		}
 		// Date originally used XXForSaveGame elements, but those were not always present on saves downloaded from upload.farm
-		output += '<span class="result">Day ' + Number($(xmlDoc).find('dayOfMonth').text()) + ' of ' +
-			capitalize($(xmlDoc).find('currentSeason').html()) + ', Year ' + Number($(xmlDoc).find('year').text()) + '</span><br />';
-		output += '<span class="result">Played for ';
+		// output += '<span class="result">Day ' + Number($(xmlDoc).find('dayOfMonth').text()) + ' of ' +
+		// 	capitalize($(xmlDoc).find('currentSeason').html()) + ', Year ' + Number($(xmlDoc).find('year').text()) + '</span><br />';
+		output += '<span class="result">' + 
+                    '第 ' + Number($(xmlDoc).find('year').text()) + ' 年，' +  
+			        translateWordToChinese(capitalize($(xmlDoc).find('currentSeason').html()), "season") + "第 " + Number($(xmlDoc).find('dayOfMonth').text()) + " 天" + '</span><br />';
+        output += '<span class="result">游玩了 ';
 		if (playHr === 0 && playMin === 0) {
-			output += "less than 1 minute";
+			output += "不到 1 分钟";
 		} else {
 			if (playHr > 0) {
-				output += playHr + ' hr ';
+				output += playHr + ' 小时 ';
 			}
 			if (playMin > 0) {
-				output += playMin + ' min ';
+				output += playMin + ' 分钟 ';
 			}
 		}
 		output += '</span><br />';
 		var version_num = saveInfo.version;
-		output += '<span class="result">Save is from version ' + version_num + '</span><br /></div>';
+		output += '<span class="result">存档创建于 ' + version_num + ' 版本</span><br /></div>';
 		output += getSectionFooter();
 		return output;
 	}
@@ -1435,20 +1563,20 @@ window.onload = function () {
 			}
 		}
 		$(player).find('questLog > [' + saveInfo.ns_prefix + "\\:type='SocializeQuest'] > whoToGreet > string").each(function () {
-			list_intro.push($(this).text());
+			list_intro.push(translateWordToChinese($(this).text(), "villager"));
 			hasCompletedIntroductions = false;
 		});
 
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has ' + (hasCompletedIntroductions ? "" : "not ") + 
-				'met everyone in town.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + farmer + (hasCompletedIntroductions ? " 已经" : " 还没有") + 
+				'遇见镇子上的所有人</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (list_intro.length == 0) ? getMilestoneString('Complete <span class="ach">Introductions</span> quest', 1) :
-				getMilestoneString('Complete <span class="ach">Introductions</span> quest', 0) + (list_intro.length) + ' more';
+		output += (list_intro.length == 0) ? getMilestoneString('完成<span class="ach">介绍</span>任务', 1) :
+				getMilestoneString('完成<span class="ach">介绍</span>任务', 0) + (list_intro.length) + ' 个人';
 		output += '</li></ul></div>';
 		output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
 		if (list_intro.length > 0) {
-			output += '<span class="need">Villagers left to meet<ol><li>' + list_intro.sort().join('</li><li>') + '</li></ol></span>\n';
+			output += '<span class="need">未见过面的村民:<ol><li>' + list_intro.sort().join('</li><li>') + '</li></ol></span>\n';
 		}
 		output += '</div>';
 		table.push(output);
@@ -1568,17 +1696,17 @@ window.onload = function () {
 			spouse = saveInfo.players[saveInfo.partners[id]];
 			count++;
 		} else {
-			spouse = '(None)';
-			needs.push('spouse');
+			spouse = '(无)';
+			needs.push('配偶');
 		}
 		// Technically, we should be searching the Friendship data for RoommateMarriage here, but for now we are hardcoding
-		var title = "spouse";
+		var title = "配偶";
 		if (spouse === "Krobus") {
-			title = "roommate"
+			title = "室友"
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + "'s " + title + ": " + spouse + 
-			((meta.wedding) ? ' -- wedding in ' + meta.wedding + ' day(s)' : '') + '</span><br />\n';
+		output += '<span class="result">' + farmer + " 的" + title + ": " + translateWordToChinese(spouse, "villager") + 
+			((meta.wedding) ? ' -- 于 ' + meta.wedding + ' 日内结婚' : '') + '</span><br />\n';
 		if (saveInfo.children.hasOwnProperty(id) && saveInfo.children[id].length > 0) {
 			child_name = saveInfo.children[id];
 			count += child_name.length;
@@ -1595,28 +1723,28 @@ window.onload = function () {
 		if (child_name.length) {
 			children = child_name.join(', ');
 			if (child_name.length === 1) {
-				needs.push("1 child");
+				needs.push("1 个孩子");
 			}
 		} else {
-			needs.push("2 children");
+			needs.push("2 个孩子");
 		}
-		output += '<span class="result">' + farmer + "'s children: " + children + '</span><ul class="ach_list"><li>\n';
-		output += (count >= 3) ? getAchieveString('Full House', 'Married + 2 kids', 1) :
-				getAchieveString('Full House', 'Married + 2 kids', 0) + needs.join(' and ');
+		output += '<span class="result">' + farmer + " 的孩子: " + children + '</span><ul class="ach_list"><li>\n';
+		output += (count >= 3) ? getAchieveString('浪漫满屋', '结婚并养育2个孩子', 1) :
+				getAchieveString('浪漫满屋', '结婚并养育2个孩子', 0) + needs.join(' 和 ');
 		output += '</li></ul></div>';
 		table.push(output);
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + houseType + ' upgraded ' + houseUpgrades + ' time(s) of ';
-		output += maxUpgrades + ' possible.</span><br /><ul class="ach_list">\n';
+		output += '<span class="result">' + houseType + ' 已升级 ' + houseUpgrades + ' 次，最多 ';
+		output += maxUpgrades + ' 次</span><br /><ul class="ach_list">\n';
 		output += '<li>';
-		output += (houseUpgrades >= 1) ? getAchieveString('Moving Up', '1 upgrade', 1) :
-				getAchieveString('Moving Up', '1 upgrade', 0) + (1 - houseUpgrades) + ' more';
+		output += (houseUpgrades >= 1) ? getAchieveString('节节高升', '升级你的房屋', 1) :
+				getAchieveString('节节高升', '升级你的房屋', 0) + (1 - houseUpgrades) + ' 次升级';
 		output += '</li>\n<li>';
-		output += (houseUpgrades >= 2) ? getAchieveString('Living Large', '2 upgrades', 1) :
-				getAchieveString('Living Large', '2 upgrades', 0) + (2 - houseUpgrades) + ' more';
+		output += (houseUpgrades >= 2) ? getAchieveString('富裕生活', '将房屋升级至最大号（2次升级）', 1) :
+				getAchieveString('富裕生活', '将房屋升级至最大号（2次升级）', 0) + (2 - houseUpgrades) + ' 次升级';
 		output += '</li>\n<li>';
-		output += (houseUpgrades >= maxUpgrades) ? getMilestoneString('House fully upgraded', 1) :
-				getMilestoneString('House fully upgraded', 0) + (maxUpgrades - houseUpgrades) + ' more';
+		output += (houseUpgrades >= maxUpgrades) ? getMilestoneString('完全升级房屋', 1) :
+				getMilestoneString('完全升级房屋', 0) + (maxUpgrades - houseUpgrades) + ' 次升级';
 		output += '</li></ul></div>';
 		table.push(output);
 		return table;
@@ -2657,7 +2785,7 @@ window.onload = function () {
                     // 去除 wikify 标签，同时处理翻译
 					// need.push('<li>' + wikify(meta.skills[i]) + ' (level ' + level + ') -- 需要 ' + 
 					// 	addCommas(meta.next_level[level] - num) + ' 经验达到下一等级， ' + addCommas(15000 - num) + ' 经验达到满级</li>\n');
-                    need.push('<li>' + translateWordToChinese(meta.skills[i]) + ' (level ' + level + ') -- 需要 ' + 
+                    need.push('<li>' + translateWordToChinese(meta.skills[i], "skill") + ' (level ' + level + ') -- 需要 ' + 
 						addCommas(meta.next_level[level] - num) + ' 经验达到下一等级， ' + addCommas(15000 - num) + ' 经验达到满级</li>\n');
 				} else {
 					count++;
@@ -3165,25 +3293,25 @@ window.onload = function () {
 					} else {
 						// need.push('<li>' + id + ' -- 还需要击杀 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
 						// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
-                        need.push('<li>' + translateWordToChinese(id) + ' -- 还需要击杀任意 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
-							meta.monsters[id].map(translateWordToChinese).join(', ') + '</li>');
+                        need.push('<li>' + translateWordToChinese(id, "monster") + ' -- 还需要击杀任意 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
+							meta.monsters[id].map((word) => translateWordToChinese(word, "monster")).join(', ') + '</li>');
 					}
 				} else {
 					// need.push('<li>' + id + ' -- 还需要击杀 ' + meta.goals[id] + ' 个: ' +
 					// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
-                    need.push('<li>' + translateWordToChinese(id) + ' -- 还需要击杀任意 ' + meta.goals[id] + ' 个: ' +
-						meta.monsters[id].map(translateWordToChinese).join(', ') + '</li>');
+                    need.push('<li>' + translateWordToChinese(id, "monster") + ' -- 还需要击杀任意 ' + meta.goals[id] + ' 个: ' +
+						meta.monsters[id].map((word) => translateWordToChinese(word, "monster")).join(', ') + '</li>');
 				}
 			}
 		}
 
 		saveInfo.perfectionTracker[umid]["Monsters"] = (completed >= goal_count);
 		if (compareSemVer(saveInfo.version, "1.5") >= 0) {
-			pt_pct = getPTLink((completed >= goal_count) ? "Yes" : "No");
+			pt_pct = getPTLink((completed >= goal_count) ? "已完成" : "未完成");
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has completed ' + completed + ' of the ' + goal_count +
-				' Monster Eradication goals.' + pt_pct + '</span><ul class="ach_list">\n';
+		output += '<span class="result">' + farmer + ' 已经完成了 ' + completed + ' 个怪物狩猎任务，总计 ' + goal_count +
+				' 个' + pt_pct + '</span><ul class="ach_list">\n';
 		output += '<li>';
 		output += (completed >= goal_count) ? getAchieveString('城镇守护者', '完成冒险公会猎人会长的全部任务', 1) :
 				getAchieveString('城镇守护者', '完成冒险公会猎人会长的全部任务', 0) + (goal_count - completed) + ' 个任务';
@@ -3262,8 +3390,8 @@ window.onload = function () {
 				'CF_Spouse': '当你与伴侣的友谊达到12/14心时即有概率在对话时触发赠送，普遍数据为13/14心时获得，多人联机玩家之间结婚也会获得',
 				'CF_Sewer': '科罗布斯以20,000g出售',
 				'CF_Statue': '给秘密森林的老坎诺利大师一个宝石甜莓',
-				'CF_Fish': '完成成就垂钓大师（钓上所有品种的鱼）后，从威利的信中获得',
-				'museumComplete': '完成成就完整收藏（向博物馆捐出全部95种收藏）'
+				'CF_Fish': '完成成就“垂钓大师”（钓上所有品种的鱼）后，从威利的信中获得',
+				'museumComplete': '完成成就“完整收藏”（向博物馆捐出全部95种收藏）'
 			};
 			
 		table[0] = parsePlayerStardrops($(xmlDoc).find('SaveGame > player'), saveInfo, meta);
@@ -3306,10 +3434,10 @@ window.onload = function () {
 
 		saveInfo.perfectionTracker[umid]["Stardrops"] = (count >= stardrop_count);
 		if (compareSemVer(saveInfo.version, "1.5") >= 0) {
-			pt_pct = getPTLink((count >= stardrop_count) ? "Yes" : "No");
+			pt_pct = getPTLink((count >= stardrop_count) ? "已完成" : "未完成");
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + '已经获得了 ' + stardrop_count + ' 个星之果实中的 ' + count +
+		output += '<span class="result">' + $(player).children('name').html() + ' 已经获得了 ' + stardrop_count + ' 个星之果实中的 ' + count +
 				' 个。 '+ pt_pct + '</span><br />\n';
 		output += '<ul class="ach_list"><li>';
 		output += (count >= stardrop_count) ? getAchieveString('星之果实的神秘', '找到所有星之果实', 1) :
@@ -5029,7 +5157,7 @@ window.onload = function () {
 		$("h2, h3").each(function () {
 			if ($(this).is(":visible")) {
 				text = $(this).text();
-				id = 'sec_' + makeAnchor(text);
+				id = 'sec_' + makeAnchor(reversedTranslateMap.get(text));
 				$(this).attr('id', id);
 				list += '<li><a href="#' + id + '">' + text + '</a></li>\n';
 			}
