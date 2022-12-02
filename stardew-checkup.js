@@ -18,6 +18,31 @@ window.onload = function () {
 	$(document.getElementById('input-container')).show();
 
     // Translate dict
+    // 标题
+    var translateTitleMap = new Map([
+        ["Summary", "概括"],
+        ["Money", "金钱"],
+        ["Skills", "技能"],
+        ["Quests", "任务"],
+        ["Monster Hunting", "怪物狩猎"],
+        ["Stardrops", "星之果实"],
+        ["Home and Family", "住所与家庭"],
+        ["Social", "社交"],
+        ["Cooking", "烹饪"],
+        ["Crafting", "制作"],
+        // ["Fishing", "钓鱼"], 在技能中出现
+        ["Basic Shipping", "售卖"],
+        ["Crop Shipping", "农作物售卖"],
+        ["Museum Collection", "博物馆收集"],
+        ["Secret Notes", "秘密纸条"],
+        ["Community Center / Joja Community Development", "社区中心收集 / Joja社区开发"],
+        ["Grandpa's Evaluation", "爷爷的评估"],
+        ["Special Orders", "特殊订单"],
+        ["Journal Scraps", "日记残页"],
+        ["Golden Walnuts", "金色核桃"],
+        ["Island Upgrades", "姜岛升级"],
+        ["Perfection Tracker", "完美度追踪器"]
+    ]);
     // 技能类
     var translateSkillMap = new Map([
         ["Farming", "耕种"],
@@ -111,6 +136,7 @@ window.onload = function () {
     ]);
     // 汇总
     var translateMap = new Map([
+        ...translateTitleMap,
         ...translateSkillMap,
         ...translateMonsterMap
     ])
@@ -295,7 +321,7 @@ window.onload = function () {
 		//   "old" currently means before version 1.5 and "new" is 1.5 & later
 		var prefs = (compareSemVer(version, "1.5") < 0) ? saveInfo.outputPrefOld : saveInfo.outputPrefNew;
 		
-		var output = '<div class="collapsible" id="wrap_' + anchor + '"><h3>' + title + '</h3>';
+		var output = '<div class="collapsible" id="wrap_' + anchor + '"><h3>' + translateWordToChinese(title) + '</h3>';
 		var sum_button, sum_class, det_button, det_class;
 
 		if (prefs === 'show_all' || prefs === 'hide_details') {
@@ -339,7 +365,7 @@ window.onload = function () {
 	// Most also create a meta object which is passed to the per-player info subroutine primarily to find out if 
 	// there are any details so that we know whether to show a button later.
 	function parseSummary(xmlDoc, saveInfo) {
-		var title = "概括",
+		var title = "Summary",
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1024,7 +1050,7 @@ window.onload = function () {
 	}
 
 	function parseMoney(xmlDoc, saveInfo) {
-		var title = '金钱',
+		var title = 'Money',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1074,7 +1100,7 @@ window.onload = function () {
 	}
 
 	function parseSocial(xmlDoc, saveInfo) {
-		var title = '社交',
+		var title = 'Social',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1490,7 +1516,7 @@ window.onload = function () {
 	}
 
 	function parseFamily(xmlDoc, saveInfo) {
-		var title = '房屋与家庭',
+		var title = 'Home and Family',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1597,7 +1623,7 @@ window.onload = function () {
 	}
 
 	function parseCooking(xmlDoc, saveInfo) {
-		var title = '烹饪',
+		var title = 'Cooking',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1829,7 +1855,7 @@ window.onload = function () {
 	function parseCrafting(xmlDoc, saveInfo) {
 		/* Manually listing all crafting recipes in the order they appear on http://stardewvalleywiki.com/Crafting
 		 * A translation is needed again because of text mismatch. */
-		var title = '制作',
+		var title = 'Crafting',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -1985,7 +2011,7 @@ window.onload = function () {
 	}
 
 	function parseFishing(xmlDoc, saveInfo) {
-		var title = '钓鱼',
+		var title = 'Fishing',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2439,7 +2465,7 @@ window.onload = function () {
 	function parseCropShipping(xmlDoc, saveInfo) {
 		// Relevant IDs were pulled from decompiled source - StardewValley.Stats.checkForShippingAchievments()
 		// Note that there are 5 more "crops" for Monoculture than there are for Polyculture
-		var title = '农作物运送',
+		var title = 'Crop Shipping',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2573,7 +2599,7 @@ window.onload = function () {
 	}
 
 	function parseSkills(xmlDoc, saveInfo) {
-		var title = '技能',
+		var title = 'Skills',
 			output = '',
 			anchor = makeAnchor(title),
 			version = "1.2",
@@ -2722,7 +2748,7 @@ window.onload = function () {
 	}
 
 	function parseMuseum(xmlDoc, saveInfo) {
-		var title = '博物馆收集',
+		var title = 'Museum Collection',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -2982,7 +3008,7 @@ window.onload = function () {
 		/* Conditions & details from decompiled source StardewValley.Locations.AdventureGuild.gil()
 		 * The game counts some monsters which are not currently available; we will count them too
 		 * just in case they are in someone's save file, but not list them in the details. */
-		var title = '怪物狩猎',
+		var title = 'Monster Hunting',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3172,7 +3198,7 @@ window.onload = function () {
 	}
 
 	function parseQuests(xmlDoc, saveInfo) {
-		var title = '任务',
+		var title = 'Quests',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3221,7 +3247,7 @@ window.onload = function () {
 	function parseStardrops(xmlDoc, saveInfo) {
 		/* mailReceived identifiers from decompiled source of StardewValley.Utility.foundAllStardrops()
 		 * descriptions are not from anywhere else and are just made up. */
-		var title = '星之果实',
+		var title = 'Stardrops',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3299,7 +3325,7 @@ window.onload = function () {
 
 	function parseGrandpa(xmlDoc, saveInfo) {
 		// Scoring details from StardewValley.Utility.getGradpaScore() & getGrandpaCandlesFromScore()
-		var title = '爷爷的评估',
+		var title = 'Grandpa\'s Evaluation',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3578,7 +3604,7 @@ window.onload = function () {
 	function parseBundlesOld(xmlDoc, saveInfo) {
 		// TODO - boy howdy is 1.5 different
 		// Bundle info from Data\Bundles.xnb & StardewValley.Locations.CommunityCenter class
-		var title = '社区中心收集 / Joja社区开发',
+		var title = 'Community Center / Joja Community Development',
 			anchor = makeAnchor(title),
 			version = "1.2",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -3858,7 +3884,7 @@ window.onload = function () {
 		//  the full bundle information to be placed in the save. Since we are going to at least have to partly
 		//  parse the bundle definitions now, we might as well hardcode the default bundles and handle older
 		//  versions that way.
-		var title = '社区中心收集 / Joja社区开发',
+		var title = 'Community Center / Joja Community Development',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4178,7 +4204,7 @@ window.onload = function () {
 	}
 
 	function parseSecretNotes(xmlDoc, saveInfo) {
-		var title = '秘密纸条',
+		var title = 'Secret Notes',
 			anchor = makeAnchor(title),
 			version = "1.3",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4361,7 +4387,7 @@ window.onload = function () {
 	}
 
 	function parseJournalScraps(xmlDoc, saveInfo) {
-		var title = '日记残页',
+		var title = 'Journal Scraps',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4482,7 +4508,7 @@ window.onload = function () {
 	}
 
 	function parseSpecialOrders(xmlDoc, saveInfo) {
-		var title = '特殊订单',
+		var title = 'Special Orders',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4543,7 +4569,7 @@ window.onload = function () {
 	}
 
 	function parseWalnuts(xmlDoc, saveInfo) {
-		var title = '金色核桃',
+		var title = 'Golden Walnuts',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4789,7 +4815,7 @@ window.onload = function () {
 	}
 
 	function parseIslandUpgrades(xmlDoc, saveInfo) {
-		var title = '姜岛升级',
+		var title = 'Island Upgrades',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
@@ -4878,7 +4904,7 @@ window.onload = function () {
 	
 	function parsePerfectionTracker(xmlDoc, saveInfo) {
 		// Scoring details from Utility.percentGameComplete()
-		var title = '完美度跟踪器',
+		var title = 'Perfection Tracker',
 			anchor = makeAnchor(title),
 			version = "1.5",
 			sum_class = getSummaryClass(saveInfo, version),
