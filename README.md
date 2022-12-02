@@ -1,4 +1,20 @@
-# stardew-checkup
+# 星露谷物语 存档进度检查器
+
+## 说明
+
+本应用是根据 [stardew-checkup](https://mouseypounds.github.io/stardew-checkup/) 进行中文汉化，并适当修改了部分内容。目前部署在 [Github Pages](https://lxlonlyn.github.io/stardew-checkup/)。
+
+**星露谷物语 存档进度检查器**是游戏[星露谷物语](http://stardewvalley.net/)的辅助工具。通过上传游戏存档，可以得知玩家的成就、里程碑等各种详细信息，方便进行统计与查漏补缺。
+
+目前其支持统计 38 种不同的成就（“草原之王之旅”相关成就无法查询）、爷爷的评估、以及包括友好度事件在内的每个村民的友好度统计等。
+
+其支持大部分 1.5 版本的新内容，且具有相对应的新特性。但如果导入 1.5 版本存档，可能会存在剧透。
+
+## 汉化更新日志
+
+- 2022.12.2 替换 jquery.min.js 的引用路径，加速国内访问；汉化基础界面及大部分模块；修复部分 bug；
+
+# Stardew Checkup
 
 ## About Stardew Checkup
 
