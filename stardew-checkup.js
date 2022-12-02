@@ -217,7 +217,7 @@ window.onload = function () {
         ["Willy", "威利"],
         ["Birdie", "贝啼"],
         ["Bouncer", "门卫"],
-        ["Dwaft", "矮人"],
+        ["Dwarf", "矮人"],
         ["Governor", "州长"],
         ["Grandpa", "爷爷"],
         ["Henchman", "仆人"],
@@ -1499,7 +1499,8 @@ window.onload = function () {
 			}
 			var hearts = Math.floor(pts/250);
 			var entry = '<li>';
-			entry += (meta.npc[who].isChild) ? who + ' (' + wikify('Child', 'Children') + ')' : wikify(who);
+			// entry += (meta.npc[who].isChild) ? who + ' (' + wikify('Child', 'Children') + ')' : wikify(who);
+            entry += (meta.npc[who].isChild) ? who + ' (' + '孩子' + ')' : translateWordToChinese(who);
 			entry += ': ' + meta.npc[who].relStatus + ', ' + hearts + '&#x2665; (' + pts + ' pts) -- ';
 				
 			// Check events
@@ -1507,7 +1508,7 @@ window.onload = function () {
 			var eventInfo = '';
 			if (meta.eventList.hasOwnProperty(who)) {
 				if (meta.eventList[who].length > 0) {
-					eventInfo += '<ul class="compact"><li>Event(s): ';
+					eventInfo += '<ul class="compact"><li>事件: ';
 					meta.eventList[who].sort(function (a,b) { return a[0] - b[0]; });
 					meta.eventList[who].forEach(function (a) { eventCheck(a, who); });
 					eventInfo += '</li></ul>';
@@ -1520,8 +1521,8 @@ window.onload = function () {
 				if (compareSemVer(saveInfo.version, "1.4") >= 0) {
 					max = 3500;
 				}
-				entry += (pts >= max) ? '<span class="ms_yes">MAX (can still decay)</span></li>' :
-					'<span class="ms_no">need ' + (max - pts) + ' more</span></li>';
+				entry += (pts >= max) ? '<span class="ms_yes">友好度满 (会衰减)</span></li>' :
+					'<span class="ms_no">友好度满需要额外 ' + (max - pts) + ' 友好度</span></li>';
 				hasNPCSpouse = true;
 				list_fam.push(entry + eventInfo);
 			} else if (meta.npc[who].isDatable) {
@@ -1529,12 +1530,12 @@ window.onload = function () {
 				if (meta.npc[who].relStatus === 'Dating') {
 					max = 2500;
 				}
-				entry += (pts >= max) ? '<span class="ms_yes">MAX</span></li>' :
-					'<span class="ms_no">need ' + (max - pts) + ' more</span></li>';
+				entry += (pts >= max) ? '<span class="ms_yes">友好度满</span></li>' :
+					'<span class="ms_no">友好度满需要额外 ' + (max - pts) + ' 友好度</span></li>';
 				list_bach.push(entry + eventInfo);
 			} else {
-				entry += (pts >= 2500) ? '<span class="ms_yes">MAX</span></li>' :
-					'<span class="ms_no">need ' + (2500 - pts) + ' more</span></li>';
+				entry += (pts >= 2500) ? '<span class="ms_yes">友好度满</span></li>' :
+					'<span class="ms_no">友好度满需要额外 ' + (2500 - pts) + ' 友好度</span></li>';
 				if (meta.npc[who].isChild) {
 					list_fam.push(entry + eventInfo);
 				} else {
@@ -1582,30 +1583,30 @@ window.onload = function () {
 		table.push(output);
 
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has ' + count_5h + ' relationship(s) of 5+ hearts.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + farmer + ' 与 ' + count_5h + ' 人有5&#x2665;及以上友好度</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (count_5h >= 1) ? getAchieveString('A New Friend', '5&#x2665; with 1 person', 1) :
-				getAchieveString('A New Friend', '5&#x2665; with 1 person', 0) + (1 - count_5h) + ' more';
+		output += (count_5h >= 1) ? getAchieveString('新朋友', '与某人达到了5颗心的等级', 1) :
+				getAchieveString('新朋友', '与某人达到了5颗心的等级', 0) + (1 - count_5h) + ' 人';
 		output += '</li>\n<li>';
-		output += (count_5h >= 4) ? getAchieveString('Cliques', '5&#x2665; with 4 people', 1) :
-				getAchieveString('Cliques', '5&#x2665; with 4 people', 0) + (4 - count_5h) + ' more\n';
+		output += (count_5h >= 4) ? getAchieveString('拉帮结派', '与4个人达到了5颗心的等级', 1) :
+				getAchieveString('拉帮结派', '与4个人达到了5颗心的等级', 0) + (4 - count_5h) + ' 人\n';
 		output += '</li>\n<li>';
-		output += (count_5h >= 10) ? getAchieveString('Networking', '5&#x2665; with 10 people', 1) :
-				getAchieveString('Networking', '5&#x2665; with 10 people', 0) + (10 - count_5h) + ' more';
+		output += (count_5h >= 10) ? getAchieveString('网络交友', '与10个人达到了5颗心的等级', 1) :
+				getAchieveString('网络交友', '与10个人达到了5颗心的等级', 0) + (10 - count_5h) + ' 人';
 		output += '</li>\n<li>';
-		output += (count_5h >= 20) ? getAchieveString('Popular', '5&#x2665; with 20 people', 1) :
-				getAchieveString('Popular', '5&#x2665; with 20 people', 0) + (20 - count_5h) + ' more';
+		output += (count_5h >= 20) ? getAchieveString('万人迷', '与20个人达到了5颗心的等级', 1) :
+				getAchieveString('万人迷', '与20个人达到了5颗心的等级', 0) + (20 - count_5h) + ' 人';
 		output += '</li></ul></div>';
 		table.push(output);
 		
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has ' + count_10h + ' relationships of 10+ hearts.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + farmer + ' 与 ' + count_10h + ' 人有10&#x2665;及以上友好度</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (count_10h >= 1) ? getAchieveString('Best Friends', '10&#x2665; with 1 person', 1) :
-				getAchieveString('Best Friends', '10&#x2665; with 1 person', 0) + (1 - count_10h) + ' more';
+		output += (count_10h >= 1) ? getAchieveString('最好的朋友', '与某人达到了10颗心的等级', 1) :
+				getAchieveString('最好的朋友', '与某人达到了10颗心的等级', 0) + (1 - count_10h) + ' 人';
 		output += '</li>\n<li>';
-		output += (count_10h >= 8) ? getAchieveString('The Beloved Farmer', '10&#x2665; with 8 people', 1) :
-				getAchieveString('The Beloved Farmer', '10&#x2665; with 8 people', 0) + (8 - count_10h) + ' more';
+		output += (count_10h >= 8) ? getAchieveString('深受喜爱的农夫', '与8个人达到了10颗心的等级', 1) :
+				getAchieveString('深受喜爱的农夫', '与8个人达到了10颗心的等级', 0) + (8 - count_10h) + ' 人';
 		output += '</li></ul></div>';
 		table.push(output);
 
@@ -1614,28 +1615,28 @@ window.onload = function () {
 			pt_pct = getPTLink(maxed_count / maxed_total, true);
 		}
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has maxed ' + maxed_count + ' of ' + maxed_total +
-				' base game villager relationships.' + pt_pct + '</span><br />';
-		output += '<span class="explain">Note: for this milestone, all dateable NPCs are considered maxed at 8 hearts.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + farmer + ' 与 ' + maxed_count + ' 人达到满友好度，总共有 ' + maxed_total +
+				' 人' + pt_pct + '</span><br />';
+		output += '<span class="explain">注: 所有可结婚对象满友好度为8&#x2665;</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (maxed_count >= maxed_total) ? getMilestoneString('Max out hearts with all base game villagers', 1) :
-				getMilestoneString('Max out hearts with all base game villagers', 0) + (maxed_total - maxed_count) + ' more';
+		output += (maxed_count >= maxed_total) ? getMilestoneString('与所有人达成满友好度', 1) :
+				getMilestoneString('与所有人达成满友好度', 0) + (maxed_total - maxed_count) + ' 人';
 		output += '</li></ul></div>';
 		table.push(output);
 
 		output = '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-		output += '<span class="result">Individual Friendship Progress for ' + farmer + '</span><ul class="outer">';
+		output += '<span class="result">' + farmer + ' 与每个人的友好度及事件</span><ul class="outer">';
 		if (list_fam.length > 0) {
-			output += '<li>Family (includes all player children)<ol class="compact">' + list_fam.sort().join('') + '</ol></li>\n';
+			output += '<li>家庭成员<ol class="compact">' + list_fam.sort().join('') + '</ol></li>\n';
 		}
 		if (list_bach.length > 0) {
-			output += '<li>Datable Villagers<ol class="compact">' + list_bach.sort().join('') + '</ol></li>\n';
+			output += '<li>可约会村民<ol class="compact">' + list_bach.sort().join('') + '</ol></li>\n';
 		}
 		if (list_poly.length > 0) {
-			output += '<li>Polyamory Events<ol class="compact">' + list_poly.sort().join('') + '</ol></li>\n';
+			output += '<li>群体10&#x2665;事件<ol class="compact">' + list_poly.sort().join('') + '</ol></li>\n';
 		}
 		if (list_other.length > 0) {
-			output += '<li>Other Villagers<ol class="compact">' + list_other.sort().join('') + '</ol></li>\n';
+			output += '<li>其他村民<ol class="compact">' + list_other.sort().join('') + '</ol></li>\n';
 		}
 		output += '</ul></div>';
 		meta.hasDetails = true; // this one always has details because of the friendship progress
@@ -1937,15 +1938,15 @@ window.onload = function () {
 				mod_craft + ' and knows ' + mod_known + " mod recipes (total unavailable).</span></span>\n";
 		}
 		output += '<ul class="ach_list"><li>';
-		output += ( (craft_count + mod_craft) >= 10) ? getAchieveString('Cook', 'cook 10 different recipes', 1) :
-				getAchieveString('Cook', 'cook 10 different recipes', 0) + (10 - craft_count - mod_craft) + ' more';
+		output += ( (craft_count + mod_craft) >= 10) ? getAchieveString('厨子', '做出10道不同的料理', 1) :
+				getAchieveString('厨子', '做出10道不同的料理', 0) + (10 - craft_count - mod_craft) + ' 道';
 		output += '</li>\n<li>';
-		output += ( (craft_count + mod_craft) >= 25) ? getAchieveString('Sous Chef', 'cook 25 different recipes', 1) :
-				getAchieveString('Sous Chef', 'cook 25 different recipes', 0) + (25 - craft_count - mod_craft) + ' more';
+		output += ( (craft_count + mod_craft) >= 25) ? getAchieveString('副主厨师', '做出25道不同的料理', 1) :
+				getAchieveString('副主厨师', '做出25道不同的料理', 0) + (25 - craft_count - mod_craft) + ' 道';
 		output += '</li>\n<li>';
-		output += ( (craft_count + mod_craft) >= (recipe_count + mod_known) ) ? getAchieveString('Gourmet Chef', 'cook every recipe', 1) :
-				getAchieveString('Gourmet Chef', 'cook every recipe', 0) + ((mod_known > 0) ? "at least " : "") +
-				(recipe_count + mod_known - craft_count - mod_craft) + ' more';
+		output += ( (craft_count + mod_craft) >= (recipe_count + mod_known) ) ? getAchieveString('美食大厨', '烹饪每种配方', 1) :
+				getAchieveString('美食大厨', '烹饪每种配方', 0) + ((mod_known > 0) ? "至少 " : "") +
+				(recipe_count + mod_known - craft_count - mod_craft) + ' 道';
 		output += '</li></ul></div>';
 		// We are assuming it is impossible to craft something without knowing the recipe.
 		if ( (craft_count + mod_craft) < (recipe_count + mod_known) ) {
@@ -1961,12 +1962,12 @@ window.onload = function () {
 			}
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to cook:<ul>';
+			output += '<span class="need">未被烹饪:<ul>';
 			if (need_c.length > 0) {
-				output += '<li>Known Recipes<ol>' + need_c.sort().join('') + '</ol></li>\n';
+				output += '<li>已知菜谱<ol>' + need_c.sort().join('') + '</ol></li>\n';
 			}
 			if (need_k.length > 0) {
-				output += '<li>Unknown Recipes<ol>' + need_k.sort().join('') + '</ol></li>\n';
+				output += '<li>未知菜谱<ol>' + need_k.sort().join('') + '</ol></li>\n';
 			}
 			if (mod_known > 0) {
 				if (mod_craft >= mod_known) {
@@ -2088,30 +2089,30 @@ window.onload = function () {
 			pt_pct = getPTLink(craft_count / recipe_count, true);
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + " has crafted " + craft_count + ' and knows ' +
-			known_count + ' of ' + recipe_count + ' base game recipes.' + pt_pct + '</span>\n';
+		output += '<span class="result">' + $(player).children('name').html() + " 已经制作过 " + craft_count + ' 种物品，了解 ' +
+			known_count + ' 种物品的制作方法，总计有 ' + recipe_count + ' 种物品' + pt_pct + '</span>\n';
 		if (mod_known > 0) {
-			output += '<br /><span class="result"><span class="note">' + $(player).children('name').html() + " has also crafted " +
-				mod_craft + ' and knows ' + mod_known + " mod recipes (total unavailable).</span></span>\n";
+			output += '<br /><span class="result"><span class="note">' + $(player).children('name').html() + " 同时制作过 " +
+				mod_craft + ' 种mod物品，了解 ' + mod_known + " 种mod物品的制作方法(总数无法统计).</span></span>\n";
 		}
 		output += '<ul class="ach_list"><li>';
-		output += ( (craft_count + mod_craft) >= 15) ? getAchieveString('D.I.Y.', 'craft 15 different items', 1) :
-				getAchieveString('D.I.Y.', 'craft 15 different items', 0) + (15 - craft_count - mod_craft) + ' more';
+		output += ( (craft_count + mod_craft) >= 15) ? getAchieveString('自己动手', '制作15个不同的物品', 1) :
+				getAchieveString('自己动手', '制作15个不同的物品', 0) + (15 - craft_count - mod_craft) + ' 种';
 		output += '</li>\n<li>';
-		output += ( (craft_count + mod_craft) >= 30) ? getAchieveString('Artisan', 'craft 30 different items', 1) :
-				getAchieveString('Artisan', 'craft 30 different items', 0) + (30 - craft_count - mod_craft) + ' more';
+		output += ( (craft_count + mod_craft) >= 30) ? getAchieveString('工匠', '制作30个不同的物品', 1) :
+				getAchieveString('工匠', '制作30个不同的物品', 0) + (30 - craft_count - mod_craft) + ' 种';
 		output += '</li>\n<li>';
-		output += ( (craft_count + mod_craft) >= (recipe_count + mod_known) ) ? getAchieveString('Craft Master', 'craft every item', 1) :
-				getAchieveString('Craft Master', 'craft every item', 0) + ((mod_known > 0) ? "at least " : "") +
-				(recipe_count + mod_known - craft_count - mod_craft) + ' more';
+		output += ( (craft_count + mod_craft) >= (recipe_count + mod_known) ) ? getAchieveString('制造大师', '制造每种物品', 1) :
+				getAchieveString('制造大师', '制造每种物品', 0) + ((mod_known > 0) ? "至少 " : "") +
+				(recipe_count + mod_known - craft_count - mod_craft) + ' 种';
 		output += '</li></ul></div>';
 		if ( (craft_count + mod_craft) < (recipe_count + mod_known) ) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to craft:<ul>';
+			output += '<span class="need">未被制作:<ul>';
 
 			if (need_c.length > 0) {
-				output += '<li>Known Recipes<ol>' + need_c.sort().join('') + '</ol></li>\n';
+				output += '<li>已知方法<ol>' + need_c.sort().join('') + '</ol></li>\n';
 			}
 
 			if (known_count < recipe_count) {
@@ -2124,7 +2125,7 @@ window.onload = function () {
 						}
 					}
 				}
-				output += '<li>Unknown Recipes<ol>' + need_k.sort().join('') + '</ol></li>';
+				output += '<li>未知方法<ol>' + need_k.sort().join('') + '</ol></li>';
 			}
 			if (mod_known > 0) {
 				if (mod_craft >= mod_known) {
@@ -2311,34 +2312,34 @@ window.onload = function () {
 			pt_pct = getPTLink(craft_count / recipe_count, true);
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + ' has ' + count +
-			' total catches and has caught ' + craft_count + ' of ' + recipe_count + ' base game fish.' + pt_pct +
+		output += '<span class="result">' + $(player).children('name').html() + ' 成功钓鱼 ' + count +
+			' 次，钓上了 ' + craft_count + ' 种不同鱼，总计有 ' + recipe_count + ' 种' + pt_pct +
 			'</span>';
 		if (mod_count > 0) {
-			output += '<br /><span class="result note">' + $(player).children('name').html() + " has also caught " +
-				mod_count + " mod fish (total unavailable).</span>";
+			output += '<br /><span class="result note">' + $(player).children('name').html() + " 同时成功钓上 " +
+				mod_count + " 种不同的mod中的鱼 (总数无法计算)</span>";
 		}
 		output += '<ul class="ach_list"><li>';
-		output += (count >= 100) ? getAchieveString('Mother Catch', 'catch 100 total fish', 1) :
-				getAchieveString('Mother Catch', 'catch 100 total fish', 0) + (100 - count) + ' more';
+		output += (count >= 100) ? getAchieveString('捕鱼大师', '抓住100条鱼', 1) :
+				getAchieveString('捕鱼大师', '抓住100条鱼', 0) + (100 - count) + ' 条';
 		output += '</li>\n<li>';
-		output += (craft_count >= 10) ? getAchieveString('Fisherman', 'catch 10 different fish', 1) :
-				getAchieveString('Fisherman', 'catch 10 different fish', 0) + (10 - craft_count) + ' more';
+		output += (craft_count >= 10) ? getAchieveString('渔夫', '抓住10种不同的鱼', 1) :
+				getAchieveString('渔夫', '抓住10种不同的鱼', 0) + (10 - craft_count) + ' 种';
 		output += '</li>\n<li>';
-		output += (craft_count >= 24) ? getAchieveString('Ol\' Mariner', 'catch 24 different fish', 1) :
-				getAchieveString('Ol\' Mariner', 'catch 24 different fish', 0) + (24 - craft_count) + ' more';
+		output += (craft_count >= 24) ? getAchieveString('老海员', '抓住24种不同的鱼', 1) :
+				getAchieveString('老海员', '抓住24种不同的鱼', 0) + (24 - craft_count) + ' 种';
 		output += '</li>\n<li>';
 		// 1.5 has some new fish that are ignored, but the logic has not changed.
 		if (compareSemVer(saveInfo.version, "1.4") >= 0) {
-			output += (craft_count >= recipe_count) ? getAchieveString('Master Angler', 'catch every type of fish', 1) :
-					getAchieveString('Master Angler', 'catch every type of fish', 0) + (recipe_count - craft_count) + ' more';
+			output += (craft_count >= recipe_count) ? getAchieveString('垂钓大师', '抓住各种不同的鱼', 1) :
+					getAchieveString('垂钓大师', '抓住各种不同的鱼', 0) + (recipe_count - craft_count) + ' 种';
 		} else {
-			output += (craft_count >= Math.min(59, recipe_count)) ? getAchieveString('Master Angler', 'catch 59 different fish', 1) :
-					getAchieveString('Master Angler', 'catch 59 different fish', 0) + (Math.min(59, recipe_count) - craft_count) + ' more';
+			output += (craft_count >= Math.min(59, recipe_count)) ? getAchieveString('垂钓大师', '抓住各种不同的鱼', 1) :
+					getAchieveString('垂钓大师', '抓住各种不同的鱼', 0) + (Math.min(59, recipe_count) - craft_count) + ' 种';
 			if (compareSemVer(saveInfo.version, "1.3") === 0) {
 				output += '</li>\n<li>';
-				output += (craft_count >= recipe_count) ? getMilestoneString('Catch every type of fish', 1) :
-					getMilestoneString('Catch every type of fish', 0) + (recipe_count - craft_count) + ' more';				
+				output += (craft_count >= recipe_count) ? getMilestoneString('抓住各种不同的鱼', 1) :
+					getMilestoneString('抓住各种不同的鱼', 0) + (recipe_count - craft_count) + ' 种';				
 			}
 		}
 		
@@ -2355,7 +2356,7 @@ window.onload = function () {
 			}
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to catch:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="need">未被钓起的鱼:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 		return [output];
 	}
@@ -2567,11 +2568,11 @@ window.onload = function () {
 			pt_pct = getPTLink(craft_count / recipe_count, true);
 		}
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + $(player).children('name').html() + ' has shipped ' + craft_count +
-				' of ' + recipe_count + ' basic items.' + pt_pct + '</span><ul class="ach_list">\n';
+		output += '<span class="result">' + $(player).children('name').html() + ' 已经售卖过 ' + craft_count +
+				' 种物品，总共有 ' + recipe_count + ' 种' + pt_pct + '</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (craft_count >= recipe_count) ? getAchieveString('Full Shipment', 'ship every item', 1) :
-				getAchieveString('Full Shipment', 'ship every item', 0) + (recipe_count - craft_count) + ' more';
+		output += (craft_count >= recipe_count) ? getAchieveString('全部货物', '寄出每一种物品', 1) :
+				getAchieveString('全部货物', '寄出每一种物品', 0) + (recipe_count - craft_count) + ' 种';
 		output += '</li></ul></div>';
 		if (craft_count < recipe_count) {
 			need = [];
@@ -2585,7 +2586,7 @@ window.onload = function () {
 			}
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to ship:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="need">未被售卖过的物品:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 		return [output];
 	}
@@ -2693,16 +2694,16 @@ window.onload = function () {
 		});
 
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += (max_ship > 0) ? '<span class="result">' + farmer + ' has shipped ' + max_crop + ' the most (' + max_ship + ').</span>' :
-				'<span class="result">' + farmer + ' has not shipped any crops yet.</span>';
+		output += (max_ship > 0) ? '<span class="result">' + farmer + ' 卖出 ' + max_crop + ' 数量最多 (' + max_ship + ').</span>' :
+				'<span class="result">' + farmer + ' 还没有卖出过任何农作物</span>';
 		output += '<ul class="ach_list"><li>\n';
-		output += (max_ship >= 300) ? getAchieveString('Monoculture', 'ship 300 of one crop', 1) :
-				getAchieveString('Monoculture', 'ship 300 of one crop', 0) + (300 - max_ship) + ' more ' + max_crop;
+		output += (max_ship >= 300) ? getAchieveString('单一栽培', '运送 300 份一种作物', 1) :
+				getAchieveString('单一栽培', '运送 300 份一种作物', 0) + max_crop + ' ' + (300 - max_ship) + " 份";
 		output += '</li></ul>\n';
-		output += '<span class="result">' + farmer + ' has shipped 15 items from ' + craft_count + ' of ' +
-				recipe_count + ' different crops.</span><ul class="ach_list">\n<li>';
-		output += (craft_count >= recipe_count) ? getAchieveString('Polyculture', 'ship 15 of each crop', 1) :
-				getAchieveString('Polyculture', 'ship 15 of each crop', 0) + ' more of ' + (recipe_count - craft_count) + ' crops';
+		output += '<span class="result">' + farmer + ' 有 ' + craft_count + ' 种农作物已经卖出了 15 份，总共有 ' +
+				recipe_count + ' 种不同农作物</span><ul class="ach_list">\n<li>';
+		output += (craft_count >= recipe_count) ? getAchieveString('混合栽培', '运送 15 份每种作物', 1) :
+				getAchieveString('混合栽培', '运送 15 份每种作物', 0) + (recipe_count - craft_count) + ' 种不同农作物';
 		output += '</li></ul></div>';
 		if (craft_count < recipe_count) {
 			need = [];
@@ -2710,18 +2711,18 @@ window.onload = function () {
 				if (meta.poly_crops.hasOwnProperty(id)) {
 					r = meta.poly_crops[id];
 					if (!crafted.hasOwnProperty(r)) {
-						need.push('<li>' + wikify(r) + ' -- 15 more</li>');
+						need.push('<li>' + wikify(r) + ' -- 还需要 15 份</li>');
 					} else {
 						n = Number(crafted[r]);
 						if (n < 15) {
-							need.push('<li>' + wikify(r) + ' --' + (15 - n) + ' more</li>');
+							need.push('<li>' + wikify(r) + ' --' + ' 还需要 ' + (15 - n) + ' 份</li>');
 						}
 					}
 				}
 			}
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to ship:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="need">未达到售卖数量农作物:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 		return [output];
 	}
@@ -3005,26 +3006,26 @@ window.onload = function () {
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
 		var intro;
 		if (saveInfo.numPlayers > 1) {
-			intro = 'Inhabitants of ' + $(xmlDoc).find('player > farmName').html(); + ' Farm have';
+			intro = '在 ' + $(xmlDoc).find('player > farmName').html(); + ' 农场的居民';
 		} else {
-			intro = $(xmlDoc).find('player > name').html() + ' has';
+			intro = $(xmlDoc).find('player > name').html();
 		}
-		output += '<span class="result">' + intro + ' donated ' + donated_count + ' of ' +
-			museum_count + ' items to the museum.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + intro + ' 捐赠了 ' + donated_count + ' 种不同物品给博物馆，总共有 ' +
+			museum_count + ' 种物品</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (donated_count >= 40) ? getAchieveString('Treasure Trove', 'donate 40 items', 1) :
-				getAchieveString('Treasure Trove', 'donate 40 items', 0) + (40 - donated_count) + ' more';
+		output += (donated_count >= 40) ? getAchieveString('无主宝藏', '向博物馆捐赠40种不同的物品', 1) :
+				getAchieveString('无主宝藏', '向博物馆捐赠40种不同的物品', 0) + (40 - donated_count) + ' 种';
 		output += '</li>\n<li>';
-		output += (donated_count >= 60) ? getMilestoneString('Donate enough items (60) to get the Rusty Key', 1) :
-				getMilestoneString('Donate enough items (60) to get the Rusty Key', 0) + (60 - donated_count) + ' more';
+		output += (donated_count >= 60) ? getMilestoneString('捐赠足够的物品 (60) 来获得生锈的钥匙', 1) :
+				getMilestoneString('捐赠足够的物品 (60) 来获得生锈的钥匙', 0) + (60 - donated_count) + ' 种';
 		output += '</li>\n<li>';
-		output += (donated_count >= museum_count) ? getAchieveString('A Complete Collection', 'donate every item', 1) :
-				getAchieveString('A Complete Collection', 'donate every item', 0) + (museum_count - donated_count) + ' more';
+		output += (donated_count >= museum_count) ? getAchieveString('全套收集', '完成博物馆收集', 1) :
+				getAchieveString('全套收集', '完成博物馆收集', 0) + (museum_count - donated_count) + ' 种';
 		output += '</li></ul></div>';
 		if (donated_count < museum_count) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">See below for items left to donate</span><br /><br /></div>';
+			output += '<span class="need">未被捐赠的物品:</span><br /><br /></div>';
 		}
 		
 		table[0] = parsePlayerMuseum($(xmlDoc).find('SaveGame > player'), saveInfo, meta);
@@ -3074,16 +3075,16 @@ window.onload = function () {
 		});
 
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has found ' + found_art + ' of ' + artifact_count + ' artifacts.</span><br />\n';
-		output += '<span class="result">' + farmer + ' has found ' + found_min + ' of ' + mineral_count +
-			' minerals.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + farmer + ' 找到了 ' + found_art + ' 种古物，总共有 ' + artifact_count + ' 种</span><br />\n';
+		output += '<span class="result">' + farmer + ' 找到了 ' + found_min + ' 种矿石，总共有 ' + mineral_count +
+			' 种</span><ul class="ach_list">\n';
 		output += '<li>';
 		output += '</li>\n<li>';
-		output += (found_art >= artifact_count) ? getMilestoneString('All artifacts found', 1) :
-				getMilestoneString('All artifacts found', 0) + (artifact_count - found_art) + ' more';
+		output += (found_art >= artifact_count) ? getMilestoneString('找到所有种类的古物', 1) :
+				getMilestoneString('找到所有的古物', 0) + (artifact_count - found_art) + ' 种';
 		output += '</li>\n<li>';
-		output += (found_min >= mineral_count) ? getMilestoneString('All minerals found', 1) :
-				getMilestoneString('All minerals found', 0) + (mineral_count - found_min) + ' more';
+		output += (found_min >= mineral_count) ? getMilestoneString('找到所有种类的矿石', 1) :
+				getMilestoneString('找到所有的矿石', 0) + (mineral_count - found_min) + ' 种';
 		output += '</li></ul></div>';
 
 		if (donated_count < museum_count || (found_art + found_min) < museum_count) {
@@ -3092,13 +3093,13 @@ window.onload = function () {
 					r = meta.artifacts[id];
 					need = [];
 					if (!found.hasOwnProperty(id)) {
-						need.push('found');
+						need.push('找到');
 					}
 					if (!meta.donated.hasOwnProperty(id)) {
-						need.push('donated');
+						need.push('捐赠');
 					}
 					if (need.length > 0) {
-						need_art.push('<li>' + wikify(r) + ' -- not ' + need.join(" or ") + '</li>');
+						need_art.push('<li>' + wikify(r) + ' -- not ' + need.join(" 及 ") + '</li>');
 					}
 				}
 			}
@@ -3107,13 +3108,13 @@ window.onload = function () {
 					r = meta.minerals[id];
 					need = [];
 					if (!found.hasOwnProperty(id)) {
-						need.push('found');
+						need.push('找到');
 					}
 					if (!meta.donated.hasOwnProperty(id)) {
-						need.push('donated');
+						need.push('捐赠');
 					}
 					if (need.length > 0) {
-						need_min.push('<li>' + wikify(r) + ' -- not ' + need.join(" or ") + '</li>');
+						need_min.push('<li>' + wikify(r) + ' -- 未被 ' + need.join("及") + '</li>');
 					}
 				}
 			}
@@ -3121,10 +3122,10 @@ window.onload = function () {
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
 			output += '<span class="need">Items left:<ul>';
 			if (need_art.length > 0) {
-				output += '<li>Artifacts<ol>' + need_art.sort().join('') + '</ol></li>\n';
+				output += '<li>古物<ol>' + need_art.sort().join('') + '</ol></li>\n';
 			}
 			if (need_min.length > 0) {
-				output += '<li>Minerals<ol>' + need_min.sort().join('') + '</ol></li>\n';
+				output += '<li>矿石<ol>' + need_min.sort().join('') + '</ol></li>\n';
 			}
 			output += '</ul></span></div>';
 		}
@@ -4425,8 +4426,8 @@ window.onload = function () {
 			}
 		});
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has ' + (hasSeenKrobus ? '' : 'not ') + ' seen the Shadow Guy at the Bus Stop.</span><br />\n';
-		output += '<span class="result">' + farmer + ' has ' + (hasMagnifyingGlass ? '' : 'not ') + ' found the Magnifying Glass.</span><br />\n';
+		output += '<span class="result">' + farmer + (hasSeenKrobus ? '已经' : '还没有') + ' 看到公交站的黑影</span><br />\n';
+		output += '<span class="result">' + farmer + (hasMagnifyingGlass ? '已经' : '还没有') + ' 找到放大镜</span><br />\n';
 		$(player).find('secretNotesSeen > int').each(function () {
 			// Filter out journal scraps
 			if (Number($(this).text()) < 1000) {
@@ -4434,11 +4435,11 @@ window.onload = function () {
 				found_notes++;
 			}
 		});
-		output += '<span class="result">' + farmer + ' has read ' + found_notes + ' of ' +
-			note_count + ' secret notes.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 已经读过 ' + found_notes + ' 张秘密纸条，总共有 ' +
+			note_count + ' 张</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (found_notes >= note_count) ? getMilestoneString('Read all the secret notes', 1) :
-				getMilestoneString('Read all the secret notes', 0) + (note_count - found_notes) + ' more';
+		output += (found_notes >= note_count) ? getMilestoneString('阅读所有的秘密纸条', 1) :
+				getMilestoneString('阅读所有的秘密纸条', 0) + (note_count - found_notes) + ' 张';
 		output += '</li></ul></div>';
 		if (found_notes < note_count) {
 			for (i = 1; i <= note_count; i++) {
@@ -4449,7 +4450,7 @@ window.onload = function () {
 			if (need.length > 0) {
 				meta.hasDetails = true;
 				output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-				output += '<span class="need">Left to read:<ol>' + need.join('') + '</ol></span></div>';
+				output += '<span class="need">未被阅读的秘密纸条:<ol>' + need.join('') + '</ol></span></div>';
 			}
 		}
 		table.push(output);
@@ -4487,11 +4488,11 @@ window.onload = function () {
 		}
 
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has found the rewards from  ' + found_rewards + ' of ' +
-			reward_count + ' secret notes.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 找到了  ' + found_rewards + ' 张秘密纸条提示的宝藏，总共有 ' +
+			reward_count + ' 张</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (found_rewards >= reward_count) ? getMilestoneString('Find all the secret note rewards', 1) :
-				getMilestoneString('Find all the secret note rewards', 0) + (reward_count - found_rewards) + ' more';
+		output += (found_rewards >= reward_count) ? getMilestoneString('找到所有秘密纸条提示的宝藏', 1) :
+				getMilestoneString('找到所有秘密纸条提示的宝藏', 0) + (reward_count - found_rewards) + ' 张';
 		output += '</li></ul></div>';
 		if (found_rewards < reward_count) {
 			need = [];
@@ -4499,15 +4500,15 @@ window.onload = function () {
 				if (!reward_skip.hasOwnProperty(i) && !rewards.hasOwnProperty(i)) {
 					var extra = "";
 					if (i == 14) {
-						extra = " (Note: may be inaccurate if item was collected and destroyed.)";
+						extra = " (注: 若物品被收集后破坏，则统计可能不准确)";
 					}
-					need.push('<li> Reward from ' + wikify('Secret Note #' + i, 'Secret Notes') + extra + '</li>');
+					need.push('<li> 从 ' + wikify('Secret Note #' + i, 'Secret Notes') + ' 中得到提示' + extra + '</li>');
 				}
 			}
 			if (need.length > 0) {
 				meta.hasDetails = true;
 				output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-				output += '<span class="need">Left to find:<ol>' + need.join('') + '</ol></span></div>';
+				output += '<span class="need">未被找到的秘密纸条提示的宝藏:<ol>' + need.join('') + '</ol></span></div>';
 			}
 		}
 		table.push(output);
