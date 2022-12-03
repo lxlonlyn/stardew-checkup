@@ -109,7 +109,7 @@ window.onload = function () {
 					('<span class="pt_no"><span class="pts"> 0%</span> (of ' + max + '% possible) from ' + desc + '</span>');
 	}
 
-	function wikify(item, page, no_anchor) {
+	function wikify(item, page, no_anchor, type = "all") {
 		// removing egg colors & changing spaces to underscores
 		var trimmed = item.replace(' (White)', '');
 		trimmed = trimmed.replace(' (Brown)', '');
@@ -119,7 +119,7 @@ window.onload = function () {
 			return (no_anchor) ? ('<a href="http://stardewvalleywiki.com/' + page + '">' + item + '</a>') :
 				('<a href="http://stardewvalleywiki.com/' + page + '#' + trimmed + '">' + item + '</a>');
 		} else {
-			return ('<a href="http://stardewvalleywiki.com/' + trimmed + '">' + item + '</a>');
+			return ('<a href="http://stardewvalleywiki.com/' + trimmed + '">' + translateWord(item, type) + '</a>');
 		}
 	}
 
@@ -3668,54 +3668,54 @@ window.onload = function () {
 		// impossible unless the CC is actually done.
 		if (isJojaMember) {
 			if (hybrid) {
-				output += '<span class="result">' + farmer + ' completed ' + ccHave +
-					' Community Center room(s) and then became a Joja member.</span><br />\n';
-				output += '<span class="result">' + farmer + ' has since completed ' + jojaHave + ' of the remaining ' +
-					hybridLeft + ' projects on the Community Development Form.</span><br />\n';
+				output += '<span class="result">' + farmer + ' 完成了 ' + ccHave +
+					' 个社区中心的收集包，之后加入了Joja会员</span><br />\n';
+				output += '<span class="result">' + farmer + ' 完成了 ' + jojaHave + ' 个Joja社区发展申请书项目，总共有 ' +
+					hybridLeft + ' 个</span><br />\n';
 			} else {
-				output += '<span class="result">' + farmer + ' is a Joja member and has completed ' + jojaHave +
-					' of the ' + jojaCount + ' projects on the Community Development Form.</span><br />\n';
+				output += '<span class="result">' + farmer + ' 加入了Joja会员，完成了 ' + jojaHave +
+					' 个Joja社区发展申请书项目，总共有 ' + jojaCount + ' 个</span><br />\n';
 			}
 			hybridLeft -= jojaHave;
-			output += '<span class="result">' + farmer + ((hasSeenCeremony) ? ' has' : ' has not') +
-					' attended the completion ceremony</span><br />\n<ul class="ach_list"><li>';
-			output += getAchieveImpossibleString('Local Legend', 'restore the Pelican Town Community Center');
+			output += '<span class="result">' + farmer + ((hasSeenCeremony) ? ' 参加了' : ' 还没有参加') +
+					' 完成典礼</span><br />\n<ul class="ach_list"><li>';
+			output += getAchieveImpossibleString('当地传奇', '修复星露谷的社区中心');
 			output += '</li><li>\n';
 			if (!hasSeenCeremony) {
 				if (hybridLeft > 0) {
-					temp = hybridLeft + ' more project(s) and the ceremony';
+					temp = hybridLeft + ' 个项目以及参加完成典礼';
 					// Since we are supporting hybrid playthrough, we check the CC versions of mail, not joja
 					for (id in ccMail) {
 						if (ccMail.hasOwnProperty(id) && id !== "ccBulletin") {
 							if (!done.hasOwnProperty(ccMail[id])) {
-								need.push('<li> Purchase ' + project[ccMail[id]] + ' project for ' + price[ccMail[id]] + '</li>');
+								need.push('<li> 购买 ' + project[ccMail[id]] + ' 项目，价格为 ' + price[ccMail[id]] + '</li>');
 							}
 						}
 					}
 				} else {
-					temp = ' to attend the ceremony';
+					temp = ' 参加完成典礼';
 				}
-				need.push('<li>Attend the completion ceremony at the Joja Warehouse</li>');
+				need.push('<li>参加在Joja仓库前举行的完成典礼</li>');
 			}
-			output += (hasSeenCeremony) ? getAchieveString('Joja Co. Member Of The Year', '', 1) :
-					getAchieveString('Joja Co. Member Of The Year', '', 0) + temp;
+			output += (hasSeenCeremony) ? getAchieveString('Joja公司年度会员', '成为Joja公司的会员并购买所有社区发展福利', 1) :
+					getAchieveString('Joja公司年度会员', '成为Joja公司的会员并购买所有社区发展福利', 0) + temp;
 			output += '</li></ul>\n';
 		} else {
-			output += '<span class="result">' + farmer + ' is not a Joja member and has completed ' + ccHave +
-					' of the ' + ccCount + ' Community Center rooms.</span><br />\n';
-			output += '<span class="result">' + farmer + ((hasSeenCeremony) ? ' has' : ' has not') +
-					' attended the completion ceremony</span><br />\n<ul class="ach_list"><li>';
+			output += '<span class="result">' + farmer + ' 不是Joja会员，完成了 ' + ccHave +
+					' 个社区中心收集包，总共有 ' + ccCount + ' 个</span><br />\n';
+			output += '<span class="result">' + farmer + ((hasSeenCeremony) ? ' 参加了' : ' 还没有参加') +
+					' 完成典礼</span><br />\n<ul class="ach_list"><li>';
 			if (ccHave === 0) {
-				output += getAchieveString('Joja Co. Member Of The Year', '', 0) + 'to become a Joja member and purchase all community development perks';
+				output += getAchieveString('Joja公司年度会员', '成为Joja公司的会员并购买所有社区发展福利', 0) + '加入Joja会员，购买所有的社区发展福利';
 			} else if (ccHave < ccCount) {
-				output += getAchieveString('Joja Co. Member Of The Year', '', 0) + 'to become a Joja member and purchase any remaining community development perks (' + hybridLeft + " left)";
+				output += getAchieveString('Joja公司年度会员', '成为Joja公司的会员并购买所有社区发展福利', 0) + '加入Joja会员，购买所有的社区发展福利 (剩余 ' + hybridLeft + " 个)";
 			} else {
-				output += getAchieveImpossibleString('Joja Co. Member Of The Year', 'become a Joja member and purchase all community development perks');
+				output += getAchieveImpossibleString('Joja公司年度会员', '成为Joja公司的会员并购买所有社区发展福利');
 			}
 			output += '</li><li>\n';
 			if (!hasSeenCeremony) {
 				if (ccHave < ccCount) {
-					temp = (ccCount - ccHave) + ' more room(s) and the ceremony';
+					temp = (ccCount - ccHave) + ' 个收集包及参加完成典礼';
 					for (id in ccMail) {
 						if (ccMail.hasOwnProperty(id)) {
 							r = ccMail[id];
@@ -3725,8 +3725,8 @@ window.onload = function () {
 									for (b in room[r].bundles) {
 										if (room[r].bundles.hasOwnProperty(b)) {
 											if (bundleHave[b] < bundleCount[b]) {
-												bundleNeed.push('<li>' + room[r].bundles[b] + ' Bundle -- ' +
-													(bundleCount[b] - bundleHave[b]) + ' more item(s)</li>');
+												bundleNeed.push('<li>' + room[r].bundles[b] + ' 收集包 -- 还需要 ' +
+													(bundleCount[b] - bundleHave[b]) + ' 项物品</li>');
 											}
 										}
 									}
@@ -3736,19 +3736,19 @@ window.onload = function () {
 						}
 					}
 				} else {
-					temp = ' to attend the ceremony';
+					temp = ' 参加完成典礼';
 				}
-				need.push('<li>Attend the re-opening ceremony at the Community Center</li>');
+				need.push('<li>参加社区中心的重建典礼</li>');
 			}
-			output += (ccHave >= ccCount && hasSeenCeremony) ? getAchieveString('Local Legend', '', 1) :
-					getAchieveString('Local Legend', '', 0) + temp;
+			output += (ccHave >= ccCount && hasSeenCeremony) ? getAchieveString('当地传奇', '修复星露谷的社区中心', 1) :
+					getAchieveString('当地传奇', '修复星露谷的社区中心', '', 0) + temp;
 			output += '</li></ul></div>';
 		}
 		if (need.length > 0) {
 			hasDetails = true;
 			output += '<div class="' + anchor + '_details ' + det_class + '">';
-			output += '<span class="result warn">Note: This does not yet support the randomized bundles from version 1.5, so the details may be inaccurate.<br /></span>';
-			output += '<span class="need">Left to do:<ol>' + need.sort().join('') + '</ol></span></div>';
+			output += '<span class="result warn">注: 目前不支持1.5版本的随机收集包，结果可能不准确<br /></span>';
+			output += '<span class="need">还需要完成:<ol>' + need.sort().join('') + '</ol></span></div>';
 		}
 
 		output = getSectionHeader(saveInfo, title, anchor, hasDetails, version) + output + getSectionFooter();

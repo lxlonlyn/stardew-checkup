@@ -183,6 +183,97 @@ const translateVillagerMap = new Map([
     ["Sandy", "桑迪"],
     ["Wizard", "法师"]
 ]);
+// 鱼
+const translateFishMap = new Map([
+    // 传说
+    ["Angler", "鮟鱇鱼"],
+    ["Crimsonfish", "绯红鱼"],
+    ["Glacierfish", "冰川鱼"],
+    ["Glacierfish Jr.", "小冰川鱼"],
+    ["Legend", "传说之鱼"],
+    ["Legend II", "传说之鱼二代"],
+    ["Ms. Angler", "雌鮟鱇鱼"],
+    ["Mutant Carp", "变种鲤鱼"],
+    ["Radioactive Carp", "放射性鲤鱼"],
+    ["Son of Crimsonfish", "绯红鱼之子"],
+    // 海边
+    ["Albacore", "青花鱼"],
+    ["Anchovy", "鳀鱼"],
+    ["Eel", "鳗鱼"],
+    ["Flounder", "比目鱼"],
+    ["Halibut", "大比目鱼"],
+    ["Herring", "鲱鱼"],
+    ["Octopus", "章鱼"],
+    ["Pufferfish", "河豚"],
+    ["Red Mullet", "红鲻鱼"],
+    ["Red Snapper", "红鲷鱼"],
+    ["Sardine", "沙丁鱼"],
+    ["Sea Cucumber", "海参"],
+    ["Squid", "鱿鱼"],
+    ["Super Cucumber", "大海参"],
+    ["Tilapia", "罗非鱼"],
+    ["Tuna", "金枪鱼"],
+    // 河鱼
+    ["Bream", "鲷鱼"],
+    ["Catfish", "鲶鱼"],
+    ["Chub", "鲢鱼"],
+    ["Dorado", "麻哈脂鲤"],
+    ["Lingcod", "蛇齿单线鱼"],
+    ["Perch", "河鲈"],
+    ["Pike", "狗鱼"],
+    ["Rainbow Trout", "虹鳟鱼"],
+    ["Salmon", "鲑鱼"],
+    ["Shad", "西鲱"],
+    ["Smallmouth Bass", "小嘴鲈鱼"],
+    ["Sunfish", "太阳鱼"],
+    ["Tiger Trout", "虎纹鳟鱼"],
+    ["Walleye", "大眼鱼"],
+    // 山间湖泊
+    ["Bullhead", "大头鱼"],
+    ["Carp", "鲤鱼"],
+    ["Largemouth Bass", "大嘴鲈鱼"],
+    ["Midnight Carp", "午夜鲤鱼"],
+    ["Sturgeon", "鲟鱼"],
+    // 偏远森林
+    // 秘密森林
+    ["Woodskip", "木跃鱼"],
+    // 矿井
+    ["Ghostfish", "鬼鱼"],
+    ["Ice Pip", "冰柱鱼"],
+    ["Lava Eel", "岩浆鳗鱼"],
+    ["Stonefish", "石鱼"],
+    // 下水道
+    // 沙漠
+    ["Sandfish", "沙鱼"],
+    ["Scorpion Carp", "蝎鲤鱼"],
+    // 突变虫穴
+    ["Slimejack", "史莱姆鱼"],
+    // 女巫
+    ["Void Salmon", "虚空鲑鱼"],
+    // 夜市
+    ["Blobfish", "水滴鱼"],
+    ["Midnight Squid", "午夜鱿鱼"],
+    ["Spook Fish", "幽灵鱼"],
+    // 蟹笼
+    ["Clam", "蛤"],
+    ["Cockle", "鸟蛤"],
+    ["Crab", "螃蟹"],
+    ["Crayfish", "小龙虾"],
+    ["Lobster", "龙虾"],
+    ["Mussel", "蚌"],
+    ["Oyster", "牡蛎"],
+    ["Periwinkle", "玉黍螺"],
+    ["Shrimp", "虾"],
+    ["Snail", "蜗牛"],
+    // 姜岛
+    ["Blue Discus", "蓝铁饼鱼"],
+    ["Lionfish", "狮子鱼"],
+    ["Stingray", "黄貂鱼"],
+    // 其他
+    ["White Algae", "白藻"],
+    ["Green Algae", "绿藻"],
+    ["Seaweed", "海草"]
+]);
 // 汇总
 const translateMap = new Map([
     ...translateTitleMap,
@@ -190,8 +281,21 @@ const translateMap = new Map([
     ...translateSeasonMap,
     ...translateSkillMap,
     ...translateMonsterMap,
-    ...translateVillagerMap
+    ...translateVillagerMap,
+    ...translateFishMap
 ])
+
+console.log(
+    "字典导入完毕，各个类别：\n",
+    "标题 " + translateTitleMap.size + " 种\n",
+    "农场类型 " + translateFarmTypeMap.size + " 种\n",
+    "季节 " + translateSeasonMap.size + " 种\n",
+    "技能 " + translateSkillMap.size + " 种\n",
+    "怪物 " + translateMonsterMap.size + " 种\n",
+    "村民 " + translateVillagerMap.size + " 种\n",
+    "鱼 " + translateFishMap.size + " 种\n",
+    "总计 " + translateMap.size + " 种\n"
+);
 
 // 标题-中译英
 const reversedTranslateTitleMap = new Map([
@@ -246,6 +350,9 @@ function translateWord(word, type = "all") {
             break;
         case "villager":
             newWord = translateVillagerMap.has(word) ? translateVillagerMap.get(word) : word;
+            break;
+        case "fish":
+            newWord = translateFishMap.has(word) ? translateFishMap.get(word) : word;
             break;
         case "all":
             newWord = translateMap.has(word) ? translateMap.get(word) : word;
