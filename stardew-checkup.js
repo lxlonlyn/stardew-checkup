@@ -55,7 +55,7 @@ window.onload = function () {
 		if (desc.length > 0) {
 			desc = '(' + desc + ') ';
 		}
-		return '<span class="ach_imp"><span class="ach">' + name + '</span> ' + desc + ' impossible</span>';
+		return '<span class="ach_imp"><span class="ach">' + name + '</span> ' + desc + ' 无法完成</span>';
 	}
 
 	function getMilestoneString(desc, yes) {
@@ -109,7 +109,7 @@ window.onload = function () {
 					('<span class="pt_no"><span class="pts"> 0%</span> (of ' + max + '% possible) from ' + desc + '</span>');
 	}
 
-	function wikify(saveInfo, item, page, no_anchor, type = "all") {
+	function wikify(item, page, no_anchor, type = "all") {
 		// removing egg colors & changing spaces to underscores
 		var trimmed = item.replace(' (White)', '');
 		trimmed = trimmed.replace(' (Brown)', '');
@@ -135,7 +135,7 @@ window.onload = function () {
 
 	function wikimap(item, index, arr) {
 		// Wrapper to allow wikify to be used within an array map without misinterpreting the 2nd and 3rd arguments.
-		return wikify(saveInfo, item);
+		return wikify(item);
 	}
 	
 	function printTranspose(table) {
@@ -1256,8 +1256,8 @@ window.onload = function () {
 			}
 			var hearts = Math.floor(pts/250);
 			var entry = '<li>';
-			// entry += (meta.npc[who].isChild) ? who + ' (' + wikify(saveInfo, 'Child', 'Children') + ')' : wikify(saveInfo, who);
-            entry += (meta.npc[who].isChild) ? who + ' (' + '孩子' + ')' : translateWord(who);
+			// entry += (meta.npc[who].isChild) ? who + ' (' + wikify('Child', 'Children') + ')' : wikify(who);
+            entry += (meta.npc[who].isChild) ? who + ' (' + '孩子' + ')' : wikify(who, undefined, undefined, "villager");
 			entry += ': ' + meta.npc[who].relStatus + ', ' + hearts + '&#x2665; (' + pts + ' pts) -- ';
 				
 			// Check events
@@ -1321,7 +1321,7 @@ window.onload = function () {
 			}
 		}
 		$(player).find('questLog > [' + saveInfo.ns_prefix + "\\:type='SocializeQuest'] > whoToGreet > string").each(function () {
-			list_intro.push(translateWord($(this).text(), "villager"));
+			list_intro.push(wikify($(this).text(), undefined, undefined, "villager"));
 			hasCompletedIntroductions = false;
 		});
 
@@ -1711,9 +1711,9 @@ window.onload = function () {
 				if (meta.recipes.hasOwnProperty(id)) {
 					r = meta.recipes[id];
 					if (!known.hasOwnProperty(r)) {
-						need_k.push('<li>' + wikify(saveInfo, r) + '</li>');
+						need_k.push('<li>' + wikify(r, undefined, undefined, "cooking") + '</li>');
 					} else if (!crafted.hasOwnProperty(r)) {
-						need_c.push('<li>' + wikify(saveInfo, r) + '</li>');
+						need_c.push('<li>' + wikify(r, undefined, undefined, "cooking") + '</li>');
 					}
 				}
 			}
@@ -1837,7 +1837,7 @@ window.onload = function () {
 			if (num > 0) {
 				craft_count++;
 			} else {
-				need_c.push('<li>' + wikify(saveInfo, id) + '</li>');
+				need_c.push('<li>' + wikify(id, undefined, undefined, undefined) + '</li>');
 			}
 		});
 
@@ -1878,7 +1878,7 @@ window.onload = function () {
 					if (meta.recipes.hasOwnProperty(id)) {
 						r = meta.recipes[id];
 						if (!known.hasOwnProperty(r)) {
-							need_k.push('<li>' + wikify(saveInfo, r) + '</li>');
+							need_k.push('<li>' + wikify(r, undefined, undefined, undefined) + '</li>');
 						}
 					}
 				}
@@ -2107,7 +2107,7 @@ window.onload = function () {
 				if (meta.recipes.hasOwnProperty(id)) {
 					r = meta.recipes[id];
 					if (!known.hasOwnProperty(r)) {
-						need.push('<li>' + wikify(saveInfo, r) + '</li>');
+						need.push('<li>' + wikify(r, undefined, undefined, undefined) + '</li>');
 					}
 				}
 			}
@@ -2337,7 +2337,7 @@ window.onload = function () {
 				if (meta.recipes.hasOwnProperty(id)) {
 					r = meta.recipes[id];
 					if (!crafted.hasOwnProperty(r)) {
-						need.push('<li>' + wikify(saveInfo, r) + '</li>');
+						need.push('<li>' + wikify(r, undefined, undefined, "shipping") + '</li>');
 					}
 				}
 			}
@@ -2451,7 +2451,7 @@ window.onload = function () {
 		});
 
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += (max_ship > 0) ? '<span class="result">' + farmer + ' 卖出 ' + max_crop + ' 数量最多 (' + max_ship + ').</span>' :
+		output += (max_ship > 0) ? '<span class="result">' + farmer + ' 卖出 ' + translateWord(max_crop, "shipping") + ' 数量最多 (' + max_ship + ').</span>' :
 				'<span class="result">' + farmer + ' 还没有卖出过任何农作物</span>';
 		output += '<ul class="ach_list"><li>\n';
 		output += (max_ship >= 300) ? getAchieveString('单一栽培', '运送 300 份一种作物', 1) :
@@ -2468,11 +2468,11 @@ window.onload = function () {
 				if (meta.poly_crops.hasOwnProperty(id)) {
 					r = meta.poly_crops[id];
 					if (!crafted.hasOwnProperty(r)) {
-						need.push('<li>' + wikify(saveInfo, r) + ' -- 还需要 15 份</li>');
+						need.push('<li>' + wikify(r, undefined, undefined, "shipping") + ' -- 还需要 15 份</li>');
 					} else {
 						n = Number(crafted[r]);
 						if (n < 15) {
-							need.push('<li>' + wikify(saveInfo, r) + ' --' + ' 还需要 ' + (15 - n) + ' 份</li>');
+							need.push('<li>' + wikify(r, undefined, undefined, "shipping") + ' --' + ' 还需要 ' + (15 - n) + ' 份</li>');
 						}
 					}
 				}
@@ -2540,10 +2540,7 @@ window.onload = function () {
 							break;
 						}
 					}
-                    // 去除 wikify 标签，同时处理翻译
-					// need.push('<li>' + wikify(saveInfo, meta.skills[i]) + ' (level ' + level + ') -- 需要 ' + 
-					// 	addCommas(meta.next_level[level] - num) + ' 经验达到下一等级， ' + addCommas(15000 - num) + ' 经验达到满级</li>\n');
-                    need.push('<li>' + wikify(saveInfo, meta.skills[i], undefined, undefined, "skill") + ' (level ' + level + ') -- 需要 ' + 
+                    need.push('<li>' + wikify(meta.skills[i], undefined, undefined, "skill") + ' (level ' + level + ') -- 需要 ' + 
 						addCommas(meta.next_level[level] - num) + ' 经验达到下一等级， ' + addCommas(15000 - num) + ' 经验达到满级</li>\n');
 				} else {
 					count++;
@@ -2856,7 +2853,7 @@ window.onload = function () {
 						need.push('捐赠');
 					}
 					if (need.length > 0) {
-						need_art.push('<li>' + wikify(saveInfo, r) + ' -- not ' + need.join(" 及 ") + '</li>');
+						need_art.push('<li>' + wikify(r, undefined, undefined, undefined) + ' -- not ' + need.join(" 及 ") + '</li>');
 					}
 				}
 			}
@@ -2871,7 +2868,7 @@ window.onload = function () {
 						need.push('捐赠');
 					}
 					if (need.length > 0) {
-						need_min.push('<li>' + wikify(saveInfo, r) + ' -- 未被 ' + need.join("及") + '</li>');
+						need_min.push('<li>' + wikify(r, undefined, undefined, undefined) + ' -- 未被 ' + need.join("及") + '</li>');
 					}
 				}
 			}
@@ -3741,7 +3738,7 @@ window.onload = function () {
 										}
 									}
 								}
-								need.push('<li> ' + wikify(saveInfo, room[r].name, 'Bundles') + '<ol>' + bundleNeed.sort().join('') + '</ol></li>');
+								need.push('<li> ' + wikify(room[r].name, 'Bundles', undefined, undefined) + '<ol>' + bundleNeed.sort().join('') + '</ol></li>');
 							}
 						}
 					}
@@ -4066,7 +4063,7 @@ window.onload = function () {
 										}
 									}
 								}
-								need.push('<li> ' + wikify(saveInfo, room[r].name, 'Bundles') + '<ol>' + bundleNeed.sort().join('') + '</ol></li>');
+								need.push('<li> ' + wikify(room[r].name, 'Bundles') + '<ol>' + bundleNeed.sort().join('') + '</ol></li>');
 							}
 						}
 					}
@@ -4201,7 +4198,7 @@ window.onload = function () {
 		if (found_notes < note_count) {
 			for (i = 1; i <= note_count; i++) {
 				if (!notes.hasOwnProperty(i)) {
-					need.push('<li>' + wikify(saveInfo, 'Secret Note #' + i, 'Secret Notes') + '</li>');
+					need.push('<li>' + wikify('Secret Note #' + i, 'Secret Notes', undefined, undefined) + '</li>');
 				}
 			}
 			if (need.length > 0) {
@@ -4259,7 +4256,7 @@ window.onload = function () {
 					if (i == 14) {
 						extra = " (注: 若物品被收集后破坏，则统计可能不准确)";
 					}
-					need.push('<li> 从 ' + wikify(saveInfo, 'Secret Note #' + i, 'Secret Notes') + ' 中得到提示' + extra + '</li>');
+					need.push('<li> 从 ' + wikify('Secret Note #' + i, 'Secret Notes', undefined, undefined) + ' 中得到提示' + extra + '</li>');
 				}
 			}
 			if (need.length > 0) {
@@ -4349,7 +4346,7 @@ window.onload = function () {
 		if (found_notes < note_count) {
 			for (i = 1; i <= note_count; i++) {
 				if (!notes.hasOwnProperty(1000 + Number(i))) {
-					need.push('<li>' + wikify(saveInfo, 'Journal Scrap #' + i, 'Journal Scraps') + '</li>');
+					need.push('<li>' + wikify('Journal Scrap #' + i, 'Journal Scraps', undefined, undefined) + '</li>');
 				}
 			}
 			if (need.length > 0) {
@@ -4380,7 +4377,7 @@ window.onload = function () {
 			for (i in k) {
 				if (rewards.hasOwnProperty(k[i]) && !rewards[k[i]]) {
 					var extra = "";
-					need.push('<li> Reward from ' + wikify(saveInfo, 'Journal Scrap #' + (Number(k[i]) - 1000) , 'Journal Scraps') + extra + '</li>');
+					need.push('<li> Reward from ' + wikify('Journal Scrap #' + (Number(k[i]) - 1000) , 'Journal Scraps', undefined, undefined) + extra + '</li>');
 				}
 			}
 			if (need.length > 0) {
@@ -4440,7 +4437,7 @@ window.onload = function () {
 		if (found_count < town_count) {
 			for (id in town) {
 				if (!found.hasOwnProperty(id)) {
-					need.push('<li>' + wikify(saveInfo, town[id], "Quests#List_of_Special_Orders", true) + '</li>');
+					need.push('<li>' + wikify(town[id], "Quests#List_of_Special_Orders", true, undefined) + '</li>');
 				}
 			}
 			if (need.length > 0) {
@@ -4879,7 +4876,7 @@ window.onload = function () {
 		output += (numObelisks == 4) ? getPerfectionNumString(numObelisks, 4, 'Obelisks on Farm', 1) :
 				getPerfectionNumString(numObelisks, 4, 'Obelisks on Farm', 0) + ' -- need ' + missingObelisks.join(', ');
 		output += '</li><li>';
-		output += getPerfectionBoolString(10, 'Golden Clock on Farm', saveInfo.perfectionTracker.global["Gold Clock"]) + (saveInfo.perfectionTracker.global["Gold Clock"] ? "" : ' -- need to build a ' + wikify(saveInfo, "Gold Clock"));
+		output += getPerfectionBoolString(10, 'Golden Clock on Farm', saveInfo.perfectionTracker.global["Gold Clock"]) + (saveInfo.perfectionTracker.global["Gold Clock"] ? "" : ' -- need to build a ' + wikify("Gold Clock", undefined, undefined, undefined));
 		output += '</li><li>';
 		output += getPerfectionBoolString(10, 'Monster Slayer Hero (all slayer goals)', saveInfo.perfectionTracker[umid]["Monsters"]) + (saveInfo.perfectionTracker[umid]["Monsters"] ? "" : ' -- <a href="#sec_Monster_Hunting">see above for needs</a>');
 		output += '</li><li>';
