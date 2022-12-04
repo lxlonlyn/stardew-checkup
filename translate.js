@@ -655,6 +655,111 @@ const translateCraftingMap = new Map([
     ["Hopper", "加料器"],
     ["Magic Bait", "魔法鱼饵"]
 ]);
+// 古物
+const translateArtifactMap = new Map([
+    ["Amphibian Fossil", "两栖动物化石"],
+    ["Anchor", "锚"],
+    ["Ancient Doll", "古代玩偶"],
+    ["Ancient Drum", "古代鼓"],  
+    ["Ancient Seed", "古代种子"],
+    ["Ancient Sword", "古剑"],   
+    ["Arrowhead", "箭头"],
+    ["Bone Flute", "骨笛"],
+    ["Chewing Stick", "咀嚼洁齿棒"],
+    ["Chicken Statue", "鸡雕像"],
+    ["Chipped Amphora", "有缺口的土罐"],
+    ["Dinosaur Egg", "恐龙蛋"],
+    ["Dried Starfish", "干海星"],
+    ["Dwarf Gadget", "矮人小工具"],
+    ["Dwarf Scroll I", "矮人卷轴 I"],
+    ["Dwarf Scroll II", "矮人卷轴 II"],
+    ["Dwarf Scroll III", "矮人卷轴 III"],
+    ["Dwarf Scroll IV", "矮人卷轴 IV"],
+    ["Dwarvish Helm", "矮人头盔"],
+    ["Elvish Jewelry", "精灵珠宝"],
+    ["Glass Shards", "玻璃碎片"],
+    ["Golden Mask", "黄金面具"],
+    ["Golden Relic", "黄金遗物"],
+    ["Nautilus Fossil", "鹦鹉螺化石"],
+    ["Ornamental Fan", "装饰用扇子"],
+    ["Palm Fossil", "棕榈化石"],
+    ["Prehistoric Handaxe", "史前手斧"],
+    ["Prehistoric Rib", "史前肋骨"],
+    ["Prehistoric Scapula", "史前肩胛骨"],
+    ["Prehistoric Skull", "史前头骨"],
+    ["Prehistoric Tibia", "史前胫骨"],
+    ["Prehistoric Tool", "史前工具"],
+    ["Prehistoric Vertebra", "史前脊骨"],
+    ["Rare Disc", "稀有圆盘"],
+    ["Rusty Cog", "生锈的齿轮"],
+    ["Rusty Spoon", "生锈的汤匙"],
+    ["Rusty Spur", "生锈的靴刺"],
+    ["Skeletal Hand", "手部骨骼"],
+    ["Skeletal Tail", "尾部骨骼"],
+    ["Strange Doll (green)", "诡异玩偶（绿）"],
+    ["Strange Doll (yellow)", "诡异玩偶（黄）"],
+    ["Trilobite", "三叶虫"]
+]);
+// 矿石
+const translateMineralMap = new Map([
+    ["Earth Crystal", "地晶"],
+    ["Fire Quartz", "火水晶"], 
+    ["Frozen Tear", "泪晶"],   
+    ["Quartz", "石英 "],       
+    ["Amethyst", "紫水晶"],    
+    ["Aquamarine", "海蓝宝石"],
+    ["Diamond", "钻石"],
+    ["Emerald", "绿宝石"],
+    ["Jade", "翡翠"],
+    ["Prismatic Shard", "五彩碎片"],
+    ["Ruby", "红宝石"],
+    ["Topaz", "黄水晶 "],
+    ["Aerinite", "青泥石"],
+    ["Alamite", "透闪石"],
+    ["Baryte", "重晶石"],
+    ["Basalt", "玄武岩"],
+    ["Bixite", "黑方石"],
+    ["Calcite", "方解石"],
+    ["Celestine", "天青石"],
+    ["Dolomite", "白云石"],
+    ["Esperite", "硅钙石"],
+    ["Fairy Stone", "精灵石"],
+    ["Fire Opal", "赤红猫眼石"],
+    ["Fluorapatite", "氟磷灰石"],
+    ["Geminite", "杰明石"],
+    ["Ghost Crystal", "幽灵水晶"],
+    ["Granite", "花岗岩"],
+    ["Helvite", "日光榴石"],
+    ["Hematite", "赤铁矿"],
+    ["Jagoite", "铁铅矿"],
+    ["Jamborite", "绿水镍矿"],
+    ["Jasper", "碧玉"],
+    ["Kyanite", "蓝晶石"],
+    ["Lemon Stone", "柠檬石"],
+    ["Limestone", "石灰石"],
+    ["Lunarite", "酸性月岩"],
+    ["Malachite", "孔雀石"],
+    ["Marble", "大理石"],
+    ["Mudstone", "泥石"],
+    ["Nekoite", "新硅钙石"],
+    ["Neptunite", "柱星叶石"],
+    ["Obsidian", "黑曜石"],
+    ["Ocean Stone", "海洋石"],
+    ["Opal", "猫眼石"],
+    ["Orpiment", "雌黄"],
+    ["Petrified Slime", "石化史莱姆"],
+    ["Pyrite", "黄铁矿"],
+    ["Sandstone", "沙岩"],
+    ["Slate", "板岩"],
+    ["Soapstone", "皂石"],
+    ["Star Shards", "陶瓷碎片"],
+    ["Thunder Egg", "雷公蛋"],
+    ["Tigerseye", "虎眼石 "],
+    ["Geode", "晶球"],
+    ["Frozen Geode", "冰封晶球"],
+    ["Magma Geode", "岩浆晶球"],
+    ["Omni Geode", "万象晶球"]
+]);
 // 汇总
 const translateMap = new Map([
     ...translateTitleMap,
@@ -666,7 +771,9 @@ const translateMap = new Map([
     ...translateFishMap,
     ...translateShippableItemMap,
     ...translateCookingMap,
-    ...translateCraftingMap
+    ...translateCraftingMap,
+    ...translateArtifactMap,
+    ...translateMineralMap
 ])
 
 // console.log(
@@ -746,6 +853,12 @@ function translateWord(word, type = "all") {
             break;
         case "crafting":
             newWord = translateCraftingMap.has(word) ? translateCraftingMap.get(word) : word;
+            break;
+        case "artifact":
+            newWord = translateArtifactMap.has(word) ? translateArtifactMap.get(word) : word;
+            break;
+        case "mineral":
+            newWord = translateMineralMap.has(word) ? translateMineralMap.get(word) : word;
             break;
         case "all":
             newWord = translateMap.has(word) ? translateMap.get(word) : word;

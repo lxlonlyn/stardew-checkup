@@ -116,16 +116,27 @@ window.onload = function () {
 		trimmed = trimmed.replace(/#/g, '.23');
 		// trimmed = trimmed.replace(/ /g, '_');
         trimmed = trimmed.replace(/_/g, ' ');
-        var itemChinese = translateWord(item, type);
-        var trimmedChinese = translateWord(trimmed, type);
-        if (trimmedChinese.indexOf('史莱姆') !== -1 && type === 'monster') {
-            // 中文 wiki 将史莱姆重定义到史莱姆泥，怪物需要特殊处理
-            trimmedChinese = '史莱姆（怪物）';
+        
+        var itemChinese = "", trimmedChinese = "";
+
+        if (item.startsWith('Secret Note ')) {
+            // 秘密纸条类需要特殊处理
+            itemChinese = "秘密纸条 #" + item.slice(13);
+            trimmedChinese = "秘密纸条#.E7.A7.98.E5.AF.86.E7.BA.B8.E6.9D.A1_.23" + item.slice(13);
+        } else {
+            itemChinese = translateWord(item, type);
+            trimmedChinese = translateWord(trimmed, type);
+
+            if (trimmedChinese.indexOf('史莱姆') !== -1 && type === 'monster') {
+                // 中文 wiki 将史莱姆重定义到史莱姆泥，怪物需要特殊处理
+                trimmedChinese = '史莱姆（怪物）';
+            }
+            else if (trimmedChinese.indexOf('蝙蝠') !== -1 && type === 'monster') {
+                // 蝙蝠只有一个分类
+                trimmedChinese = '蝙蝠';
+            }
         }
-        else if (trimmedChinese.indexOf('蝙蝠') !== -1 && type === 'monster') {
-            // 蝙蝠只有一个分类
-            trimmedChinese = '蝙蝠';
-        }
+
         // if (saveInfo.wikiPref === "official_chinese") {
         //     return ('<a href="https://zh.stardewvalleywiki.com/' + translateWord(trimmed, type) + '">' + translateWord(item, type) + '</a>');
         // }
@@ -2789,7 +2800,7 @@ window.onload = function () {
 		if (donated_count < museum_count) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">未被捐赠的物品:</span><br /><br /></div>';
+			output += '<span class="need">下方是未被捐赠的物品详情:</span><br /><br /></div>';
 		}
 		
 		table[0] = parsePlayerMuseum($(xmlDoc).find('SaveGame > player'), saveInfo, meta);
@@ -2863,7 +2874,7 @@ window.onload = function () {
 						need.push('捐赠');
 					}
 					if (need.length > 0) {
-						need_art.push('<li>' + wikify(r, undefined, undefined, undefined) + ' -- not ' + need.join(" 及 ") + '</li>');
+						need_art.push('<li>' + wikify(r, undefined, undefined, 'artifact') + ' -- 未被 ' + need.join("及") + '</li>');
 					}
 				}
 			}
@@ -2878,13 +2889,13 @@ window.onload = function () {
 						need.push('捐赠');
 					}
 					if (need.length > 0) {
-						need_min.push('<li>' + wikify(r, undefined, undefined, undefined) + ' -- 未被 ' + need.join("及") + '</li>');
+						need_min.push('<li>' + wikify(r, undefined, undefined, 'mineral') + ' -- 未被 ' + need.join("及") + '</li>');
 					}
 				}
 			}
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Items left:<ul>';
+			output += '<span class="need">未捐赠物品:<ul>';
 			if (need_art.length > 0) {
 				output += '<li>古物<ol>' + need_art.sort().join('') + '</ol></li>\n';
 			}
