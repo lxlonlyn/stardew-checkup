@@ -116,6 +116,16 @@ window.onload = function () {
 		trimmed = trimmed.replace(/#/g, '.23');
 		trimmed = trimmed.replace(/ /g, '_');
         trimmed = trimmed.replace('_', ' ');
+        var itemChinese = translateWord(item, type);
+        var trimmedChinese = translateWord(trimmed, type);
+        if (trimmedChinese.indexOf('史莱姆') !== -1 && type === 'monster') {
+            // 中文 wiki 将史莱姆重定义到史莱姆泥，怪物需要特殊处理
+            trimmedChinese = '史莱姆（怪物）';
+        }
+        else if (trimmedChinese.indexOf('蝙蝠') !== -1 && type === 'monster') {
+            // 蝙蝠只有一个分类
+            trimmedChinese = '蝙蝠';
+        }
         // if (saveInfo.wikiPref === "official_chinese") {
         //     return ('<a href="https://zh.stardewvalleywiki.com/' + translateWord(trimmed, type) + '">' + translateWord(item, type) + '</a>');
         // }
@@ -130,7 +140,7 @@ window.onload = function () {
         //         return ('<a href="http://stardewvalleywiki.com/' + trimmed + '">' + translateWord(item, type) + '</a>');
         //     }
         // }
-        return ('<a href="https://zh.stardewvalleywiki.com/' + translateWord(trimmed, type) + '">' + translateWord(item, type) + '</a>');
+        return ('<a href="https://zh.stardewvalleywiki.com/' + trimmedChinese + '">' + itemChinese + '</a>');
 	}
 
 	function wikimap(item, index, arr) {
@@ -3049,13 +3059,15 @@ window.onload = function () {
 						// need.push('<li>' + id + ' -- 还需要击杀 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
 						// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
                         need.push('<li>' + translateWord(id, "monster") + ' -- 还需要击杀任意 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
-							meta.monsters[id].map((word) => translateWord(word, "monster")).join(', ') + '</li>');
+							meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', ') + '</li>');
+                        console.log(meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', '));
 					}
 				} else {
 					// need.push('<li>' + id + ' -- 还需要击杀 ' + meta.goals[id] + ' 个: ' +
 					// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
                     need.push('<li>' + translateWord(id, "monster") + ' -- 还需要击杀任意 ' + meta.goals[id] + ' 个: ' +
-						meta.monsters[id].map((word) => translateWord(word, "monster")).join(', ') + '</li>');
+						meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', ') + '</li>');
+                        console.log(meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', '));
 				}
 			}
 		}

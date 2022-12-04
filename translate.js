@@ -59,7 +59,7 @@ const translateMonsterMap = new Map([
     ["Lava Bat", "熔岩蝙蝠"],
     ["Iridium Bat", "铱蝠"],
     ["Bug", "臭虫"],
-    ["Cave Fly", "洞穴蝇"],
+    ["Cave Fly", "苍蝇"],
     ["Duggy", "掘地虫"],
     ["Dust Sprite", "灰尘精灵"],
     ["Dust Sprites", "灰尘精灵"],
@@ -111,7 +111,7 @@ const translateMonsterMap = new Map([
     ["Royal Serpent", "皇家飞蛇"],
 
     // 突变洞穴
-    ["Mutant Fly", "突变蝇"],
+    ["Mutant Fly", "突变苍蝇"],
     ["Mutant Grub", "突变蛆"],
 
     // 荒野农场
