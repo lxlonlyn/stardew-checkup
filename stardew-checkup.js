@@ -114,8 +114,8 @@ window.onload = function () {
 		var trimmed = item.replace(' (White)', '');
 		trimmed = trimmed.replace(' (Brown)', '');
 		trimmed = trimmed.replace(/#/g, '.23');
-		trimmed = trimmed.replace(/ /g, '_');
-        trimmed = trimmed.replace('_', ' ');
+		// trimmed = trimmed.replace(/ /g, '_');
+        trimmed = trimmed.replace(/_/g, ' ');
         var itemChinese = translateWord(item, type);
         var trimmedChinese = translateWord(trimmed, type);
         if (trimmedChinese.indexOf('史莱姆') !== -1 && type === 'monster') {
@@ -1847,7 +1847,7 @@ window.onload = function () {
 			if (num > 0) {
 				craft_count++;
 			} else {
-				need_c.push('<li>' + wikify(id, undefined, undefined, undefined) + '</li>');
+				need_c.push('<li>' + wikify(id, undefined, undefined, 'crafting') + '</li>');
 			}
 		});
 
@@ -1879,7 +1879,7 @@ window.onload = function () {
 			output += '<span class="need">未被制作:<ul>';
 
 			if (need_c.length > 0) {
-				output += '<li>已知方法<ol>' + need_c.sort().join('') + '</ol></li>\n';
+				output += '<li>已知方法，尚未制作<ol>' + need_c.sort().join('') + '</ol></li>\n';
 			}
 
 			if (known_count < recipe_count) {
@@ -1888,7 +1888,7 @@ window.onload = function () {
 					if (meta.recipes.hasOwnProperty(id)) {
 						r = meta.recipes[id];
 						if (!known.hasOwnProperty(r)) {
-							need_k.push('<li>' + wikify(r, undefined, undefined, undefined) + '</li>');
+							need_k.push('<li>' + wikify(r, undefined, undefined, 'crafting') + '</li>');
 						}
 					}
 				}
@@ -3060,14 +3060,12 @@ window.onload = function () {
 						// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
                         need.push('<li>' + translateWord(id, "monster") + ' -- 还需要击杀任意 ' + (meta.goals[id] - killed[id]) + ' 个: ' +
 							meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', ') + '</li>');
-                        console.log(meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', '));
 					}
 				} else {
 					// need.push('<li>' + id + ' -- 还需要击杀 ' + meta.goals[id] + ' 个: ' +
 					// 	meta.monsters[id].map(wikimap).join(', ') + '</li>');
                     need.push('<li>' + translateWord(id, "monster") + ' -- 还需要击杀任意 ' + meta.goals[id] + ' 个: ' +
 						meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', ') + '</li>');
-                        console.log(meta.monsters[id].map((word) => wikify(word, undefined, undefined, "monster")).join(', '));
 				}
 			}
 		}
