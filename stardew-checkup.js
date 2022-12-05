@@ -123,10 +123,15 @@ window.onload = function () {
             // 秘密纸条类需要特殊处理
             itemChinese = "秘密纸条 #" + item.slice(13);
             trimmedChinese = "秘密纸条#.E7.A7.98.E5.AF.86.E7.BA.B8.E6.9D.A1_.23" + item.slice(13);
-        } else {
+        } 
+        else {
             itemChinese = translateWord(item, type);
             trimmedChinese = translateWord(trimmed, type);
-
+            
+            if (type === "bundle") {
+                // 收集包特殊处理
+                trimmedChinese = '收集包#' + trimmedChinese;
+            }
             if (trimmedChinese.indexOf('史莱姆') !== -1 && type === 'monster') {
                 // 中文 wiki 将史莱姆重定义到史莱姆泥，怪物需要特殊处理
                 trimmedChinese = '史莱姆（怪物）';
@@ -239,7 +244,7 @@ window.onload = function () {
 		}			
 
 		// Supporting sections that don't have details also should not have the button. We'll leave the empty div alone
-		var button_element = "(No Details)";
+		var button_element = "(没有详情)";
 		if (showDetailsButton) {
 			button_element = '<button id="toggle_' + anchor + '_details" type="button" data-target="' + anchor + '_details">' + det_button + '</button>';
 		}
@@ -3753,13 +3758,13 @@ window.onload = function () {
 									for (b in room[r].bundles) {
 										if (room[r].bundles.hasOwnProperty(b)) {
 											if (bundleHave[b] < bundleCount[b]) {
-												bundleNeed.push('<li>' + room[r].bundles[b] + ' 收集包 -- 还需要 ' +
+												bundleNeed.push('<li>' + translateWord(room[r].bundles[b], "bundle") + '收集包 -- 还需要 ' +
 													(bundleCount[b] - bundleHave[b]) + ' 项物品</li>');
 											}
 										}
 									}
 								}
-								need.push('<li> ' + wikify(room[r].name, 'Bundles', undefined, undefined) + '<ol>' + bundleNeed.sort().join('') + '</ol></li>');
+								need.push('<li> ' + wikify(room[r].name, 'Bundles', undefined, 'bundle') + '<ol>' + bundleNeed.sort().join('') + '</ol></li>');
 							}
 						}
 					}

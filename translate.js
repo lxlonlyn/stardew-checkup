@@ -760,6 +760,45 @@ const translateMineralMap = new Map([
     ["Magma Geode", "岩浆晶球"],
     ["Omni Geode", "万象晶球"]
 ]);
+// 
+const translateBundleMap = new Map([
+    ["Pantry", "茶水间"],
+    ["Spring Crops", "春季作物"],
+    ["Summer Crops", "夏季作物"],
+    ["Fall Crops", "秋季作物"],
+    ["Quality Crops", "高品质作物"],
+    ["Animal", "动物"],
+    ["Artisan", "工匠"],
+    ["Crafts Room", "工艺室"],
+    ["Spring Foraging", "春季觅食"],
+    ["Summer Foraging", "夏季觅食"],
+    ["Fall Foraging", "秋季觅食"],
+    ["Winter Foraging", "冬季觅食"],
+    ["Construction", "建筑"],
+    ["Exotic Foraging", "异国情调觅食"],
+    ["Fish Tank", "鱼缸"],
+    ["River Fish", "河鱼"],
+    ["Lake Fish", "湖鱼"],
+    ["Ocean Fish", "海鱼"],
+    ["Night Fishing", "夜间垂钓"],
+    ["Specialty Fish", "特色鱼类"],
+    ["Crab Pot", "蟹笼"],
+    ["Boiler Room", "锅炉房"],
+    ["Blacksmith's", "铁匠的"],
+    ["Geologist's", "地理学家的"],
+    ["Adventurer's", "冒险家的"],
+    ["Vault", "金库"],
+    [" 2,500g", "&ensp;2,500金"],
+    [" 5,000g", "&ensp;5,000金"],
+    ["10,000g", "10,000金"],
+    ["25,000g", "25,000金"],
+    ["Bulletin Board", "布告栏"],
+    ["Chef's", "厨师"],
+    ["Field Research", "土地研究"],
+    ["Enchanter's", "魔法师"],
+    ["Dye", "染料"],
+    ["Fodder", "饲料"]
+]);
 // 汇总
 const translateMap = new Map([
     ...translateTitleMap,
@@ -773,7 +812,8 @@ const translateMap = new Map([
     ...translateCookingMap,
     ...translateCraftingMap,
     ...translateArtifactMap,
-    ...translateMineralMap
+    ...translateMineralMap,
+    ...translateBundleMap
 ])
 
 // console.log(
@@ -859,6 +899,9 @@ function translateWord(word, type = "all") {
             break;
         case "mineral":
             newWord = translateMineralMap.has(word) ? translateMineralMap.get(word) : word;
+            break;
+        case "bundle":
+            newWord = translateBundleMap.has(word) ? translateBundleMap.get(word) : word;
             break;
         case "all":
             newWord = translateMap.has(word) ? translateMap.get(word) : word;
