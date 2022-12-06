@@ -18,7 +18,7 @@ const translateTitleMap = new Map([
     ["Secret Notes", "秘密纸条"],
     ["Community Center / Joja Community Development", "社区中心收集 / Joja社区开发"],
     ["Grandpa's Evaluation", "爷爷的评价"],
-    ["Special Orders", "特殊订单"],
+    ["Special Orders", "特别任务"],
     ["Journal Scraps", "日记残页"],
     ["Golden Walnuts", "金色核桃"],
     ["Island Upgrades", "姜岛升级"],
@@ -760,7 +760,7 @@ const translateMineralMap = new Map([
     ["Magma Geode", "岩浆晶球"],
     ["Omni Geode", "万象晶球"]
 ]);
-// 
+// 收集包
 const translateBundleMap = new Map([
     ["Pantry", "茶水间"],
     ["Spring Crops", "春季作物"],
@@ -799,6 +799,27 @@ const translateBundleMap = new Map([
     ["Dye", "染料"],
     ["Fodder", "饲料"]
 ]);
+// 特殊任务
+const translateSpecialOrderMap = new Map([
+    ["Island Ingredients", "岛屿食材"],
+    ["Cave Patrol", "洞穴巡查"],
+    ["Aquatic Overpopulation", "水生物泛滥"],
+    ["Biome Balance", "生态平衡"],
+    ["Rock Rejuvenation", "宝石能量"],
+    ["Gifts for George", "给乔治的礼物"],
+    ["Fragments of the past", "历史的碎片"],
+    ["Gus' Famous Omelet", "格斯的著名煎蛋卷"],
+    ["Crop Order", "农作物订单"],
+    ["Community Cleanup", "社区清理"],
+    ["The Strong Stuff", "烈酒"],
+    ["Pierre's Prime Produce", "皮埃尔优选"],
+    ["Robin's Project", "罗宾的项目"],
+    ["Robin's Resource Rush", "罗宾的资源活动"],
+    ["Juicy Bugs Wanted!", "需要多汁的虫子!"],
+    ["Tropical Fish", "热带鱼"],
+    ["A Curious Substance", "奇特物质"],
+    ["Prismatic Jelly", "五彩胶冻"]
+]);
 // 汇总
 const translateMap = new Map([
     ...translateTitleMap,
@@ -813,7 +834,8 @@ const translateMap = new Map([
     ...translateCraftingMap,
     ...translateArtifactMap,
     ...translateMineralMap,
-    ...translateBundleMap
+    ...translateBundleMap,
+    ...translateSpecialOrderMap
 ])
 
 // console.log(
@@ -849,8 +871,8 @@ const reversedTranslateTitleMap = new Map([
     ["博物馆收集", "Museum Collection"],
     ["秘密纸条", "Secret Notes"],
     ["社区中心收集 / Joja社区开发", "Community Center / Joja Community Development"],
-    ["爷爷的评估", "Grandpa's Evaluation"],
-    ["特殊订单", "Special Orders"],
+    ["爷爷的评价", "Grandpa's Evaluation"],
+    ["特别任务", "Special Orders"],
     ["日记残页", "Journal Scraps"],
     ["金色核桃", "Golden Walnuts"],
     ["姜岛升级", "Island Upgrades"],
@@ -902,6 +924,9 @@ function translateWord(word, type = "all") {
             break;
         case "bundle":
             newWord = translateBundleMap.has(word) ? translateBundleMap.get(word) : word;
+            break;
+        case "special order":
+            newWord = translateSpecialOrderMap.has(word) ? translateSpecialOrderMap.get(word) : word;
             break;
         case "all":
             newWord = translateMap.has(word) ? translateMap.get(word) : word;

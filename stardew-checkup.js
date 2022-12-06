@@ -118,7 +118,6 @@ window.onload = function () {
         trimmed = trimmed.replace(/_/g, ' ');
         
         var itemChinese = "", trimmedChinese = "";
-
         if (item.startsWith('Secret Note ')) {
             // 秘密纸条类需要特殊处理
             itemChinese = "秘密纸条 #" + item.slice(13);
@@ -129,8 +128,12 @@ window.onload = function () {
             trimmedChinese = translateWord(trimmed, type);
             
             if (type === "bundle") {
-                // 收集包特殊处理
+                // 收集包处理
                 trimmedChinese = '收集包#' + trimmedChinese;
+            }
+            else if (type === "special order") {
+                // 特别任务处理
+                trimmedChinese = '任务#鹈鹕镇的特别任务列表';
             }
             if (trimmedChinese.indexOf('史莱姆') !== -1 && type === 'monster') {
                 // 中文 wiki 将史莱姆重定义到史莱姆泥，怪物需要特殊处理
@@ -4451,27 +4454,27 @@ window.onload = function () {
 
 		var intro;
 		if (saveInfo.numPlayers > 1) {
-			intro = 'Inhabitants of ' + $(xmlDoc).find('player > farmName').html(); + ' Farm have';
+			intro = '居住在 ' + $(xmlDoc).find('player > farmName').html(); + ' 农场的居民已经';
 		} else {
-			intro = $(xmlDoc).find('player > name').html() + ' has';
+			intro = $(xmlDoc).find('player > name').html() + ' 已经';
 		}
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + intro + ' completed ' + found_count + ' of ' +
-			town_count + ' town special orders.</span><br />\n';
+		output += '<span class="result">' + intro + ' 完成了 ' + found_count + ' 个特别任务，总共有 ' +
+			town_count + ' 个</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (found_count >= town_count) ? getMilestoneString('Complete all Special Orders', 1) :
-				getMilestoneString('Complete all Special Orders', 0) + (town_count - found_count) + ' more';
+		output += (found_count >= town_count) ? getMilestoneString('完成所有的特别任务', 1) :
+				getMilestoneString('完成所有的特别任务', 0) + (town_count - found_count) + ' 个任务';
 		output += '</li></ul></div>';
 		if (found_count < town_count) {
 			for (id in town) {
 				if (!found.hasOwnProperty(id)) {
-					need.push('<li>' + wikify(town[id], "Quests#List_of_Special_Orders", true, undefined) + '</li>');
+					need.push('<li>' + wikify(town[id], "任务#鹈鹕镇的特别任务列表", true, 'special order') + '</li>');
 				}
 			}
 			if (need.length > 0) {
 				meta.hasDetails = true;
 				output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-				output += '<span class="need">Left to complete:<ol>' + need.sort().join('') + '</ol></span></div>';
+				output += '<span class="need">未被完成过的任务:<ol>' + need.sort().join('') + '</ol></span></div>';
 			}
 		}
 
