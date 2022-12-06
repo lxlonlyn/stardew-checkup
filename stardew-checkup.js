@@ -64,13 +64,13 @@ window.onload = function () {
 	}
 
 	function getPointString(pts, desc, cum, yes) {
-		var c = (cum) ? ' more' : '';
-		return (yes) ? '<span class="pt_yes"><span class="pts">+' + pts + c + '</span> earned (' + desc + ')</span>' :
-					'<span class="pt_no"><span class="pts"> (' + pts + c + ')</span> possible (' + desc + ')</span>';
+		var c = (cum) ? '额外 ' : '';
+		return (yes) ? '<span class="pt_yes"><span class="pts">+' + c + pts + ' 分</span> 已经获得 (' + desc + ')</span>' :
+					'<span class="pt_no"><span class="pts"> (' + c + pts + ' 分)</span> 可以获得 (' + desc + ')</span>';
 	}
 
 	function getPointImpossibleString(pts, desc) {
-		return '<span class="pt_imp"><span class="pts">+' + pts + '</span> impossible (' + desc + ')</span>';
+		return '<span class="pt_imp"><span class="pts">+' + pts + ' 分</span> 无法获得 (' + desc + ')</span>';
 	}
 
 	function getPerfectionPctString(pct, max, desc, yes) {
@@ -122,7 +122,7 @@ window.onload = function () {
         if (item.startsWith('Secret Note ')) {
             // 秘密纸条类需要特殊处理
             itemChinese = "秘密纸条 #" + item.slice(13);
-            trimmedChinese = "秘密纸条#.E7.A7.98.E5.AF.86.E7.BA.B8.E6.9D.A1_.23" + item.slice(13);
+            trimmedChinese = "秘密纸条#秘密纸条_#" + item.slice(13);
         } 
         else {
             itemChinese = translateWord(item, type);
@@ -3326,11 +3326,13 @@ window.onload = function () {
 		}
 		if (hasRustyKey === 'true') {
 			count++;
-			hasKeys.push('Rusty Key');
+			// hasKeys.push('Rusty Key');
+            hasKeys.push('生锈的钥匙');
 		}
 		if (hasSkullKey === 'true') {
 			count++;
-			hasKeys.push('Skull Key');
+			// hasKeys.push('Skull Key');
+            hasKeys.push('头骨钥匙');
 		}
 		if (compareSemVer(saveInfo.version, "1.3") >= 0) {
 			var	uid = $(xmlDoc).find('player').children('UniqueMultiplayerID').text();
@@ -3380,130 +3382,130 @@ window.onload = function () {
 		}
 		output = getSectionHeader(saveInfo, title, anchor, true, version);
 		output += '<div class="' + anchor + '_summary ' + sum_class + '">';
-		output += '<span class="result">' + farmer + ' has earned a total of ' + count +
-				' point(s) (details below); the maximum possible is ' + max_count + ' points.</span><br />\n';
-		output += '<span class="result">The shrine has ' + currentCandles + ' candle(s) lit. The next evaluation will light ' +
-				candles + ' candle(s).</span><br />\n';
+		output += '<span class="result">' + farmer + ' 目前在爷爷的评价中获得了 ' + count +
+				' 分 (详情在下面); 最多能获得 ' + max_count + ' 分</span><br />\n';
+		output += '<span class="result">神龛已经点亮了 ' + currentCandles + ' 根蜡烛，下次评价将点亮 ' +
+				candles + ' 根蜡烛</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (candles >= max_candles) ? getMilestoneString('Four candle evaluation', 1) :
-				getMilestoneString('Four candle evaluation', 0) + (12 - count) + ' more point(s)';
+		output += (candles >= max_candles) ? getMilestoneString('点亮神龛的四根蜡烛', 1) :
+				getMilestoneString('点亮神龛的四根蜡烛', 0) + (12 - count) + ' 分';
 		output += '</li></ul></span>';
 
 		output += '<div class="' + anchor + '_details ' + det_class + '">';
-		output += '<span class="result">' + farmer + ' has earned a total of ' + addCommas(money) + 'g.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 总收入为 ' + addCommas(money) + 'g</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (money >= 5e4) ? getPointString(1, 'at least 50,000g earnings', 0, 1) :
-				getPointString(1, 'at least 50,000g earnings', 0, 0) + ' -- need ' + addCommas(5e4 - money) + 'g more';
+		output += (money >= 5e4) ? getPointString(1, '总收入达到 50,000g', 0, 1) :
+				getPointString(1, '总收入达到 50,000g', 0, 0) + ' -- 需要再挣 ' + addCommas(5e4 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 1e5) ? getPointString(1, 'at least 100,000g earnings', 1, 1) :
-				getPointString(1, 'at least 100,000g earnings', 1, 0) + ' -- need ' + addCommas(1e5 - money) + 'g more';
+		output += (money >= 1e5) ? getPointString(1, '总收入达到 100,000g', 1, 1) :
+				getPointString(1, '总收入达到 100,000g', 1, 0) + ' -- 需要再挣 ' + addCommas(1e5 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 2e5) ? getPointString(1, 'at least 200,000g earnings', 1, 1) :
-				getPointString(1, 'at least 200,000g earnings', 1, 0) + ' -- need ' + addCommas(2e5 - money) + 'g more';
+		output += (money >= 2e5) ? getPointString(1, '总收入达到 200,000g', 1, 1) :
+				getPointString(1, '总收入达到 200,000g', 1, 0) + ' -- 需要再挣 ' + addCommas(2e5 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 3e5) ? getPointString(1, 'at least 300,000g earnings', 1, 1) :
-				getPointString(1, 'at least 300,000g earnings', 1, 0) + ' -- need ' + addCommas(3e5 - money) + 'g more';
+		output += (money >= 3e5) ? getPointString(1, '总收入达到 300,000g', 1, 1) :
+				getPointString(1, '总收入达到 300,000g', 1, 0) + ' -- 需要再挣 ' + addCommas(3e5 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 5e5) ? getPointString(1, 'at least 500,000g earnings', 1, 1) :
-				getPointString(1, 'at least 500,000g earnings', 1, 0) + ' -- need ' + addCommas(5e5 - money) + 'g more';
+		output += (money >= 5e5) ? getPointString(1, '总收入达到 500,000g', 1, 1) :
+				getPointString(1, '总收入达到 500,000g', 1, 0) + ' -- 需要再挣 ' + addCommas(5e5 - money) + 'g';
 		output += '</li>\n<li>';
-		output += (money >= 1e6) ? getPointString(2, 'at least 1,000,000g earnings', 1, 1) :
-				getPointString(2, 'at least 1,000,000g earnings', 1, 0) + ' -- need ' + addCommas(1e6 - money) + 'g more';
+		output += (money >= 1e6) ? getPointString(2, '总收入达到 1,000,000g', 1, 1) :
+				getPointString(2, '总收入达到 1,000,000g', 1, 0) + ' -- 需要再挣 ' + addCommas(1e6 - money) + 'g';
 		output += '</li></ul>\n';
 
-		output += '<span class="result">' + farmer + ' has earned ' + Object.keys(ach_have).length +
-				' of the ' + ach_count + ' relevant achievements.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 已获得 ' + Object.keys(ach_have).length +
+				' 个相关成就，总共有 ' + ach_count + ' 个</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (ach_have.hasOwnProperty(5)) ? getPointString(1, '<span class="ach">A Complete Collection</span> Achievement', 0, 1) :
-				getPointString(1, '<span class="ach">A Complete Collection</span> Achievement', 0, 0);
+		output += (ach_have.hasOwnProperty(5)) ? getPointString(1, '<span class="ach">全套收集</span> Achievement', 0, 1) :
+				getPointString(1, '<span class="ach">全套收集</span> 成就', 0, 0);
 		output += '</li>\n<li>';
-		output += (ach_have.hasOwnProperty(26)) ? getPointString(1, '<span class="ach">Master Angler</span> Achievement', 0, 1) :
-				getPointString(1, '<span class="ach">Master Angler</span> Achievement', 0, 0);
+		output += (ach_have.hasOwnProperty(26)) ? getPointString(1, '<span class="ach">垂钓大师</span> Achievement', 0, 1) :
+				getPointString(1, '<span class="ach">垂钓大师</span> 成就', 0, 0);
 		output += '</li>\n<li>';
-		output += (ach_have.hasOwnProperty(34)) ? getPointString(1, '<span class="ach">Full Shipment</span> Achievement', 0, 1) :
-				getPointString(1, '<span class="ach">Full Shipment</span> Achievement', 0, 0);
+		output += (ach_have.hasOwnProperty(34)) ? getPointString(1, '<span class="ach">全部货物</span> Achievement', 0, 1) :
+				getPointString(1, '<span class="ach">全部货物</span> 成就', 0, 0);
 		output += '</li></ul>\n';
 
 		if (isJojaMember) {
-			output += '<span class="result">' + farmer + ' has purchased a Joja membership and cannot restore the Community Center';
+			output += '<span class="result">' + farmer + ' 已是Joja会员，无法完成社区中心的重建';
 			output += '<ul class="ach_list"><li>';
-			output += getPointImpossibleString(1, 'complete Community Center');
+			output += getPointImpossibleString(1, '完成所有社区中心的收集包');
 			output += '</li>\n<li>';
-			output += getPointImpossibleString(2, 'attend the Community Center re-opening');
+			output += getPointImpossibleString(2, '参加社区中心的竣工仪式');
 			output += '</li></ul>\n';
 		} else {
 			if (cc_done || cc_have >= cc_count) {
-				output += '<span class="result">' + farmer + ' has completed the Community Center restoration';
-				output += (cc_done) ? ' and attended the re-opening ceremony.' : ' but has not yet attended the re-opening ceremony.';
+				output += '<span class="result">' + farmer + ' 已经完成了所有社区中心的收集包';
+				output += (cc_done) ? ' ，参加社区中心的竣工仪式' : ' ，但还没有参加社区中心的竣工仪式';
 				output += '</span><br />\n';
 			} else {
-				output += '<span class="result">' + farmer + ' has not completed the Community Center restoration.';
+				output += '<span class="result">' + farmer + ' 还没有完成所有社区中心的收集包';
 			}
 			output += '<ul class="ach_list"><li>';
-			output += (cc_done || cc_have >= cc_count) ? getPointString(1, 'complete Community Center', 0, 1) :
-					getPointString(1, 'complete Community Center', 0, 0);
+			output += (cc_done || cc_have >= cc_count) ? getPointString(1, '完成所有社区中心的收集包', 0, 1) :
+					getPointString(1, '完成所有社区中心的收集包', 0, 0);
 			output += '</li>\n<li>';
-			output += (cc_done) ? getPointString(2, 'attend the Community Center re-opening', 0, 1) :
-					getPointString(2, 'attend the Community Center re-opening', 0, 0);
+			output += (cc_done) ? getPointString(2, '参加社区中心的竣工仪式', 0, 1) :
+					getPointString(2, '参加社区中心的竣工仪式', 0, 0);
 			output += '</li></ul>\n';
 		}
 
-		output += '<span class="result">' + farmer + ' has ' + realPlayerLevel + ' total skill levels.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 所有技能等级和为 ' + realPlayerLevel + ' 级</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (playerLevel >= 15) ? getPointString(1, '30 total skill levels', 0, 1) :
-				getPointString(1, '30 total skill levels', 0, 0) + ' -- need ' + (30 - realPlayerLevel) + ' more';
+		output += (playerLevel >= 15) ? getPointString(1, '所有技能等级和达到 30', 0, 1) :
+				getPointString(1, '所有技能等级和达到 30', 0, 0) + ' -- 还需要 ' + (30 - realPlayerLevel) + ' 级';
 		output += '</li>\n<li>';
-		output += (playerLevel >= 25) ? getPointString(1, '50 total skill levels', 1, 1) :
-				getPointString(1, '50 total skill levels', 1, 0) + ' -- need ' + (50 - realPlayerLevel) + ' more';
+		output += (playerLevel >= 25) ? getPointString(1, '所有技能等级和达到 50', 1, 1) :
+				getPointString(1, '所有技能等级和达到 50', 1, 0) + ' -- 还需要 ' + (50 - realPlayerLevel) + ' 级';
 		output += '</li></ul>\n';
 
-		output += '<span class="result">' + farmer + ' has ' + heart_count +
-				' relationship(s) of 1975+ friendship points (~8 hearts.)</span><br />\n';
+		output += '<span class="result">' + farmer + ' 与 ' + heart_count +
+				' 个村民达到了 1975+ 友谊值 (8&#x2665;)</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (heart_count >= 5) ? getPointString(1, '~8&#x2665; with 5 people', 0, 1) :
-				getPointString(1, '~8&#x2665; with 5 people', 0, 0) + ' -- need ' + (5 - heart_count) + ' more';
+		output += (heart_count >= 5) ? getPointString(1, '与 5 个村民达到 8&#x2665; 好感度', 0, 1) :
+				getPointString(1, '与 5 个村民达到 8&#x2665; 好感度', 0, 0) + ' -- 还需要 ' + (5 - heart_count) + ' 人';
 		output += '</li>\n<li>';
-		output += (heart_count >= 10) ? getPointString(1, '~8&#x2665; with 10 people', 1, 1) :
-				getPointString(1, '~8&#x2665; with 10 people', 1, 0) + ' -- need ' + (10 - heart_count) + ' more';
+		output += (heart_count >= 10) ? getPointString(1, '与 10 个村民达到 8&#x2665; 好感度', 1, 1) :
+				getPointString(1, '与 10 个村民达到 8&#x2665; 好感度', 1, 0) + ' -- 还需要 ' + (10 - heart_count) + ' 人';
 		output += '</li></ul>\n';
 
 		if (hasPet) {
-			output += '<span class="result">' + farmer + ' has a pet with ' + petLove + ' friendship points.</span><br />\n';
+			output += '<span class="result">' + farmer + ' 领养了一个宠物，和其好感度为 ' + petLove + '</span><br />\n';
 		} else {
-			need = ' a pet and ';
-			output += '<span class="result">' + farmer + ' does not have a pet.</span><br />\n';
+			need = ' 领养一个宠物 ';
+			output += '<span class="result">' + farmer + ' 没有领养宠物</span><br />\n';
 		}
 		output += '<ul class="ach_list"><li>';
-		output += (petLove >= 999) ? getPointString(1, 'pet with at least 999 friendship points', 0, 1) :
-				getPointString(1, 'pet with at least 999 friendship points', 0, 0) + ' -- need ' +
-				need + (999 - petLove) + ' friendship points';
+		output += (petLove >= 999) ? getPointString(1, '与宠物达到至少 999 好感值', 0, 1) :
+				getPointString(1, '与宠物达到至少 999 好感值', 0, 0) + ' -- 还需要' +
+				need + '与宠物达到 ' + (999 - petLove) + ' 好感值';
 		output += '</li></ul>\n';
 
-		output += '<span class="result">' + farmer + ((spouse.length > 0) ? ' is' : ' is not') +
-				' married and has upgraded the farmhouse ' + houseUpgrades + ' time(s).</span><br />\n';
+		output += '<span class="result">' + farmer + ((spouse.length > 0) ? ' 已经结婚了' : ' 还没有结婚') +
+				' 且已经升级住所 ' + houseUpgrades + ' 次</span><br />\n';
 		output += '<ul class="ach_list"><li>';
 		need = [];
 		if (spouse.length === 0) {
-			need.push('a spouse');
+			need.push('结婚');
 		}
 		if (houseUpgrades < 2) {
-			need.push((2 - houseUpgrades) + ' more upgrade(s)');
+			need.push('升级住所 ' + (2 - houseUpgrades) + ' 次');
 		}
-		output += (need.length === 0) ? getPointString(1, 'married with at least 2 house upgrades', 0, 1) :
-				getPointString(1, 'married with at least 2 house upgrades', 0, 0) + ' -- need ' + need.join(" and ");
+		output += (need.length === 0) ? getPointString(1, '已婚且房子至少升级 2 次', 0, 1) :
+				getPointString(1, '已婚且房子至少升级 2 次', 0, 0) + ' -- 还需要 ' + need.join(" 且 ");
 		output += '</li></ul>\n';
 
 		if (hasKeys.length > 0) {
-			output += '<span class="result">' + farmer + ' has acquired the ' + hasKeys.join(" and ") + '.</span><br />\n';
+			output += '<span class="result">' + farmer + ' 已经有了 ' + hasKeys.join(" 和 ") + '</span><br />\n';
 		} else {
-			output += '<span class="result">' + farmer + ' has not acquired either the Rusty Key or Skull Key.</span><br />\n';
+			output += '<span class="result">' + farmer + ' 没有头骨钥匙和生锈的钥匙</span><br />\n';
 		}
 		output += '<ul class="ach_list"><li>';
-		output += (hasRustyKey === 'true') ? getPointString(1, 'has the Rusty Key', 0, 1) :
-				getPointString(1, 'get the Rusty Key', 0, 0) + ' -- acquired after 60 museum donations';
+		output += (hasRustyKey === 'true') ? getPointString(1, '获得生锈的钥匙', 0, 1) :
+				getPointString(1, '获得生锈的钥匙', 0, 0) + ' -- 在博物馆捐献 60 个物品后获得';
 		output += '</li>\n<li>';
-		output += (hasSkullKey === 'true') ? getPointString(1, 'has the Skull Key', 0, 1) :
-				getPointString(1, 'get the Skull Key', 0, 0) + ' -- acquired on level 120 of the mines';
+		output += (hasSkullKey === 'true') ? getPointString(1, '获得头骨钥匙', 0, 1) :
+				getPointString(1, '获得头骨钥匙', 0, 0) + ' -- 在到达矿井 120 层后获得';
 		output += '</li></ul></div>';
 		output += getSectionFooter();
 		

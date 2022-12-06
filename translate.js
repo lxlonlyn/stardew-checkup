@@ -17,7 +17,7 @@ const translateTitleMap = new Map([
     ["Museum Collection", "博物馆收集"],
     ["Secret Notes", "秘密纸条"],
     ["Community Center / Joja Community Development", "社区中心收集 / Joja社区开发"],
-    ["Grandpa's Evaluation", "爷爷的评估"],
+    ["Grandpa's Evaluation", "爷爷的评价"],
     ["Special Orders", "特殊订单"],
     ["Journal Scraps", "日记残页"],
     ["Golden Walnuts", "金色核桃"],
