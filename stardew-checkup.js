@@ -123,6 +123,10 @@ window.onload = function () {
             itemChinese = "秘密纸条 #" + item.slice(13);
             trimmedChinese = "秘密纸条#秘密纸条_#" + item.slice(13);
         } 
+        else if (item.startsWith('Journal Scrap ')) {
+            itemChinese = "日记残页 #" + item.slice(15);
+            trimmedChinese = "日记残页#日记残页_#" + item.slice(15);
+        }
         else {
             itemChinese = translateWord(item, type);
             trimmedChinese = translateWord(trimmed, type);
@@ -4360,7 +4364,7 @@ window.onload = function () {
 		});
 		
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has ' + (hasVisitedIsland ? '' : 'not ') + ' visited the Island.</span><br />\n';
+		output += '<span class="result">' + farmer + (hasVisitedIsland ? ' 已经' : ' 还没有') + ' 去过姜岛</span><br />\n';
 		$(player).find('secretNotesSeen > int').each(function () {
 			// Only count Journal Scraps
 			if (Number($(this).text()) >= 1000) {
@@ -4368,11 +4372,11 @@ window.onload = function () {
 				found_notes++;
 			}
 		});
-		output += '<span class="result">' + farmer + ' has read ' + found_notes + ' of ' +
-			note_count + ' journal scraps.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 已经读过 ' + found_notes + ' 张日记残页，总共有 ' +
+			note_count + ' 张</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (found_notes >= note_count) ? getMilestoneString('Read all the journal scraps', 1) :
-				getMilestoneString('Read all the journal scraps', 0) + (note_count - found_notes) + ' more';
+		output += (found_notes >= note_count) ? getMilestoneString('阅读所有的日记残页', 1) :
+				getMilestoneString('阅读所有的日记残页', 0) + (note_count - found_notes) + ' 张';
 		output += '</li></ul></div>';
 		if (found_notes < note_count) {
 			for (i = 1; i <= note_count; i++) {
@@ -4383,7 +4387,7 @@ window.onload = function () {
 			if (need.length > 0) {
 				meta.hasDetails = true;
 				output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-				output += '<span class="need">Left to read:<ol>' + need.join('') + '</ol></span></div>';
+				output += '<span class="need">还没读过的日记残页:<ol>' + need.join('') + '</ol></span></div>';
 			}
 		}
 		table.push(output);
@@ -4396,25 +4400,25 @@ window.onload = function () {
 			}
 		});
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has found the rewards from  ' + found_rewards + ' of ' +
-			reward_count + ' journal scraps.</span><br />\n';
+		output += '<span class="result">' + farmer + ' 找到了  ' + found_rewards + ' 个日记残页提示的宝藏，总共有 ' +
+			reward_count + ' 个</span><br />\n';
 		output += '<ul class="ach_list"><li>';
-		output += (found_rewards >= reward_count) ? getMilestoneString('Find all the journal scrap rewards', 1) :
-				getMilestoneString('Find all the journal scrap rewards', 0) + (reward_count - found_rewards) + ' more';
+		output += (found_rewards >= reward_count) ? getMilestoneString('找到所有日记残页提示的宝藏', 1) :
+				getMilestoneString('找到所有日记残页提示的宝藏', 0) + (reward_count - found_rewards) + ' 个';
 		output += '</li></ul></div>';
 		if (found_rewards < reward_count) {
 			need = [];
 			var k = Object.keys(rewards).sort();
 			for (i in k) {
 				if (rewards.hasOwnProperty(k[i]) && !rewards[k[i]]) {
-					var extra = "";
-					need.push('<li> Reward from ' + wikify('Journal Scrap #' + (Number(k[i]) - 1000) , 'Journal Scraps', undefined, undefined) + extra + '</li>');
+					var extra = " 中提示的宝藏";
+					need.push('<li>' + wikify('Journal Scrap #' + (Number(k[i]) - 1000) , 'Journal Scraps', undefined, undefined) + extra + '</li>');
 				}
 			}
 			if (need.length > 0) {
 				meta.hasDetails = true;
 				output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-				output += '<span class="need">Left to find:<ol>' + need.join('') + '</ol></span></div>';
+				output += '<span class="need">未被找到的宝藏:<ol>' + need.join('') + '</ol></span></div>';
 			}
 		}
 		table.push(output);
