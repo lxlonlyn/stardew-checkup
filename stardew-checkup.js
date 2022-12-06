@@ -80,17 +80,17 @@ window.onload = function () {
 		pts = pts.toFixed(places);
 		var pretty_pct = 100*pct;
 		pretty_pct = pretty_pct.toFixed(Math.max(0, places-1));
-		return (yes) ? '<span class="pt_yes"><span class="pts">' + pts + '%</span> from completion of ' + desc + '</span>' :
-					'<span class="pt_no"><span class="pts"> ' + pts + '%</span> (of ' + max + '% possible) from ' + desc +
-					' (' + pretty_pct + '%)</span>';
+		return (yes) ? '<span class="pt_yes"><span class="pts">' + pts + '%</span> 从 ' + desc + ' 完成获得</span>' :
+					'<span class="pt_no"><span class="pts"> ' + pts + '%</span> (占比 ' + max + '%) 从 ' + desc +
+					' (' + pretty_pct + '%) 中获得</span>';
 	}
 	
 	function getPerfectionNumString(num, max, desc, yes) {
 		var pts = num;
 		var pretty_pct = num + "/" + max;
-		return (yes) ? '<span class="pt_yes"><span class="pts">' + pts + '%</span> from completion of ' + desc + '</span>' :
-					'<span class="pt_no"><span class="pts"> ' + pts + '%</span> (of ' + max + '% possible) from ' + desc +
-					' (' + pretty_pct + ')</span>';
+		return (yes) ? '<span class="pt_yes"><span class="pts">' + pts + '%</span> 从完成 ' + desc + ' 获得</span>' :
+					'<span class="pt_no"><span class="pts"> ' + pts + '%</span> (占比 ' + max + '%) 从 ' + desc +
+					' (' + pretty_pct + ') 中获得</span>';
 	}
 	
 	function getPerfectionPctNumString(pct, max, count, desc, yes) {
@@ -99,14 +99,14 @@ window.onload = function () {
 		if (pct < .0001 || pct > .9999) { places = 0 };
 		pts = pts.toFixed(places);
 		var pretty_pct = Math.round(count * pct) + "/" + count + " or " + Number(100*pct).toFixed(Math.max(0, places-1)) + "%";
-		return (yes) ? '<span class="pt_yes"><span class="pts">' + pts + '%</span> from completion of ' + desc + '</span>' :
-					'<span class="pt_no"><span class="pts"> ' + pts + '%</span> (of ' + max + '% possible) from ' + desc +
-					' (' + pretty_pct + ')</span>';
+		return (yes) ? '<span class="pt_yes"><span class="pts">' + pts + '%</span> 从完成 ' + desc + ' 获得</span>' :
+					'<span class="pt_no"><span class="pts"> ' + pts + '%</span> (占比 ' + max + '%) 从 ' + desc +
+					' (' + pretty_pct + ') 中获得</span>';
 	}
 
 	function getPerfectionBoolString(max, desc, yes) {
-		return (yes) ? ('<span class="pt_yes"><span class="pts">' + max + '%</span> from completion of ' + desc + '</span>') :
-					('<span class="pt_no"><span class="pts"> 0%</span> (of ' + max + '% possible) from ' + desc + '</span>');
+		return (yes) ? ('<span class="pt_yes"><span class="pts">' + max + '%</span> 从完成 ' + desc + ' 获得</span>') :
+					('<span class="pt_no"><span class="pts"> 0%</span> (占比 ' + max + '%) 从 ' + desc + '</span>');
 	}
 
 	function wikify(item, page, no_anchor, type = "all") {
@@ -4508,83 +4508,84 @@ window.onload = function () {
 			// Using same IDs as game uses internally
 			trackerAllAtOnce = {
 				// These are awarded all at once so the actual count is not listed in the save file
-				"Bush_IslandEast_17_37": { 'num':1, 'name':'Island Jungle Bush', 'hint':'In open center area (17,37)' },
-				"Bush_IslandShrine_23_34": { 'num':1, 'name':'Island Jungle Shrine Bush', 'hint':'Along Southern edge (23,34)' },
-				"Bush_IslandSouth_31_5": { 'num':1, 'name':'Island South Bush', 'hint':'Accessed from hidden path East of stairs on Island North map (31,5)' },
-				"Bush_IslandNorth_9_84": { 'num':1, 'name':'Island North Bush', 'hint':'Hidden clearing in trees West of stairs from dock area (9,84)' },
-				"Bush_IslandNorth_20_26": { 'num':1, 'name':'Island North Bush', 'hint':'Hidden clearing in trees on West side in front of Volcano (20,26)' },
-				"Bush_IslandNorth_56_27": { 'num':1, 'name':'Island North Bush', 'hint':'Behind coconut tree on East side in front of Volcano (56,27)' },
-				"Bush_IslandNorth_4_42": { 'num':1, 'name':'Island North Bush', 'hint':'Grassy area above Dig Site (4,42)' },
-				"Bush_IslandNorth_45_38": { 'num':1, 'name':'Island North Bush', 'hint':'Grassy area above Field Office (45,38)' },
-				"Bush_IslandNorth_47_40": { 'num':1, 'name':'Island North Bush', 'hint':'Grassy area above Field Office (47,40)' },
-				"Bush_IslandNorth_13_33": { 'num':1, 'name':'Island North Bush', 'hint':'Along river accessed via secret passage from Volcano entrance (13,33)' },
-				"Bush_IslandNorth_5_30": { 'num':1, 'name':'Island North Bush', 'hint':'Along river accessed via secret passage from Volcano entrance (5,39)' },
+				// "Bush_IslandEast_17_37": { 'num':1, 'name':'Island Jungle Bush', 'hint':'In open center area (17,37)' },
+                "Bush_IslandEast_17_37": { 'num':1, 'name':'岛屿东部：灌木丛', 'hint':'在前往雷欧家的丛林中' },
+				"Bush_IslandShrine_23_34": { 'num':1, 'name':'岛屿东部：宝石鸟神龛附近灌木丛', 'hint':'在宝石鸟神龛南侧（下方）' },
+				"Bush_IslandSouth_31_5": { 'num':1, 'name':'岛屿南部：灌木丛', 'hint':'Accessed from hidden path East of stairs on Island North map (31,5)' },
+				"Bush_IslandNorth_9_84": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Hidden clearing in trees West of stairs from dock area (9,84)' },
+				"Bush_IslandNorth_20_26": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Hidden clearing in trees on West side in front of Volcano (20,26)' },
+				"Bush_IslandNorth_56_27": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Behind coconut tree on East side in front of Volcano (56,27)' },
+				"Bush_IslandNorth_4_42": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Grassy area above Dig Site (4,42)' },
+				"Bush_IslandNorth_45_38": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Grassy area above Field Office (45,38)' },
+				"Bush_IslandNorth_47_40": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Grassy area above Field Office (47,40)' },
+				"Bush_IslandNorth_13_33": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Along river accessed via secret passage from Volcano entrance (13,33)' },
+				"Bush_IslandNorth_5_30": { 'num':1, 'name':'岛屿北部：灌木丛', 'hint':'Along river accessed via secret passage from Volcano entrance (5,39)' },
 				
-				"Bush_Caldera_28_36": { 'num':1, 'name':'Volcano Caldera Bush', 'hint':'Along Southern edge (28,36)' },
-				"Bush_Caldera_9_34": { 'num':1, 'name':'Volcano Caldera Bush', 'hint':'Along Southern edge (9,34)' },
-				"Bush_CaptainRoom_2_4": { 'num':1, 'name':'Island West Shipwreck Bush', 'hint':'Shipwreck is enterable from left side (2,4)' },
+				"Bush_Caldera_28_36": { 'num':1, 'name':'岛屿北部：火山口灌木丛', 'hint':'Along Southern edge (28,36)' },
+				"Bush_Caldera_9_34": { 'num':1, 'name':'岛屿北部：火山口灌木丛', 'hint':'Along Southern edge (9,34)' },
+				"Bush_CaptainRoom_2_4": { 'num':1, 'name':'岛屿西部：沉船中灌木丛', 'hint':'Shipwreck is enterable from left side (2,4)' },
 
-				"TreeNut": { 'num':1, 'name':'Tree in Leo\'s Hut', 'hint':'Hit the tree with an axe' },
-				"Buried_IslandNorth_19_39": { 'num':1, 'name':'Island North Buried', 'hint':'At top of stairs from Dig Site, marked by a circle of small rocks (19,39)' },
-				"Buried_IslandNorth_19_13": { 'num':1, 'name':'Island North Buried', 'hint':'Cliff edge West of Volcano, marked by a circle of small rocks (19,13)' },
-				"Buried_IslandNorth_57_79": { 'num':1, 'name':'Island North Buried', 'hint':'Sand patch within grass patch in SE corner, marked by a circle of small rocks (57,79)' },
-				"Buried_IslandNorth_54_21": { 'num':1, 'name':'Island North Buried', 'hint':'Along Eastern edge of Volcano, between rocks and plants (54,21)' },
-				"Buried_IslandNorth_42_77": { 'num':1, 'name':'Island North Buried', 'hint':'Dark grassy area just NE of stairs from dock, between tufts of long grass (42,77)' },
-				"Buried_IslandNorth_62_54": { 'num':1, 'name':'Island North Buried', 'hint':'NE corner of path between docks and Field Office, marked by slightly raised sand (62,54)' },
-				"Buried_IslandNorth_26_81": { 'num':1, 'name':'Island North Buried', 'hint':'Beneath curved tree West of stairs from dock, marked by a circle of small rocks (26,81)' },
-				"IslandLeftPlantRestored": { 'num':1, 'name':'Field Office Plant Survey Reward', 'hint':'Correct count is 22 plants' },
-				"IslandRightPlantRestored": { 'num':1, 'name':'Field Office Starfish Survey Reward', 'hint':'Correct count is 18 starfish' },
-				"IslandBatRestored": { 'num':1, 'name':'Field Office Mummified Bat Reward', 'hint':'Found by breaking non-ore rocks in the Volcano' },
-				"IslandFrogRestored": { 'num':1, 'name':'Field Office Mummified Frog Reward', 'hint':'Found by cutting weeds in Jungle' },
-				"IslandCenterSkeletonRestored": { 'num':6, 'name':'Field Office Mammal Skeleton Reward', 'hint':"Skull -- Found in Golden Coconuts\nSpine -- Found by fishing in Island North\nLeg (2) -- Found by breaking fossil stones (high chance)\nRibs -- Found by breaking fossil stones (low chance)\nTail -- Found by panning in Island North" },
-				"IslandSnakeRestored": { 'num':3, 'name':'Field Office Snake Skeleton Reward', 'hint':"Skull -- Found by digging artifact spots in Island North or West\n    and fishing in Island West\nVertebra (2) -- Found by digging artifact spots in Island West" },
-				"Bush_IslandWest_104_3": { 'num':1, 'name':'Island West Bush', 'hint':'End of hidden path through dense trees in NE part of map (104,3)' },
-				"Bush_IslandWest_31_24": { 'num':1, 'name':'Island West Bush', 'hint':'Behind Mahogany tree in Tiger Slime area (31,24)' },
-				"Bush_IslandWest_38_56": { 'num':1, 'name':'Island West Bush', 'hint':'Behind palm tree near pond West of Birdie\'s hut (38,56)' },
-				"Bush_IslandWest_75_29": { 'num':1, 'name':'Island West Bush', 'hint':'In front of the trees above farmhouse (75,29)' },
-				"Bush_IslandWest_64_30": { 'num':1, 'name':'Island West Bush', 'hint':'Elevated area on West side of river; follow path counter-clockwise from Tiger Slimes (64,30)' },
-				"Bush_IslandWest_54_18": { 'num':1, 'name':'Island West Bush', 'hint':'Obscured by dense trees along path between Tiger Slimes and suspension bridge (54,18)' },
-				"Bush_IslandWest_25_30": { 'num':1, 'name':'Island West Bush', 'hint':'Along wall SE of walnut door (25,30)' },
-				"Bush_IslandWest_15_3": { 'num':1, 'name':'Island West Bush', 'hint':'Follow coastline N past walnut door (15,3)' },
-				"Buried_IslandWest_21_81": { 'num':1, 'name':'Island West Buried', 'hint':'In dark sand on SW coast, between circular indentations. (21,81)' },
-				"Buried_IslandWest_62_76": { 'num':1, 'name':'Island West Buried', 'hint':'Among debris pile S of farm, between blue starfish (62,76)' },
-				"Buried_IslandWest_39_24": { 'num':1, 'name':'Island West Buried', 'hint':'In Tiget Slime area, between tufts of long grass (39,24)' },
-				"Buried_IslandWest_88_14": { 'num':1, 'name':'Island West Buried', 'hint':'In grass in NE corner, between animated tiles (88,14)' },
-				"Buried_IslandWest_43_74": { 'num':1, 'name':'Island West Buried', 'hint':'Near tidal pools between blue and yellow starfish, initially blocked by boulder (43,74)' },
-				"Buried_IslandWest_30_75": { 'num':1, 'name':'Island West Buried', 'hint':'Between tidal pools, marked by X (30,75)' },
-				"IslandWestCavePuzzle": { 'num':3, 'name':'Island West Cave Puzzle', 'hint':'"Simon Says" musical crystals in hidden cave N of suspension bridge' },
-				"SandDuggy": { 'num':1, 'name':'Island West Sand Duggy', 'hint':'Can place items to block other holes' },
-				"TreeNutShot": { 'num':1, 'name':'Island North Palm Tree', 'hint':'Can use slingshot to knock walnut from tree' },
-				"Mermaid": { 'num':5, 'name':'Island Cove Mermaid Puzzle', 'hint':'Use flute blocks to play Mermaid\s song; stones provide tuning clues' },
-				"Buried_IslandSouthEastCave_36_26": { 'num':1, 'name':'Island Cove Cave Buried', 'hint':'Among the barrels across from the dock (36,26)' },
-				"Buried_IslandSouthEast_25_17": { 'num':1, 'name':'Island Cove Buried', 'hint':'NE of star pool, between yellow starfish (25,17)' },
-				"StardropPool": { 'num':1, 'name':'Island Cove Star Pool', 'hint':'Fish a walnut out of the pool' },
-				"BananaShrine": { 'num':3, 'name':'Island Jungle Banana Shrine Reward', 'hint':'Place a banana on the shrine' },
-				"IslandGourmand1": { 'num':5, 'name':'Island Farm Cave Gourmand Reward #1', 'hint':'Grow some melons for the Gourmand' },
-				"IslandGourmand2": { 'num':5, 'name':'Island Farm Cave Gourmand Reward #2', 'hint':'Grow some wheat for the Gourmand' },
-				"IslandGourmand3": { 'num':5, 'name':'Island Farm Cave Gourmand Reward #3', 'hint':'Grow some garlic for the Gourmand' },
-				"IslandShrinePuzzle": { 'num':5, 'name':'Island Jungle Gem Shrine Reward', 'hint':'Place gems dropped by the birds on appropriate pedestals' },
+				"TreeNut": { 'num':1, 'name':'岛屿东部：雷欧家里的树', 'hint':'Hit the tree with an axe' },
+				"Buried_IslandNorth_19_39": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'At top of stairs from Dig Site, marked by a circle of small rocks (19,39)' },
+				"Buried_IslandNorth_19_13": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'Cliff edge West of Volcano, marked by a circle of small rocks (19,13)' },
+				"Buried_IslandNorth_57_79": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'Sand patch within grass patch in SE corner, marked by a circle of small rocks (57,79)' },
+				"Buried_IslandNorth_54_21": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'Along Eastern edge of Volcano, between rocks and plants (54,21)' },
+				"Buried_IslandNorth_42_77": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'Dark grassy area just NE of stairs from dock, between tufts of long grass (42,77)' },
+				"Buried_IslandNorth_62_54": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'NE corner of path between docks and Field Office, marked by slightly raised sand (62,54)' },
+				"Buried_IslandNorth_26_81": { 'num':1, 'name':'岛屿北部：锄地', 'hint':'Beneath curved tree West of stairs from dock, marked by a circle of small rocks (26,81)' },
+				"IslandLeftPlantRestored": { 'num':1, 'name':'岛屿北部：岛屿办事处——紫色花数量调查', 'hint':'答案是 22 朵' },
+				"IslandRightPlantRestored": { 'num':1, 'name':'岛屿北部：岛屿办事处——海星数量调查', 'hint':'答案是 18 只' },
+				"IslandBatRestored": { 'num':1, 'name':'岛屿北部：岛屿办事处——蝙蝠木乃伊捐赠', 'hint':'在火山地牢开采石头' },
+				"IslandFrogRestored": { 'num':1, 'name':'岛屿北部：岛屿办事处——青蛙木乃伊捐赠', 'hint':'清除姜岛东部丛林内的杂草' },
+				"IslandCenterSkeletonRestored": { 'num':6, 'name':'岛屿北部：岛屿办事处——巨大动物化石捐赠', 'hint':"腿骨化石 (需要 2 个) -- 开采姜岛挖掘场的骨头矿\n肋骨化石 -- 开采姜岛挖掘场的骨头矿或挖掘姜岛南部的远古斑点\n颅骨化石 -- 打开金色椰子\n脊柱化石 -- 挖掘姜岛南部沙滩的远古斑点或在姜岛挖掘场旁的小河钓鱼\n尾巴化石 -- 在姜岛挖掘场旁的小河淘金" },
+				"IslandSnakeRestored": { 'num':3, 'name':'岛屿北部：岛屿办事处——蛇化石捐赠', 'hint':"蛇头骨 -- 挖掘姜岛挖掘场的远古斑点或挖掘姜岛西部的远古斑点或在姜岛西部钓鱼\n蛇脊椎骨 (需要 2 个) -- 挖掘姜岛西部的远古斑点" },
+				"Bush_IslandWest_104_3": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'End of hidden path through dense trees in NE part of map (104,3)' },
+				"Bush_IslandWest_31_24": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'Behind Mahogany tree in Tiger Slime area (31,24)' },
+				"Bush_IslandWest_38_56": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'Behind palm tree near pond West of Birdie\'s hut (38,56)' },
+				"Bush_IslandWest_75_29": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'In front of the trees above farmhouse (75,29)' },
+				"Bush_IslandWest_64_30": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'Elevated area on West side of river; follow path counter-clockwise from Tiger Slimes (64,30)' },
+				"Bush_IslandWest_54_18": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'Obscured by dense trees along path between Tiger Slimes and suspension bridge (54,18)' },
+				"Bush_IslandWest_25_30": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'Along wall SE of walnut door (25,30)' },
+				"Bush_IslandWest_15_3": { 'num':1, 'name':'岛屿西部：灌木丛', 'hint':'Follow coastline N past walnut door (15,3)' },
+				"Buried_IslandWest_21_81": { 'num':1, 'name':'岛屿西部：锄地', 'hint':'In dark sand on SW coast, between circular indentations. (21,81)' },
+				"Buried_IslandWest_62_76": { 'num':1, 'name':'岛屿西部：锄地', 'hint':'Among debris pile S of farm, between blue starfish (62,76)' },
+				"Buried_IslandWest_39_24": { 'num':1, 'name':'岛屿西部：锄地', 'hint':'In Tiget Slime area, between tufts of long grass (39,24)' },
+				"Buried_IslandWest_88_14": { 'num':1, 'name':'岛屿西部：锄地', 'hint':'In grass in NE corner, between animated tiles (88,14)' },
+				"Buried_IslandWest_43_74": { 'num':1, 'name':'岛屿西部：锄地', 'hint':'Near tidal pools between blue and yellow starfish, initially blocked by boulder (43,74)' },
+				"Buried_IslandWest_30_75": { 'num':1, 'name':'岛屿西部：锄地', 'hint':'Between tidal pools, marked by X (30,75)' },
+				"IslandWestCavePuzzle": { 'num':3, 'name':'岛屿西部：五彩水晶谜题', 'hint':'位于老虎史莱姆小树林的东北侧洞穴内' },
+				"SandDuggy": { 'num':1, 'name':'岛屿西部：打地鼠游戏', 'hint':'Can place items to block other holes' },
+				"TreeNutShot": { 'num':1, 'name':'岛屿北部：棕榈树上', 'hint':'Can use slingshot to knock walnut from tree' },
+				"Mermaid": { 'num':5, 'name':'岛屿南部：美人鱼谜题', 'hint':'Use flute blocks to play Mermaid\s song; stones provide tuning clues' },
+				"Buried_IslandSouthEastCave_36_26": { 'num':1, 'name':'岛屿南部：海盗湾锄地', 'hint':'Among the barrels across from the dock (36,26)' },
+				"Buried_IslandSouthEast_25_17": { 'num':1, 'name':'岛屿南部：锄地', 'hint':'NE of star pool, between yellow starfish (25,17)' },
+				"StardropPool": { 'num':1, 'name':'岛屿南部：星型湖', 'hint':'Fish a walnut out of the pool' },
+				"BananaShrine": { 'num':3, 'name':'岛屿东部：丛林中香蕉神龛', 'hint':'Place a banana on the shrine' },
+				"IslandGourmand1": { 'num':5, 'name':'岛屿西部：青蛙美食家——任务 #1', 'hint':'种植甜瓜，成熟后与其对话（不要收获）' },
+				"IslandGourmand2": { 'num':5, 'name':'岛屿西部：青蛙美食家——任务 #2', 'hint':'种植小麦，成熟后与其对话（不要收获）' },
+				"IslandGourmand3": { 'num':5, 'name':'岛屿西部：青蛙美食家——任务 #3', 'hint':'种植大蒜，成熟后与其对话（不要收获）' },
+				"IslandShrinePuzzle": { 'num':5, 'name':'岛屿东部：宝石鸟祭坛', 'hint':'Place gems dropped by the birds on appropriate pedestals' },
 			},
 			trackerExtra = {
 				// Extra because it has unique handling via a special NetWorldState variable
-				"GoldenCoconut": { 'num':1, 'name':'Break a Golden Coconut', 'hint':'' },
+				"GoldenCoconut": { 'num':1, 'name':'任何地方：打开金色椰子', 'hint':'' },
 			},
 			trackerLimited = {
 				// These are (usually) awarded one at a time, sometimes with a random component.
-				"Birdie": { 'num':5, 'name':'Birdie\'s Quest Reward', 'hint':'' },
-				"Darts": { 'num':3, 'name':'Winning Darts Minigame', 'hint':'' },
-				"TigerSlimeNut": { 'num':1, 'name':'Killing Island West Tiger Slimes', 'hint':'' },
-				"VolcanoNormalChest": { 'num':1, 'name':'Looting Volcano Common Chests', 'hint':'' },
-				"VolcanoRareChest": { 'num':1, 'name':'Looting Volcano Rare Chests', 'hint':'' },
-				"VolcanoBarrel": { 'num':5, 'name':'Breaking Volcano "Barrels"', 'hint':'' },
-				"VolcanoMining": { 'num':5, 'name':'Mining Stones in Volcano', 'hint':'' },
-				"VolcanoMonsterDrop": { 'num':5, 'name':'Killing Monsters in Volcano', 'hint':'' },
-				"IslandFarming": { 'num':5, 'name':'Harvesting Crops on Island Farm', 'hint':'' },
-				"MusselStone": { 'num':5, 'name':'Breaking Shell Stones on Island Farm Beach', 'hint':'' },
-				"IslandFishing": { 'num':5, 'name':'Fishing on the Island', 'hint':'' },
-				"Island_N_BuriedTreasureNut": { 'num':1, 'name':'Journal Scrap #10 Buried Treasure', 'hint':'By curved tree just SW of Volcano entrance (27,28); must have read journal scrap' },
-				"Island_W_BuriedTreasureNut": { 'num':1, 'name':'Journal Scrap #4 Buried Treasure', 'hint':'Between the bush clumps on beach N of Birdie\'s hut (18,42); must have read journal scrap' },
-				"Island_W_BuriedTreasureNut2": { 'num':1, 'name':'Journal Scrap #6 Buried Treasure', 'hint':'Against wall on beach in SE corner of farm (104,74); must have read journal scrap' },
+				"Birdie": { 'num':5, 'name':'岛屿西部：完成任务 “海盗的妻子”', 'hint':'' },
+				"Darts": { 'num':3, 'name':'岛屿东部：赢得海盗的小游戏', 'hint':'' },
+				"TigerSlimeNut": { 'num':1, 'name':'岛屿西部：击杀老虎史莱姆', 'hint':'' },
+				"VolcanoNormalChest": { 'num':1, 'name':'岛屿北部：火山地牢——打开普通宝箱', 'hint':'' },
+				"VolcanoRareChest": { 'num':1, 'name':'岛屿北部：火山地牢——打开稀有宝箱', 'hint':'' },
+				"VolcanoBarrel": { 'num':5, 'name':'岛屿北部：火山地牢——打破火山小工具', 'hint':'' },
+				"VolcanoMining": { 'num':5, 'name':'岛屿北部：火山地牢——采矿', 'hint':'' },
+				"VolcanoMonsterDrop": { 'num':5, 'name':'岛屿北部：火山地牢——击杀怪物', 'hint':'' },
+				"IslandFarming": { 'num':5, 'name':'岛屿西部：收获作物', 'hint':'' },
+				"MusselStone": { 'num':5, 'name':'岛屿西部：开采岛屿西部沙滩上的蚌矿', 'hint':'' },
+				"IslandFishing": { 'num':5, 'name':'岛屿任何地方：钓鱼', 'hint':'' },
+				"Island_N_BuriedTreasureNut": { 'num':1, 'name':'岛屿北部：日记残页 #10 提示的宝藏', 'hint':'只有在阅读日记残页后能获得，在火山入口西南方的棕榈树位置' },
+				"Island_W_BuriedTreasureNut": { 'num':1, 'name':'岛屿西部：日记残页 #4 提示的宝藏', 'hint':'只有在阅读日记残页后能获得，在贝啼小屋北边' },
+				"Island_W_BuriedTreasureNut2": { 'num':1, 'name':'岛屿西部：日记残页 #6 提示的宝藏', 'hint':'只有在阅读日记残页后能获得，农场南部沙滩的东南侧靠墙角落' },
 			};
 
 		if (compareSemVer(saveInfo.version, version) < 0) {
@@ -4655,30 +4656,30 @@ window.onload = function () {
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
 		var intro;
 		if (saveInfo.numPlayers > 1) {
-			intro = 'Inhabitants of ' + $(xmlDoc).find('player > farmName').html(); + ' Farm have';
+			intro = '住在 ' + $(xmlDoc).find('player > farmName').html(); + ' 农场的居民';
 		} else {
-			intro = $(xmlDoc).find('player > name').html() + ' has';
+			intro = $(xmlDoc).find('player > name').html();
 		}
-		output += '<span class="result">' + intro + ' found ' + game_count + ' of ' +
-			count + ' golden walnuts.' + pt_pct + '</span>';
+		output += '<span class="result">' + intro + ' 找到了 ' + game_count + ' 个金色核桃，总共有 ' +
+			count + ' 个' + pt_pct + '</span>';
 		if (found_count !== game_count) {
-			output += '<br /><span class="result warn">Warning: Save lists a count of ' + game_count + " but we've found markers for " + found_count + '</span>';
+			output += '<br /><span class="result warn">注意: Save lists a count of ' + game_count + " but we've found markers for " + found_count + '</span>';
 		}
 		output += '<ul class="ach_list"><li>';
-		output += (game_count >= 10) ? getMilestoneString('Collect enough walnuts (10) to earn Leo\'s trust.', 1) :
-				getMilestoneString('Collect enough walnuts (10) to earn Leo\'s trust.', 0) + (10 - game_count) + ' more';
+		output += (game_count >= 10) ? getMilestoneString('收集 10 个金色核桃，以获得雷欧的信任', 1) :
+				getMilestoneString('收集 10 个金色核桃，以获得雷欧的信任', 0) + (10 - game_count) + ' 个';
 		output += '</li>\n<li>';
-		output += (game_count >= 101) ? getMilestoneString('Collect enough walnuts (101) to access the secret room.', 1) :
-				getMilestoneString('Collect enough walnuts (101) to access the secret room', 0) + (101 - game_count) + ' more';
+		output += (game_count >= 101) ? getMilestoneString('收集 101 个金色核桃，以进入秘密房间', 1) :
+				getMilestoneString('收集 101 个金色核桃，以进入秘密房间', 0) + (101 - game_count) + ' 个';
 		output += '</li>\n<li>';
-		output += (found_count >= count) ? getMilestoneString('Collect all golden walnuts.', 1) :
-				getMilestoneString('Collect all golden walnuts', 0) + (count - found_count) + ' more';
+		output += (found_count >= count) ? getMilestoneString('收集所有的金色核桃', 1) :
+				getMilestoneString('收集所有的金色核桃', 0) + (count - found_count) + ' 个';
 		output += '</li></ul></div>';
 
 		if (found_count < count) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to find:<ol>';
+			output += '<span class="need">未获取的金色核桃:<ol>';
 			var val = 0;
 			var keys = Object.keys(need);
 			var forceShowSpoilers = false;
@@ -4688,7 +4689,7 @@ window.onload = function () {
 				output += '<li value="' + val + '">';
 				var extra = "";
 				if (need[id] > 1) {
-					extra = " -- " + need[id] + " walnuts";
+					extra = " -- " + need[id] + " 个金色核桃";
 				}
 				
 				if (trackerAllAtOnce.hasOwnProperty(id)) {
@@ -4697,7 +4698,7 @@ window.onload = function () {
 						if (forceShowSpoilers) {
 							output += ' -- <span class="note">' + trackerAllAtOnce[id].hint + '</span>';
 						} else {
-							output += ' (<span class="note" data-tooltip="' + trackerAllAtOnce[id].hint + '">Hover for spoilers</span>)';
+							output += ' (<span class="note" data-tooltip="' + trackerAllAtOnce[id].hint + '">显示剧透</span>)';
 						}
 					}
 					output += '</li>';
@@ -4707,7 +4708,7 @@ window.onload = function () {
 						if (forceShowSpoilers) {
 							output += ' -- <span class="note">' + trackerExtra[id].hint + '</span>';
 						} else {
-							output += ' (<span class="note" data-tooltip="' + trackerExtra[id].hint + '">Hover for spoilers</span>)';
+							output += ' (<span class="note" data-tooltip="' + trackerExtra[id].hint + '">显示剧透</span>)';
 						}
 					}
 					output += '</li>';
@@ -4717,7 +4718,7 @@ window.onload = function () {
 						if (forceShowSpoilers) {
 							output += ' -- <span class="note">' + trackerLimited[id].hint + '</span>';
 						} else {
-							output += ' (<span class="note" data-tooltip="' + trackerLimited[id].hint + '">Hover for spoilers</span>)';
+							output += ' (<span class="note" data-tooltip="' + trackerLimited[id].hint + '">显示剧透</span>)';
 						}
 					}
 					output += '</li>';
@@ -4749,17 +4750,17 @@ window.onload = function () {
 			id,
 			cost = 0,
 			upgrades = {
-				"Island_FirstParrot": { 'cost': 1, 'name':'Feed Leo\'s Friend' },
-				"Island_Turtle": { 'cost': 10, 'name':'Turtle Relocation' },
-				"Island_UpgradeHouse": { 'cost': 20, 'name':'Island Farmhouse' },
-				"Island_Resort": { 'cost': 20, 'name':'Resort' },
-				"Island_UpgradeTrader": { 'cost': 10, 'name':'Island Trader' },
-				"Island_UpgradeBridge": { 'cost': 10, 'name':'Bridge to Dig Site' },
-				"Island_UpgradeParrotPlatform": { 'cost': 10, 'name':'Parrot Express Platforms' },
-				"Island_UpgradeHouse_Mailbox": { 'cost': 5, 'name':'Mailbox' },
-				"Island_W_Obelisk": { 'cost': 20, 'name':'Obelisk to Return to Valley' },
-				"Island_VolcanoBridge": { 'cost': 5, 'name':'Bridge in Volcano entrance' },
-				"Island_VolcanoShortcutOut": { 'cost': 5, 'name':'Exit hole from Volcano vendor' },
+				"Island_FirstParrot": { 'cost': 1, 'name':'投喂雷欧的朋友：解锁姜岛北部通道' },
+				"Island_Turtle": { 'cost': 10, 'name':'叫醒乌龟：解锁通往姜岛西部的通道' },
+				"Island_UpgradeHouse": { 'cost': 20, 'name':'修好睡觉小屋：解锁姜岛西部农场的房屋，可在里面睡觉从而在岛上度过当日' },
+				"Island_Resort": { 'cost': 20, 'name':'建个度假村：在港口附近建设度假村' },
+				"Island_UpgradeTrader": { 'cost': 10, 'name':'建造贸易小屋：解锁姜岛商人的商店' },
+				"Island_UpgradeBridge": { 'cost': 10, 'name':'修好桥：修复去挖掘场之桥梁。间接解锁岛屿办事处' },
+				"Island_UpgradeParrotPlatform": { 'cost': 10, 'name':'鹦鹉特快：开启岛上传送系统鹦鹉特快' },
+				"Island_UpgradeHouse_Mailbox": { 'cost': 5, 'name':'传递信件：可以在姜岛查看信件' },
+				"Island_W_Obelisk": { 'cost': 20, 'name':'建个传送塔：建设将玩家传送回农场的建筑农场尖塔' },
+				"Island_VolcanoBridge": { 'cost': 5, 'name':'建座桥：解锁通往火山内部的永久桥梁，使玩家不再需要浇水即可进入火山内部' },
+				"Island_VolcanoShortcutOut": { 'cost': 5, 'name':'开条捷径：在火山地牢第5层挖一个出口到姜岛北部' },
 			};
 
 		if (compareSemVer(saveInfo.version, version) < 0) {
@@ -4788,28 +4789,28 @@ window.onload = function () {
 		output += '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
 		var intro;
 		if (saveInfo.numPlayers > 1) {
-			intro = 'Inhabitants of ' + $(xmlDoc).find('player > farmName').html(); + ' Farm have';
+			intro = '居住在 ' + $(xmlDoc).find('player > farmName').html(); + ' 农场的居民';
 		} else {
-			intro = $(xmlDoc).find('player > name').html() + ' has';
+			intro = $(xmlDoc).find('player > name').html();
 		}
-		output += '<span class="result">' + intro + ' purchased ' + bought_count + ' of ' +
-			count + ' Island Upgrades.</span><ul class="ach_list">\n';
+		output += '<span class="result">' + intro + ' 已经购买了' + bought_count + ' 个姜岛升级项目，总共有 ' +
+			count + ' 个</span><ul class="ach_list">\n';
 		output += '<li>';
-		output += (bought_count >= count) ? getMilestoneString('Purchase all upgrades.', 1) :
-				getMilestoneString('Purchase all upgrades', 0) + (count - bought_count) + ' more (costs ' + cost + ' walnuts)';
+		output += (bought_count >= count) ? getMilestoneString('购买所有姜岛升级项目', 1) :
+				getMilestoneString('购买所有姜岛升级项目', 0) + (count - bought_count) + ' 个 (花费 ' + cost + ' 个金色核桃)';
 		output += '</li></ul></div>';
 
 		if (bought_count < count) {
 			meta.hasDetails = true;
 			output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-			output += '<span class="need">Left to buy:<ol>';
+			output += '<span class="need">未购买升级:<ol>';
 			var val = 0;
 			var keys = Object.keys(need);
 			for (var i in keys) {
 				id = keys[i];
 				var extra = "";
 				if (need[id] > 1) {
-					extra = " -- costs " + need[id] + " walnuts";
+					extra = " -- 花费 " + need[id] + " 个金色核桃";
 				}
 				output += '<li>' + upgrades[id].name + extra + '</li>';				
 			}
@@ -4870,10 +4871,10 @@ window.onload = function () {
 			missingObelisks = [],
 			need = '';
 
-		if (saveInfo.perfectionTracker.global["Earth Obelisk"]) { numObelisks++; } else { missingObelisks.push("Earth"); }
-		if (saveInfo.perfectionTracker.global["Water Obelisk"]) { numObelisks++; } else { missingObelisks.push("Water"); }
-		if (saveInfo.perfectionTracker.global["Desert Obelisk"]) { numObelisks++; } else { missingObelisks.push("Desert"); }
-		if (saveInfo.perfectionTracker.global["Island Obelisk"]) { numObelisks++; } else { missingObelisks.push("Island"); }
+		if (saveInfo.perfectionTracker.global["Earth Obelisk"]) { numObelisks++; } else { missingObelisks.push("土之图腾柱"); }
+		if (saveInfo.perfectionTracker.global["Water Obelisk"]) { numObelisks++; } else { missingObelisks.push("水之图腾柱"); }
+		if (saveInfo.perfectionTracker.global["Desert Obelisk"]) { numObelisks++; } else { missingObelisks.push("沙漠图腾柱"); }
+		if (saveInfo.perfectionTracker.global["Island Obelisk"]) { numObelisks++; } else { missingObelisks.push("姜岛图腾柱"); }
 
 		var pct = {
 			"Walnuts": Math.min(saveInfo.perfectionTracker.global["Walnuts"].count / saveInfo.perfectionTracker.global["Walnuts"].total, 1),
@@ -4896,44 +4897,44 @@ window.onload = function () {
 		left = left.toFixed( (left < 100) ? 1 : 0 );
 		
 		output = '<div class="' + meta.anchor + '_summary ' + meta.sum_class + '">';
-		output += '<span class="result">' + farmer + ' has ' + pt_pct + '% Total Completion (details below).</span>';
+		output += '<span class="result">' + farmer + ' 达成了 ' + pt_pct + '% 完美度 (详细见下面).</span>';
 		output += '<ul class="ach_list"><li>';
-		output += (pt_pct >= 100) ? getMilestoneString('100% Completion', 1) :
-				getMilestoneString('100% Completion', 0) + left + '% more';
+		output += (pt_pct >= 100) ? getMilestoneString('100% 完美通关', 1) :
+				getMilestoneString('100% 完美通关', 0) + left + '%';
 		output += '</li></ul></div>';
 		meta.hasDetails = true;
 		output += '<div class="' + meta.anchor + '_details ' + meta.det_class + '">';
-		output += '<span class="result">Percentage Breakdown</span>';
+		output += '<span class="result">百分比分析</span>';
 		output += '<ul class="ach_list"><li>';
-		output += (pct["Shipping"] >= 1) ? getPerfectionPctString(pct["Shipping"], 15, 'Produce &amp; Forage Shipped', 1) :
-				getPerfectionPctString(pct["Shipping"], 15, 'Produce &amp; Forage Shipped', 0) + ' -- <a href="#sec_Basic_Shipping">see above for needs</a>';
+		output += (pct["Shipping"] >= 1) ? getPerfectionPctString(pct["Shipping"], 15, '已售出的产品和采集品', 1) :
+				getPerfectionPctString(pct["Shipping"], 15, '已售出的产品和采集品', 0) + ' -- <a href="#sec_Basic_Shipping">查看细节</a>';
 		output += '</li><li>';
-		output += (numObelisks == 4) ? getPerfectionNumString(numObelisks, 4, 'Obelisks on Farm', 1) :
-				getPerfectionNumString(numObelisks, 4, 'Obelisks on Farm', 0) + ' -- need ' + missingObelisks.join(', ');
+		output += (numObelisks == 4) ? getPerfectionNumString(numObelisks, 4, '农场上的图腾柱', 1) :
+				getPerfectionNumString(numObelisks, 4, '农场上的图腾柱', 0) + ' -- 需要 ' + missingObelisks.join(', ');
 		output += '</li><li>';
-		output += getPerfectionBoolString(10, 'Golden Clock on Farm', saveInfo.perfectionTracker.global["Gold Clock"]) + (saveInfo.perfectionTracker.global["Gold Clock"] ? "" : ' -- need to build a ' + wikify("Gold Clock", undefined, undefined, undefined));
+		output += getPerfectionBoolString(10, '农场上有黄金时钟', saveInfo.perfectionTracker.global["Gold Clock"]) + (saveInfo.perfectionTracker.global["Gold Clock"] ? "" : ' -- 需要摆放一个 ' + wikify("Gold Clock", undefined, undefined, undefined));
 		output += '</li><li>';
-		output += getPerfectionBoolString(10, 'Monster Slayer Hero (all slayer goals)', saveInfo.perfectionTracker[umid]["Monsters"]) + (saveInfo.perfectionTracker[umid]["Monsters"] ? "" : ' -- <a href="#sec_Monster_Hunting">see above for needs</a>');
+		output += getPerfectionBoolString(10, '杀怪英雄 (完成探险家公会所有要求)', saveInfo.perfectionTracker[umid]["Monsters"]) + (saveInfo.perfectionTracker[umid]["Monsters"] ? "" : ' -- <a href="#sec_Monster_Hunting">查看细节</a>');
 		output += '</li><li>';
-		output += (pct["Great Friends"] >= 1) ? getPerfectionPctString(pct["Great Friends"], 11, 'Great Friends (maxing all relationships)', 1) :
-				getPerfectionPctString(pct["Great Friends"], 11, 'Great Friends (maxing all relationships)', 0) + ' -- <a href="#sec_Social">see above for needs</a>';
+		output += (pct["Great Friends"] >= 1) ? getPerfectionPctString(pct["Great Friends"], 11, '好朋友 (与所有村民达到满好感度)', 1) :
+				getPerfectionPctString(pct["Great Friends"], 11, '好朋友 (与所有村民达到满好感度)', 0) + ' -- <a href="#sec_Social">查看细节</a>';
 		output += '</li><li>';
-		output += (pct["Skills"] >= 1) ? getPerfectionPctNumString(pct["Skills"], 5, 25, 'Farmer Level (max all skills)', 1) :
-				getPerfectionPctNumString(pct["Skills"], 5, 25, 'Farmer Level (max all skills)', 0) + ' -- <a href="#sec_Skills">see above for needs</a>';
+		output += (pct["Skills"] >= 1) ? getPerfectionPctNumString(pct["Skills"], 5, 25, '农场主等级 (所有技能达到 10 级)', 1) :
+				getPerfectionPctNumString(pct["Skills"], 5, 25, '农场主等级 (所有技能达到 10 级)', 0) + ' -- <a href="#sec_Skills">查看细节</a>';
 		output += '</li><li>';
-		output += getPerfectionBoolString(10, 'Found All Stardrops', saveInfo.perfectionTracker[umid]["Stardrops"]) + (saveInfo.perfectionTracker[umid]["Stardrops"] ? "" : ' -- <a href="#sec_Stardrops">see above for needs</a>');
+		output += getPerfectionBoolString(10, '找到所有星之果实', saveInfo.perfectionTracker[umid]["Stardrops"]) + (saveInfo.perfectionTracker[umid]["Stardrops"] ? "" : ' -- <a href="#sec_Stardrops">查看细节</a>');
 		output += '</li><li>';
-		output += (pct["Cooking"] >= 1) ? getPerfectionPctString(pct["Cooking"], 10, 'Cooking Recipes Made', 1) :
-				getPerfectionPctString(pct["Cooking"], 10, 'Cooking Recipes Made', 0) + ' -- <a href="#sec_Cooking">see above for needs</a>';
+		output += (pct["Cooking"] >= 1) ? getPerfectionPctString(pct["Cooking"], 10, '烹饪所有菜肴', 1) :
+				getPerfectionPctString(pct["Cooking"], 10, '烹饪所有菜肴', 0) + ' -- <a href="#sec_Cooking">查看细节</a>';
 		output += '</li><li>';
-		output += (pct["Crafting"] >= 1) ? getPerfectionPctString(pct["Crafting"], 10, 'Crafting Recipes Made', 1) :
-				getPerfectionPctString(pct["Crafting"], 10, 'Crafting Recipes Made', 0) + ' -- <a href="#sec_Crafting">see above for needs</a>';
+		output += (pct["Crafting"] >= 1) ? getPerfectionPctString(pct["Crafting"], 10, '制作所有可打造物品', 1) :
+				getPerfectionPctString(pct["Crafting"], 10, '制作所有可打造物品', 0) + ' -- <a href="#sec_Crafting">查看细节</a>';
 		output += '</li><li>';
-		output += (pct["Fishing"] >= 1) ? getPerfectionPctString(pct["Fishing"], 10, 'Fish Caught', 1) :
-				getPerfectionPctString(pct["Fishing"], 10, 'Fish Caught', 0) + ' -- <a href="#sec_Fishing">see above for needs</a>';
+		output += (pct["Fishing"] >= 1) ? getPerfectionPctString(pct["Fishing"], 10, '捕获所有种类的鱼', 1) :
+				getPerfectionPctString(pct["Fishing"], 10, '捕获所有种类的鱼', 0) + ' -- <a href="#sec_Fishing">查看细节</a>';
 		output += '</li><li>';
-		output += (pct["Walnuts"] >= 1) ? getPerfectionPctNumString(pct["Walnuts"], 5, 130, 'Golden Walnuts Found', 1) :
-				getPerfectionPctNumString(pct["Walnuts"], 5, 130, 'Golden Walnuts Found', 0) + ' -- <a href="#sec_Skills">see above for needs</a>';
+		output += (pct["Walnuts"] >= 1) ? getPerfectionPctNumString(pct["Walnuts"], 5, 130, '找到姜岛上所有的金色核桃', 1) :
+				getPerfectionPctNumString(pct["Walnuts"], 5, 130, '找到姜岛上所有的金色核桃', 0) + ' -- <a href="#sec_Skills">查看细节</a>';
 		output += '</li></ul></div>';
 		table.push(output);
 

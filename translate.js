@@ -820,6 +820,10 @@ const translateSpecialOrderMap = new Map([
     ["A Curious Substance", "奇特物质"],
     ["Prismatic Jelly", "五彩胶冻"]
 ]);
+// 其他
+const translateOthersMap = new Map([
+    ["Gold Clock", "黄金时钟"]
+]);
 // 汇总
 const translateMap = new Map([
     ...translateTitleMap,
@@ -835,7 +839,8 @@ const translateMap = new Map([
     ...translateArtifactMap,
     ...translateMineralMap,
     ...translateBundleMap,
-    ...translateSpecialOrderMap
+    ...translateSpecialOrderMap,
+    ...translateOthersMap
 ])
 
 // console.log(
@@ -927,6 +932,9 @@ function translateWord(word, type = "all") {
             break;
         case "special order":
             newWord = translateSpecialOrderMap.has(word) ? translateSpecialOrderMap.get(word) : word;
+            break;
+        case "others":
+            newWord = translateOthersMap.has(word) ? translateOthersMap.get(word) : word;
             break;
         case "all":
             newWord = translateMap.has(word) ? translateMap.get(word) : word;
