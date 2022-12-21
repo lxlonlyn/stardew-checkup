@@ -2,7 +2,7 @@
 
 ## 说明
 
-本应用是根据 [stardew-checkup](https://mouseypounds.github.io/stardew-checkup/) 进行中文汉化，并适当修改了部分内容。目前部署在 [Github Pages](https://lxlonlyn.github.io/stardew-checkup/)。
+本应用是根据 [stardew-checkup](https://mouseypounds.github.io/stardew-checkup/) 进行中文汉化，并适当修改了部分内容。目前部署在 [Github Pages](https://lxlonlyn.github.io/stardew-checkup/)。如无法访问，可以使用 netlify 部署的网页 [https://stardew-checkup.lonlyn.site/](https://stardew-checkup.lonlyn.site/)。
 
 **星露谷物语 存档进度检查器**是游戏[星露谷物语](http://stardewvalley.net/)的辅助工具。通过上传游戏存档，可以得知玩家的成就、里程碑等各种详细信息，方便进行统计与查漏补缺。
 
